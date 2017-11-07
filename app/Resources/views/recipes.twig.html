@@ -6,6 +6,20 @@
     <section class="content-section">
         <div class="container">
             <h1 class="text-center">Recipes</h1>
+            <div class="row thumbnail-gallery">
+                {% for recipe in recipes %}
+                <div class="col-lg-3 col-sm-4 col-6">
+                    <img src="//placehold.it/600x350" class="img-thumbnail">
+                    <a href="/recipes/{{recipe.name}}" title="Image 1"><div class="thumbnail-hoverbox">
+                        <p>{{recipe.name}}</p>
+                        <p style="font-size:14px">Tags: healthy, vegetarian, dinner</p>
+                    </div></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="text-center" style="text-align:center">
+                {{ knp_pagination_render(recipes) }}
+            </div>
         </div>
     </section>
 {% endblock %}
