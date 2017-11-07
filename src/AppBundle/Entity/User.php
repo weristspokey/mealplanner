@@ -181,12 +181,12 @@ class User implements UserInterface, \Serializable
 
     public function getSalt()
     {
-
+        return null;
     }
     
     public function eraseCredentials()
     {
-
+        $this->plainPassword = null;
     }
 }
 

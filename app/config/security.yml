@@ -17,11 +17,13 @@ security:
             chain:
                 providers: [ in_memory, db_provider]
         in_memory:
+        #for admin login
             memory: 
                 users:
                     admin:
                         password: $2y$13$UuDt8xxgESvVSY7KozpPZeoWQWsbpiF9uDtLyLd1fxTycrVNk1cdG
                         roles: 'ROLE_ADMIN'
+        #for user login
         db_provider:
             entity:
                 class: AppBundle:User
