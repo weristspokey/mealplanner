@@ -1,0 +1,17 @@
+{% extends 'template/base.html.twig' %}
+{% block navItems %}
+{% include 'nav.html' %}
+{% endblock %}
+{% block body %}
+    <section class="content-section">
+        <div class="container">
+            <h1 class="text-center">Weekly mealplan</h1>
+        </div>
+    </section>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('js/mealplan.js') }}"></script>
+        <script src="{{ asset('bxslider/jquery.bxslider.js') }}"></script>
+        <script src="{{ asset('js/slider.js') }}"></script>
+{% endblock %}
