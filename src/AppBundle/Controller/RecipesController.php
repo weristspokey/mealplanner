@@ -20,20 +20,36 @@ class RecipesController extends Controller
         $pagination = $recipePaginator->paginate(
             $recipes,
             $request->query->getInt('page', 1),
-            6
+            8
             );
+
         return $this->render('recipes.twig.html', [
             'recipes' => $pagination
+
         ]);
     }
 
     /**
-     * @Route("/recipes/add/{name}")
+     * @Route("/recipes/{name}")
      */
-    public function addRecipe($name)
+    public function recipeViewAction($name)
+    {
+        $recipes = $this->getDoctrine()->getRepository('AppBundle:Recipe')->findAll();
+        dump($recipes);
+
+        return $this->render('recipeDetail.twig.html', [
+            'name' => $name
+            ]);
+    }
+
+    /**
+     * @Route("/recipes/create/{name}")
+     */
+    public function createRecipe($name)
     {
         $tags = array('healthy', 'vegan', 'veggie');
         $ingredients = array('Milk', 'Eggs');
+        $image = "curry.jpg";
         $userId = 2;
         $recipe = new Recipe();
         $recipe->setName($name);
@@ -43,7 +59,7 @@ class RecipesController extends Controller
         $recipe->setTags($tags);
         $recipe->setIngredients($ingredients);
         $recipe->setUserId($userId);
-        //$recipe->setImage($image);
+        $recipe->setImage($image);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($recipe);
@@ -51,6 +67,7 @@ class RecipesController extends Controller
 
         return $this->redirectToRoute('recipes');
     }
+
 }
 
 ?>
