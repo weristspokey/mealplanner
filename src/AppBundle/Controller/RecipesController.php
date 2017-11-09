@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Recipe;
+use AppBundle\Form\RecipeType;
 
 class RecipesController extends Controller
 {
@@ -30,7 +31,7 @@ class RecipesController extends Controller
     }
 
     /**
-     * @Route("/recipes/{name}")
+     * @Route("/recipes/name/{name}")
      */
     public function recipeViewAction($name)
     {
@@ -67,6 +68,59 @@ class RecipesController extends Controller
 
         return $this->redirectToRoute('recipes');
     }
+
+    /**
+     * @Route("/recipes/add", name="add-recipe")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
+     */
+    public function addRecipe(Request $request)
+    {
+        $recipe = new Recipe();
+
+        $addRecipeForm = $this->createForm(RecipeType::class, $recipe, [
+        ]);
+
+        $addRecipeForm->HandleRequest($request);
+
+        if($addRecipeForm->isSubmitted() && $addRecipeForm->isValid()) 
+        {
+            /**$recipeName = $_POST['name'];
+            $recipeDescription = $_POST['description'];
+            $recipeTags = $_POST['tags'];
+            $recipeIngredients = $_POST['ingredients'];
+            $recipeImage = $_POST['image'];
+
+            //$user->setPassword($password);
+            $recipeTags = $_POST['tags'];
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($recipe);
+            $em->flush();
+
+            $this->addFlash('success', 'You are registered');
+            return $this->redirectToRoute('index');**/
+
+            $recipeTags = $recipe->getTags();
+            $recipeTags = explode(',',$recipeTags);
+
+            $recipeIngredients = $recipe->getIngredients();
+            $recipeIngredients = explode(',',$recipeIngredients);
+
+            $recipe->setTags($recipeTags);
+            $recipe->setIngredients($recipeIngredients);
+            $recipe->setUserId(2);
+            $recipe->setInStock(false);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($recipe);
+            $em->flush();
+        }
+        
+
+        return $this->render('addRecipe.twig.html', [
+            'add_recipe_form' => $addRecipeForm->createView(),
+            ]);
+    }
+
 
 }
 
