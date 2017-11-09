@@ -5,12 +5,12 @@
 {% block body %}
     <section class="content-section">
         <div class="container">
-            <h1 class="text-center">Recipes</h1>
+            <h1 class="text-center">Recipes<a href="{{ path('add-recipe') }}"><span class="fa fa-plus" aria-hidden="true"></span></a></h1>       
             <div class="row thumbnail-gallery">
                 {% for recipe in recipes %}
                 <div class="col-lg-3 col-sm-4 col-6">
                     <img src="//placehold.it/600x350" class="img-thumbnail">
-                    <a href="/recipes/{{recipe.name}}" title="Image 1"><div class="thumbnail-hoverbox">
+                    <a href="/recipes/view/{{recipe.id}}" title="Image 1"><div class="thumbnail-hoverbox">
                         <p>{{recipe.name}}</p>
                         <p style="font-size:14px">Tags: healthy, vegetarian, dinner</p>
                     </div></a>

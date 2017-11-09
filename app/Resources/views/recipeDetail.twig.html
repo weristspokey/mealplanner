@@ -3,23 +3,31 @@
 {% include 'nav.html' %}
 {% endblock %}
 {% block body %}
-
     <section class="content-section">
         <div class="container">
-            <h1 class="text-center">{{name}}</h1>
-
-   <div class="row">
-      <div class="col-lg-6 col-12" style="margin:auto"><a href="#" title="Image 1"><img src="//placehold.it/600x350" class="img-thumbnail"></a></div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6 col-12" style="margin:auto"><p>Tags: Veggie, cool, dinner</p></div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-12">Description</div>
-        <div class="col-lg-6 col-12">Ingredients</div>
-    </div>
-</div>
-</section>
+            <h1 class="text-center">{{recipe.name}}</h1>
+            <div class="row">
+                <div class="col-lg-6 col-12" style="margin:auto">
+                    <a href="#" title="Image 1"><img src="//placehold.it/600x350" class="img-thumbnail"></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 text-center" style="margin:auto">
+                    <p>Tags: {{recipe_tags}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 text-center">
+                    <h3>Description</h3>
+                    <p>{{recipe.description}}</p>
+                </div>
+                <div class="col-lg-6 col-12 text-center">
+                    <h3>Ingredients</h3>
+                    <p>{{recipe_ingredients}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
 {% block javascripts %}
 {% endblock %}

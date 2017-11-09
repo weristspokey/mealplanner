@@ -31,15 +31,23 @@ class RecipesController extends Controller
     }
 
     /**
-     * @Route("/recipes/name/{name}")
+     * @Route("/recipes/view/{recipeId}")
      */
-    public function recipeViewAction($name)
+    public function recipeViewAction($recipeId)
     {
-        $recipes = $this->getDoctrine()->getRepository('AppBundle:Recipe')->findAll();
-        dump($recipes);
+        $em = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($recipeId);
+
+        $recipeTags = $recipe->getTags();
+        $recipeTags = implode(",", $recipeTags);
+
+        $recipeIngredients = $recipe->getIngredients();
+        $recipeIngredients = implode(",", $recipeIngredients);
 
         return $this->render('recipeDetail.twig.html', [
-            'name' => $name
+            'recipe' => $recipe,
+            'recipe_tags' => $recipeTags,
+            'recipe_ingredients' => $recipeIngredients
             ]);
     }
 
