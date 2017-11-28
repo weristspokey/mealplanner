@@ -13,7 +13,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 col-12 text-center" style="margin:auto">
-                    <p>Tags: {{recipe_tags}}</p>
+                    <p>Tags: {{ recipe.tags|join(', ') }}</p>
                 </div>
             </div>
             <div class="row">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-lg-6 col-12 text-center">
                     <h3>Ingredients</h3>
-                    <p>{{recipe_ingredients}}</p>
+                    <p>{{ recipe.ingredients|join(', ') }}</p>
                 </div>
             </div>
         </div>

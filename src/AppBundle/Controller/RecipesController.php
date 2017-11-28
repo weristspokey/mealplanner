@@ -29,7 +29,6 @@ class RecipesController extends Controller
 
         return $this->render('recipes.twig.html', [
             'recipes' => $pagination
-
         ]);
     }
 
@@ -41,16 +40,8 @@ class RecipesController extends Controller
         $em = $this->getDoctrine()->getManager();
         $recipe = $em->getRepository('AppBundle:Recipe')->find($recipeId);
 
-        $recipeTags = $recipe->getTags();
-        $recipeTags = implode(",", $recipeTags);
-
-        $recipeIngredients = $recipe->getIngredients();
-        $recipeIngredients = implode(",", $recipeIngredients);
-
         return $this->render('recipeDetail.twig.html', [
-            'recipe' => $recipe,
-            'recipe_tags' => $recipeTags,
-            'recipe_ingredients' => $recipeIngredients
+            'recipe' => $recipe
             ]);
     }
 
@@ -125,6 +116,7 @@ class RecipesController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
+
             return $this->redirectToRoute('recipes');
         }
         

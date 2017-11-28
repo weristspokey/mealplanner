@@ -11,8 +11,8 @@
                 <div class="col-lg-3 col-sm-4 col-6">
                     <img src="//placehold.it/600x350" class="img-thumbnail">
                     <a href="/recipes/view/{{recipe.id}}" title="Image 1"><div class="thumbnail-hoverbox">
-                        <p>{{recipe.name}}</p>
-                        <p style="font-size:14px">Tags: healthy, vegetarian, dinner</p>
+                        <p>{{ recipe.name }}</p>
+                        <p style="font-size:14px">Tags: {{ recipe.tags|join(', ') }}</p>
                     </div></a>
                 </div>
                 {% endfor %}
