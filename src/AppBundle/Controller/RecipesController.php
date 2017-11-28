@@ -15,7 +15,10 @@ class RecipesController extends Controller
      */
     public function routeAction(Request $request)
     {
-        $recipes =$this->getDoctrine()->getRepository('AppBundle:Recipe')->findAll();
+        $userId = $this->getUser()->getId();
+        $recipes = $this->getDoctrine()->getRepository('AppBundle:Recipe')->findBy(
+            array('userId' => $userId)
+            );
 
         $recipePaginator = $this->get('knp_paginator');
         $pagination = $recipePaginator->paginate(
@@ -85,6 +88,7 @@ class RecipesController extends Controller
     public function addRecipe(Request $request)
     {
         $recipe = new Recipe();
+        $userId = $this->getUser()->getId();
 
         $addRecipeForm = $this->createForm(RecipeType::class, $recipe, [
         ]);
@@ -116,7 +120,7 @@ class RecipesController extends Controller
 
             $recipe->setTags($recipeTags);
             $recipe->setIngredients($recipeIngredients);
-            $recipe->setUserId(2);
+            $recipe->setUserId($userId);
             $recipe->setInStock(false);
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
@@ -125,7 +129,7 @@ class RecipesController extends Controller
         
 
         return $this->render('addRecipe.twig.html', [
-            'add_recipe_form' => $addRecipeForm->createView(),
+            'add_recipe_form' => $addRecipeForm->createView()
             ]);
     }
 
