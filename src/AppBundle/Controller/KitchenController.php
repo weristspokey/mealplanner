@@ -11,7 +11,7 @@ class KitchenController extends Controller
     /**
      * @Route("/kitchen", name="kitchen")
      */
-    public function rouuteAction()
+    public function routeAction()
     {
         return $this->render('kitchen.twig.html', [
         ]);
