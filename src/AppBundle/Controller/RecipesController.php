@@ -125,6 +125,7 @@ class RecipesController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
+            return $this->redirectToRoute('recipes');
         }
         
 
