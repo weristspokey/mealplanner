@@ -72,7 +72,7 @@ class RecipesController extends Controller
     }
 
     /**
-     * @Route("/recipes/add", name="add-recipe")
+     * @Route("/recipes/add", name="add_recipe")
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \LogicException
      */
@@ -88,31 +88,25 @@ class RecipesController extends Controller
 
         if($addRecipeForm->isSubmitted() && $addRecipeForm->isValid()) 
         {
-            /**$recipeName = $_POST['name'];
-            $recipeDescription = $_POST['description'];
-            $recipeTags = $_POST['tags'];
-            $recipeIngredients = $_POST['ingredients'];
-            $recipeImage = $_POST['image'];
-
-            //$user->setPassword($password);
-            $recipeTags = $_POST['tags'];
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($recipe);
-            $em->flush();
-
-            $this->addFlash('success', 'You are registered');
-            return $this->redirectToRoute('index');**/
-
             $recipeTags = $recipe->getTags();
             $recipeTags = explode(',',$recipeTags);
 
             $recipeIngredients = $recipe->getIngredients();
             $recipeIngredients = explode(',',$recipeIngredients);
 
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $recipeImage */
+            $recipeImage = $recipe->getImage();
+            $recipeImageName = md5(uniqid()).'.'.$recipeImage->guessExtension();
+            $recipeImage->move(
+                $this->getParameter('image_directory'),
+                $recipeImageName
+            );
+            
             $recipe->setTags($recipeTags);
             $recipe->setIngredients($recipeIngredients);
             $recipe->setUserId($userId);
             $recipe->setInStock(false);
+            $recipe->setImage($recipeImageName);
             $em = $this->getDoctrine()->getManager();
             $em->persist($recipe);
             $em->flush();
