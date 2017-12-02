@@ -101,7 +101,7 @@ class RecipesController extends Controller
                 $this->getParameter('image_directory'),
                 $recipeImageName
             );
-            
+
             $recipe->setTags($recipeTags);
             $recipe->setIngredients($recipeIngredients);
             $recipe->setUserId($userId);
@@ -120,6 +120,67 @@ class RecipesController extends Controller
             ]);
     }
 
+    /**
+     * @Route("/recipes/view/{recipeId}/edit", name="edit_recipe")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \LogicException
+     */
+    public function editRecipe($recipeId)
+    {
+        $recipe = new Recipe();
+        $userId = $this->getUser()->getId();
+
+        $addRecipeForm = $this->createForm(RecipeType::class, $recipe, [
+        ]);
+
+        $addRecipeForm->HandleRequest($request);
+
+        if($addRecipeForm->isSubmitted() && $addRecipeForm->isValid()) 
+        {
+            $recipeTags = $recipe->getTags();
+            $recipeTags = explode(',',$recipeTags);
+
+            $recipeIngredients = $recipe->getIngredients();
+            $recipeIngredients = explode(',',$recipeIngredients);
+
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $recipeImage */
+            $recipeImage = $recipe->getImage();
+            $recipeImageName = md5(uniqid()).'.'.$recipeImage->guessExtension();
+            $recipeImage->move(
+                $this->getParameter('image_directory'),
+                $recipeImageName
+            );
+
+            $recipe->setTags($recipeTags);
+            $recipe->setIngredients($recipeIngredients);
+            $recipe->setUserId($userId);
+            $recipe->setInStock(false);
+            $recipe->setImage($recipeImageName);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($recipe);
+            $em->flush();
+
+            return $this->redirectToRoute('recipes');
+        }
+        
+
+        return $this->render('addRecipe.twig.html', [
+            'add_recipe_form' => $addRecipeForm->createView()
+            ]);
+    }
+
+    /**
+     * @Route("recipes/view/{recipeId}/delete")
+     */
+    public function deleteAction($recipeId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $recipe = $em->getRepository('AppBundle:Recipe')->find($recipeId);
+
+        $em->remove($recipe);
+        $em->flush();
+        return new Response('Deleted with id '.$recipeId);
+    }
 
 }
 

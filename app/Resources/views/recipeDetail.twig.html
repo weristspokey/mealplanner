@@ -5,10 +5,10 @@
 {% block body %}
     <section class="content-section">
         <div class="container">
-            <h1 class="text-center">{{recipe.name}}</h1>
+            <h1 class="text-center">{{recipe.name}}<a href="{{ path('add_recipe') }}"><span class="fa fa-edit" aria-hidden="true"></span></a></h1>
             <div class="row">
-                <div class="col-lg-6 col-12" style="margin:auto">
-                    <a href="#" title="Image 1"><img src="//placehold.it/600x350" class="img-thumbnail"></a>
+                <div class="col-lg-8 col-12" style="margin:auto">
+                    <a href="#" title="{{recipe.name}}"><img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail"></a>
                 </div>
             </div>
             <div class="row">
@@ -28,6 +28,4 @@
             </div>
         </div>
     </section>
-{% endblock %}
-{% block javascripts %}
 {% endblock %}
