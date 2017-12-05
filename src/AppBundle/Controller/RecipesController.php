@@ -46,7 +46,7 @@ class RecipesController extends Controller
             );
         $foodItems = $em->getRepository('AppBundle:Food')->findAll();
         $ingredients = [];
-q
+
         foreach ($recipeItems as $recipeItem) {
            $recipeItemId = $recipeItem->getFoodId();
            foreach ($foodItems as $foodItem) {
