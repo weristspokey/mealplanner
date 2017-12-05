@@ -4,7 +4,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use AppBundle\Entity\RecipeItem;
+use AppBundle\Entity\User;
 /**
  * Recipe
  *
@@ -22,17 +25,16 @@ class Recipe
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_id", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="recipes")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100, unique=true)
+     * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
 
@@ -51,13 +53,6 @@ class Recipe
     private $tags;
 
     /**
-     * @var array
-     *
-     * @ORM\Column(name="ingredients", type="simple_array")
-     */
-    private $ingredients;
-
-    /**
      * @var string
      * @Assert\Image()
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
@@ -65,12 +60,14 @@ class Recipe
     private $image;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(name="in_stock", type="boolean")
+     * @ORM\OneToMany(targetEntity="RecipeItem", mappedBy="recipeId")
      */
-    private $inStock;
+    private $recipeItems;
 
+     public function __construct()
+    {
+        $this->recipeItems = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -85,11 +82,11 @@ class Recipe
     /**
      * Set userId
      *
-     * @param integer $userId
+     * @param User $userId
      *
      * @return Recipe
      */
-    public function setUserId($userId)
+    public function setUserId(User $userId)
     {
         $this->userId = $userId;
 
@@ -99,7 +96,7 @@ class Recipe
     /**
      * Get userId
      *
-     * @return int
+     * @return User
      */
     public function getUserId()
     {
@@ -131,30 +128,6 @@ class Recipe
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Recipe
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
      * Set tags
      *
      * @param array $tags
@@ -176,30 +149,6 @@ class Recipe
     public function getTags()
     {
         return $this->tags;
-    }
-
-    /**
-     * Set ingredients
-     *
-     * @param array $ingredients
-     *
-     * @return Recipe
-     */
-    public function setIngredients($ingredients)
-    {
-        $this->ingredients = $ingredients;
-
-        return $this;
-    }
-
-    /**
-     * Get ingredients
-     *
-     * @return array
-     */
-    public function getIngredients()
-    {
-        return $this->ingredients;
     }
 
     /**
@@ -226,28 +175,62 @@ class Recipe
         return $this->image;
     }
 
+
     /**
-     * Set inStock
+     * Set description
      *
-     * @param boolean $inStock
+     * @param string $description
      *
      * @return Recipe
      */
-    public function setInStock($inStock)
+    public function setDescription($description)
     {
-        $this->inStock = $inStock;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get inStock
+     * Get description
      *
-     * @return bool
+     * @return string
      */
-    public function getInStock()
+    public function getDescription()
     {
-        return $this->inStock;
+        return $this->description;
+    }
+
+    /**
+     * Add recipeItem
+     *
+     * @param \AppBundle\Entity\RecipeItem $recipeItem
+     *
+     * @return Recipe
+     */
+    public function addRecipeItem(\AppBundle\Entity\RecipeItem $recipeItem)
+    {
+        $this->recipeItems[] = $recipeItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove recipeItem
+     *
+     * @param \AppBundle\Entity\RecipeItem $recipeItem
+     */
+    public function removeRecipeItem(\AppBundle\Entity\RecipeItem $recipeItem)
+    {
+        $this->recipeItems->removeElement($recipeItem);
+    }
+
+    /**
+     * Get recipeItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecipeItems()
+    {
+        return $this->recipeItems;
     }
 }
-

@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use AppBundle\Entity\Recipe;
 
 /**
  * User
@@ -46,6 +48,15 @@ class User implements UserInterface, \Serializable
      */
     private $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Recipe", mappedBy="id")
+     */
+    private $recipes;
+
+     public function __construct()
+    {
+        $this->recipes = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -188,5 +199,39 @@ class User implements UserInterface, \Serializable
     {
         $this->plainPassword = null;
     }
-}
 
+
+    /**
+     * Add recipe
+     *
+     * @param \AppBundle\Entity\Recipe $recipe
+     *
+     * @return User
+     */
+    public function addRecipe(\AppBundle\Entity\Recipe $recipe)
+    {
+        $this->recipes[] = $recipe;
+
+        return $this;
+    }
+
+    /**
+     * Remove recipe
+     *
+     * @param \AppBundle\Entity\Recipe $recipe
+     */
+    public function removeRecipe(\AppBundle\Entity\Recipe $recipe)
+    {
+        $this->recipes->removeElement($recipe);
+    }
+
+    /**
+     * Get recipes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecipes()
+    {
+        return $this->recipes;
+    }
+}

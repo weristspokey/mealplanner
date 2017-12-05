@@ -38,12 +38,12 @@ class RecipeType extends AbstractType
                 'attr' => [
                 'placeholder' => 'Tags']]
             )
-            ->add('ingredients', TextType::class, [
-                'label' => false,
-                'required' => true,
-                'attr' => [
-                'placeholder' => 'Ingredients']]
-            )
+            // ->add('recipeItems', TextType::class, [
+            //     'label' => false,
+            //     'required' => false,
+            //     'attr' => [
+            //     'placeholder' => 'Ingredients']]
+            // )
             ->add('image', FileType::class, [
                 'label' => false,
                 'required' => false,

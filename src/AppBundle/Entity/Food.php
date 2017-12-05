@@ -31,13 +31,6 @@ class Food
     /**
      * @var bool
      *
-     * @ORM\Column(name="in_stock", type="boolean")
-     */
-    private $inStock;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(name="is_vegetarian", type="boolean")
      */
     private $isVegetarian;
@@ -82,30 +75,6 @@ class Food
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set inStock
-     *
-     * @param boolean $inStock
-     *
-     * @return Food
-     */
-    public function setInStock($inStock)
-    {
-        $this->inStock = $inStock;
-
-        return $this;
-    }
-
-    /**
-     * Get inStock
-     *
-     * @return bool
-     */
-    public function getInStock()
-    {
-        return $this->inStock;
     }
 
     /**
@@ -156,4 +125,3 @@ class Food
         return $this->isVegan;
     }
 }
-

@@ -8,7 +8,7 @@
             <h1 class="text-center">{{recipe.name}}<a href="{{ path('add_recipe') }}"><span class="fa fa-edit" aria-hidden="true"></span></a></h1>
             <div class="row">
                 <div class="col-lg-8 col-12" style="margin:auto">
-                    <a href="#" title="{{recipe.name}}"><img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail"></a>
+                    <a href="#" title="{{recipe.name}}"><img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail img-recipe"></a>
                 </div>
             </div>
             <div class="row">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-lg-6 col-12 text-center">
                     <h3>Ingredients</h3>
-                    <p>{{ recipe.ingredients|join(', ') }}</p>
+                    <p>{{ ingredients|join(', ') }}
                 </div>
             </div>
         </div>
