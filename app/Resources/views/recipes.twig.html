@@ -10,7 +10,7 @@
                     <h1 class="text-center">Recipes</h1></div>
                 <div class="col-md-1"><a class="float-right" href="{{ path('add_recipe') }}"><span class="fa fa-plus" aria-hidden="true"></span></a></div>
             </div>
-            <div class="row thumbnail-gallery">
+            <div class="row thumbnail-gallery recipes-gallery">
                 {% for recipe in recipes %}
                 <div class="col-lg-3 col-sm-4 col-6">
                     <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
