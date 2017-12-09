@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use AppBundle\Entity\Recipe;
-
+use AppBundle\Entity\Tag;
 /**
  * User
  *
@@ -16,6 +16,12 @@ use AppBundle\Entity\Recipe;
  */
 class User implements UserInterface, \Serializable
 {
+     public function __construct()
+    {
+        $this->recipes = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+    }
+
     /**
      * @var int
      *
@@ -53,10 +59,10 @@ class User implements UserInterface, \Serializable
      */
     private $recipes;
 
-     public function __construct()
-    {
-        $this->recipes = new ArrayCollection();
-    }
+    /**
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="id")
+     */
+    private $tags;
 
     /**
      * Get id
@@ -233,5 +239,39 @@ class User implements UserInterface, \Serializable
     public function getRecipes()
     {
         return $this->recipes;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     *
+     * @return User
+     */
+    public function addTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     */
+    public function removeTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

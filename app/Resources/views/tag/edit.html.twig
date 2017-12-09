@@ -1,0 +1,27 @@
+{% extends 'template/base.html.twig' %}
+{% block navItems %}
+{% include 'nav.html' %}
+{% endblock %}
+{% block body %}
+    <section class="content-section">
+        <div class="container">
+            <h1>Tag edit</h1>
+
+            {{ form_start(edit_form) }}
+                {{ form_widget(edit_form) }}
+                <input type="submit" value="Edit" />
+            {{ form_end(edit_form) }}
+
+            <ul>
+                <li>
+                    <a href="{{ path('tag_index') }}">Back to the list</a>
+                </li>
+                <li>
+                    {{ form_start(delete_form) }}
+                        <input type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}

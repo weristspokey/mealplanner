@@ -31,6 +31,7 @@ class Recipe
      */
     private $userId;
 
+
     /**
      * @var string
      *
@@ -48,7 +49,7 @@ class Recipe
     /**
      * @var array
      *
-     * @ORM\Column(name="tags", type="simple_array", nullable=true)
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="recipeId")
      */
     private $tags;
 

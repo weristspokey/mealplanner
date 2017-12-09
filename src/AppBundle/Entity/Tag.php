@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\User;
 
 /**
  * Tag
@@ -35,6 +36,11 @@ class Tag
      */
     private $color;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tags")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $userId;
 
     /**
      * Get id
@@ -93,5 +99,28 @@ class Tag
     {
         return $this->color;
     }
-}
 
+     /**
+     * Set userId
+     *
+     * @param User $userId
+     *
+     * @return Tag
+     */
+    public function setUserId(User $userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return User
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+}
