@@ -36,6 +36,19 @@ class RecipeItem
      */
     private $foodId;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="value", type="integer")
+     */
+    private $value;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="unit", type="string")
+     */
+    private $unit;
 
     /**
      * Get id
@@ -93,5 +106,53 @@ class RecipeItem
     public function getFoodId()
     {
         return $this->foodId;
+    }
+
+    /**
+     * Set value
+     *
+     * @param integer $value
+     *
+     * @return RecipeItem
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return integer
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set unit
+     *
+     * @param string $unit
+     *
+     * @return RecipeItem
+     */
+    public function setUnit($unit)
+    {
+        $this->unit = $unit;
+
+        return $this;
+    }
+
+    /**
+     * Get unit
+     *
+     * @return string
+     */
+    public function getUnit()
+    {
+        return $this->unit;
     }
 }

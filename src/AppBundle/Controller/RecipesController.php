@@ -57,11 +57,6 @@ class RecipesController extends Controller
            }
         }
 
-        dump($recipeItems);
-        dump($recipeItems[0]->getFoodId());
-        dump($ingredients);
-        dump($recipe->getTags());
-
         return $this->render('recipeDetail.twig.html', [
             'recipe' => $recipe,
             'ingredients' => $ingredients
@@ -109,9 +104,13 @@ class RecipesController extends Controller
         $user = $this->getUser();
         $recipeItem = new RecipeItem();
         $recipeItem->setFoodId(2);
+        $recipeItem->setValue(2);
+        $recipeItem->setUnit('ml');
         $recipeItem->setRecipeId($recipe);
         $recipeItemTwo = new RecipeItem();
         $recipeItemTwo->setFoodId(1);
+        $recipeItemTwo->setValue(2);
+        $recipeItemTwo->setUnit('ml');
         $recipeItemTwo->setRecipeId($recipe);
 
         $addRecipeForm = $this->createForm(RecipeType::class, $recipe, [
