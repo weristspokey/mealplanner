@@ -6,14 +6,12 @@
 
     <section class="content-section">
         <div class="container">
-            <h1>Tag creation</h1>
+            <h1 class="text-center">Tags</h1>
+            {% for tag in tags %}
+                <a href="{{ path('tag_edit', { 'id': tag.id }) }}" class="btn btn-default" role="button"> {{ tag.name }}</a>
+            {% endfor %}
+            <h1 class="text-center">Add Tag</h1>
             {{form(new_tag_form)}}
-
-                <ul>
-                    <li>
-                        <a href="{{ path('tag_index') }}">Back to the list</a>
-                    </li>
-                </ul>
         </div>
     </section>
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'template/base.html.twig' %}
+{% block navItems %}
+{% include 'nav.html' %}
+{% endblock %}
+{% block body %}
+
+    <section class="content-section">
+        <div class="container">
+            <h1 class="text-center">Add Recipe</h1>
+            {{form(new_recipe_form)}}
+        </div>
+    </section>
+{% endblock %}

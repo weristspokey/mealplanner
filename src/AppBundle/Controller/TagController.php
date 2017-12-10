@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
+use AppBundle\Entity\Recipe;
 use AppBundle\Form\TagType;
 /**
  * Tag controller.
@@ -25,7 +26,6 @@ class TagController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
         $tags = $em->getRepository('AppBundle:Tag')->findAll();
 
         return $this->render('tag/index.html.twig', array(
@@ -41,6 +41,12 @@ class TagController extends Controller
      */
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+        $userId = $this->getUser()->getId();
+        $tags = $em->getRepository('AppBundle:Tag')->findBy(
+            array('userId' => $userId)
+            );
+
         $tag = new Tag();
         $user = $this->getUser();
         $newTagForm = $this->createForm(TagType::class, $tag);
@@ -52,10 +58,11 @@ class TagController extends Controller
             $em->persist($tag);
             $em->flush();
 
-            return $this->redirectToRoute('tag_show', array('id' => $tag->getId()));
+            return $this->redirectToRoute('tag_new', array('id' => $tag->getId()));
         }
 
         return $this->render('tag/new.html.twig', array(
+            'tags' => $tags,
             'tag' => $tag,
             'new_tag_form' => $newTagForm->createView(),
         ));
@@ -92,7 +99,7 @@ class TagController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('tag_edit', array('id' => $tag->getId()));
+            return $this->redirectToRoute('tag_new');
         }
 
         return $this->render('tag/edit.html.twig', array(

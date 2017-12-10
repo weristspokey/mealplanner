@@ -8,8 +8,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Controller\RecipeController;
+
 
 class RecipeType extends AbstractType
 {
@@ -18,7 +21,7 @@ class RecipeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-       $builder
+        $builder
             ->add('name', TextType::class, [
                 'label' => false,
                 'required' => true,
@@ -32,11 +35,15 @@ class RecipeType extends AbstractType
                 'placeholder' => 'Description',
                 'rows' => '9']]
             )
-            ->add('tags', TextType::class, [
+            ->add('tags', ChoiceType::class, [
+                'choices' => ['hi', 'ho', 'h'],
                 'label' => false,
                 'required' => false,
+                'placeholder' => 'Tags',
+                'multiple' => true,
                 'attr' => [
-                'placeholder' => 'Tags']]
+                    'class' => 'selectpicker']
+                ]
             )
             // ->add('recipeItems', TextType::class, [
             //     'label' => false,
@@ -47,6 +54,7 @@ class RecipeType extends AbstractType
             ->add('image', FileType::class, [
                 'label' => false,
                 'required' => false,
+                'data_class' => null,
                 'attr' => [
                 'placeholder' => 'an image for your recipe']]
             )
