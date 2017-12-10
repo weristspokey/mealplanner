@@ -22,7 +22,11 @@
             </div>
             <div class="row">
                 <div class="col-lg-6 col-12 text-center" style="margin:auto">
-                    <p>Tags: recipe.tags|join(', ') </p>
+                    <p>Tags: 
+                    {% for tag in tags %}
+                        <a href="" class="btn btn-default" role="button">{{tag.name}}</a>
+                    {% endfor %}
+                    </p>
                 </div>
             </div>
             <div class="row">

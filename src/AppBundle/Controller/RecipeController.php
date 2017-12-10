@@ -11,6 +11,7 @@ use AppBundle\Entity\RecipeItem;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Form\RecipeType;
+use AppBundle\Entity\Tag;
 
 
 /**
@@ -32,24 +33,21 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $userId = $this->getUser()->getId();
-        $tags = $em->getRepository('AppBundle:Tag')->findBy(
-            array('userId' => $userId)
-            );
 
         $recipes = $em->getRepository('AppBundle:Recipe')->findBy(
             array('userId' => $userId)
             );
-
+        dump($recipes);
+        dump($recipes[0]->getTags());
         $recipePaginator = $this->get('knp_paginator');
         $pagination = $recipePaginator->paginate(
             $recipes,
             $request->query->getInt('page', 1),
             8
             );
-
+        
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $pagination,
-            'tags' => $tags
+            'recipes' => $pagination
         ]);
     }
 
@@ -65,9 +63,6 @@ class RecipeController extends Controller
         $user = $this->getUser();
         $userId = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
-        $tags = $em->getRepository('AppBundle:Tag')->findBy(
-            array('userId' => $userId)
-            );
 
         $recipeItem = new RecipeItem();
         $recipeItem->setFoodId(2);
@@ -91,7 +86,7 @@ class RecipeController extends Controller
                 $this->getParameter('image_directory'),
                 $recipeImageName
             );
-            $recipe->setTags($tags);
+
             $recipe->addRecipeItem($recipeItem);
             $recipe->addRecipeItem($recipeItemTwo);
             $recipe->setImage($recipeImageName);
@@ -121,13 +116,12 @@ class RecipeController extends Controller
     public function showAction(Recipe $recipe)
     {
         $em = $this->getDoctrine()->getManager();
-
         $userId = $this->getUser()->getId();
-        $tags = $em->getRepository('AppBundle:Tag')->findBy(
-            array('userId' => $userId)
-            );
+        $tags = $recipe->getTags();
+
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
+            'tags' => $tags
         ]);
     }
 

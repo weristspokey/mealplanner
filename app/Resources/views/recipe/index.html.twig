@@ -25,8 +25,8 @@
                     <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}"><div class="thumbnail-hoverbox">
                         <p>{{ recipe.name }}</p>
                         <p style="font-size:14px">Tags:
-                        {% for tag in tags %}
-                        {{ tag.name }}
+                        {% for tag in recipe.tags %}
+                           {{tag.name}}
                         {% endfor %}
                         </p>
                     </div></a>

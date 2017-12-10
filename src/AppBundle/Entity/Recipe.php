@@ -49,7 +49,7 @@ class Recipe
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="recipeId")
+     * @ORM\Column(name="tags", type="array", nullable=true)
      */
     private $tags;
 
