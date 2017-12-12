@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-12 text-center" style="margin:auto">
+                <div class="col-lg-6 col-12 text-center" style="margin:auto; margin-top: 10px">
                     <p>Tags: 
                     {% for tag in tags %}
                         <a href="" class="btn btn-default" role="button">{{tag.name}}</a>
@@ -38,6 +38,9 @@
                     <h3>Ingredients</h3>
                     <p>ingredients|join(', ')</p>
                 </div>
+                {{ form_start(delete_form) }}
+                        <input type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
             </div>
         </div>
     </section>

@@ -126,7 +126,7 @@ class TagController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('tag_index');
+        return $this->redirectToRoute('tag_new');
     }
 
     /**

@@ -318,7 +318,7 @@ body {
 }
 
 .thumbnail-gallery .col-6:hover .thumbnail-hoverbox{
-    opacity: 0.6;
+    opacity: 0.8;
 }
 .thumbnail-gallery .col-6:hover .img-thumbnail {
     opacity: 0.8;

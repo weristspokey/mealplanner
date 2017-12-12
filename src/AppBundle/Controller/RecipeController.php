@@ -33,12 +33,11 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $userId = $this->getUser()->getId();
-
+        
         $recipes = $em->getRepository('AppBundle:Recipe')->findBy(
             array('userId' => $userId)
             );
-        dump($recipes);
-        dump($recipes[0]->getTags());
+
         $recipePaginator = $this->get('knp_paginator');
         $pagination = $recipePaginator->paginate(
             $recipes,
@@ -118,10 +117,11 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
         $tags = $recipe->getTags();
-
+        $deleteForm = $this->createDeleteForm($recipe);
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
-            'tags' => $tags
+            'tags' => $tags,
+            'delete_form' => $deleteForm->createView(),
         ]);
     }
 

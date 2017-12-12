@@ -34,6 +34,13 @@ class RecipeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $this->tokenStorage->getToken()->getUser();
+            if (!$user) 
+            {
+                throw new \LogicException(
+                    'The RecipeFormType cannot be used without an authenticated user!'
+                );
+            }
         $builder
             ->add('name', TextType::class, [
                 'label' => false,
@@ -55,6 +62,12 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'placeholder' => 'Tags',
                 'multiple' => true,
+                'query_builder' => function(EntityRepository $er) use ($user)
+                {
+                    return $er->createQueryBuilder('tag')
+                    ->where('tag.userId ='.  $user->getId())
+                    ->orderBy('tag.name', 'ASC');
+                },
                 'attr' => [
                     'class' => 'selectpicker']
                 ]
@@ -74,33 +87,6 @@ class RecipeType extends AbstractType
             )
             ->add('Submit', SubmitType::class);
 
-            $user = $this->tokenStorage->getToken()->getUser();
-            if (!$user) 
-            {
-                throw new \LogicException(
-                    'The RecipeFormType cannot be used without an authenticated user!'
-                );
-            }
-
-            // $builder->addEventListener(
-            //     FormEvents::PRE_SET_DATA,
-            //     function (FormEvent $event) use ($user) 
-            //     {
-            //         $form = $event->getForm();
-
-            //         $formOptions = array(
-            //             'class'         => Tag::class,
-            //             'choice_label'  => 'name',
-            //             'label' => false,
-            //             'required' => true,
-            //             'placeholder' => 'Tags',
-            //             'multiple' => true,
-            //             'attr' => [
-            //                 'class' => 'selectpicker']
-            //         );
-            //         $form->add('tags', EntityType::class, $formOptions);
-            //     }
-            // );
     }
     
     /**
