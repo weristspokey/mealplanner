@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\Food;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 /**
@@ -29,10 +30,9 @@ class RecipeItem
      */
     private $recipeId;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="foodId", type="integer")
+     /**
+     * @ORM\ManyToOne(targetEntity="Food", inversedBy="recipeItems")
+     * @ORM\JoinColumn(name="food_id", referencedColumnName="id")
      */
     private $foodId;
 
@@ -87,11 +87,11 @@ class RecipeItem
     /**
      * Set foodId
      *
-     * @param integer $foodId
+     * @param Food $foodId
      *
      * @return RecipeItem
      */
-    public function setFoodId($foodId)
+    public function setFoodId(Food $foodId)
     {
         $this->foodId = $foodId;
 
@@ -101,7 +101,7 @@ class RecipeItem
     /**
      * Get foodId
      *
-     * @return int
+     * @return Food
      */
     public function getFoodId()
     {

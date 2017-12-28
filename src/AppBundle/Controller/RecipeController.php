@@ -33,7 +33,7 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $userId = $this->getUser()->getId();
-        
+
         $recipes = $em->getRepository('AppBundle:Recipe')->findBy(
             array('userId' => $userId)
             );
@@ -64,16 +64,13 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $recipeItem = new RecipeItem();
-        $recipeItem->setFoodId(2);
+        $food = $em->getRepository('AppBundle:Food')->find(3);
+        dump($food);
+        $recipeItem->setFoodId($food);
         $recipeItem->setValue(2);
         $recipeItem->setUnit('ml');
         $recipeItem->setRecipeId($recipe);
-        $recipeItemTwo = new RecipeItem();
-        $recipeItemTwo->setFoodId(1);
-        $recipeItemTwo->setValue(2);
-        $recipeItemTwo->setUnit('ml');
-        $recipeItemTwo->setRecipeId($recipe);
-
+        dump($recipeItem);
         $newRecipeForm = $this->createForm(RecipeType::class, $recipe);
         $newRecipeForm->handleRequest($request);
 
@@ -87,15 +84,14 @@ class RecipeController extends Controller
             );
 
             $recipe->addRecipeItem($recipeItem);
-            $recipe->addRecipeItem($recipeItemTwo);
             $recipe->setImage($recipeImageName);
             $recipe->setUserId($user);
             $em = $this->getDoctrine()->getManager();
             
             $em->persist($recipe);
             $em->persist($recipeItem);
-            $em->persist($recipeItemTwo);
             $em->flush();
+            dump($recipe);
 
             return $this->redirectToRoute('recipe_index');
         }
@@ -115,19 +111,22 @@ class RecipeController extends Controller
     public function showAction(Recipe $recipe)
     {
         $em = $this->getDoctrine()->getManager();
+        
         $userId = $this->getUser()->getId();
         $tags = $recipe->getTags();
+        $recipeItems = $recipe->getRecipeItems();
+
         $deleteForm = $this->createDeleteForm($recipe);
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
+            'recipeItems' => $recipeItems,
             'tags' => $tags,
-            'delete_form' => $deleteForm->createView(),
+            'delete_form' => $deleteForm->createView()
         ]);
     }
 
     /**
      * Displays a form to edit an existing recipe entity.
-     *
      * @Route("/{id}/edit", name="recipe_edit")
      * @Method({"GET", "POST"})
      */

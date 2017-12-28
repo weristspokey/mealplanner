@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use AppBundle\Entity\RecipeItem;
 
 /**
  * Food
@@ -42,6 +45,15 @@ class Food
      */
     private $isVegan;
 
+     /**
+     * @ORM\OneToMany(targetEntity="RecipeItem", mappedBy="foodId")
+     */
+    private $recipeItems;
+
+    public function __construct()
+    {
+        $this->recipeItems = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -123,5 +135,39 @@ class Food
     public function getIsVegan()
     {
         return $this->isVegan;
+    }
+
+    /**
+     * Add recipeItem
+     *
+     * @param \AppBundle\Entity\RecipeItem $recipeItem
+     *
+     * @return Food
+     */
+    public function addRecipeItem(\AppBundle\Entity\RecipeItem $recipeItem)
+    {
+        $this->recipeItems[] = $recipeItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove recipeItem
+     *
+     * @param \AppBundle\Entity\RecipeItem $recipeItem
+     */
+    public function removeRecipeItem(\AppBundle\Entity\RecipeItem $recipeItem)
+    {
+        $this->recipeItems->removeElement($recipeItem);
+    }
+
+    /**
+     * Get recipeItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecipeItems()
+    {
+        return $this->recipeItems;
     }
 }

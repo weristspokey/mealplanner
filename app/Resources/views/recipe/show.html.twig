@@ -36,7 +36,11 @@
                 </div>
                 <div class="col-lg-6 col-12 text-center">
                     <h3>Ingredients</h3>
-                    <p>ingredients|join(', ')</p>
+                    <p>
+                        {% for item in recipeItems %}
+                        {{item.value}} {{item.unit}} {{item.foodId.name}}<br>
+                    {% endfor %}
+                    </p>
                 </div>
                 {{ form_start(delete_form) }}
                         <input type="submit" value="Delete">
