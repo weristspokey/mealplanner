@@ -55,6 +55,7 @@ class Recipe
 
     /**
      * @var string
+     * @Assert\NotBlank
      * @Assert\Image()
      * @ORM\Column(name="image", type="string", length=255, nullable=true)
      */

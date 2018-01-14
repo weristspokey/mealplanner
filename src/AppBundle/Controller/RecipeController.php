@@ -11,8 +11,11 @@ use AppBundle\Entity\RecipeItem;
 use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Form\RecipeType;
+use AppBundle\Form\RecipeItemType;
+use AppBundle\Form\TagSelectpickerType;
 use AppBundle\Entity\Tag;
-
+use AppBundle\Service\FileUploader;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Recipe controller.
@@ -44,7 +47,7 @@ class RecipeController extends Controller
             $request->query->getInt('page', 1),
             8
             );
-        
+
         return $this->render('recipe/index.html.twig', [
             'recipes' => $pagination
         ]);
@@ -56,44 +59,44 @@ class RecipeController extends Controller
      * @Route("/new", name="recipe_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, FileUploader $fileUploader)
     {
         $recipe = new Recipe();
         $user = $this->getUser();
-        $userId = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
 
-        $recipeItem = new RecipeItem();
-        $food = $em->getRepository('AppBundle:Food')->find(3);
-        dump($food);
-        $recipeItem->setFoodId($food);
-        $recipeItem->setValue(2);
-        $recipeItem->setUnit('ml');
-        $recipeItem->setRecipeId($recipe);
-        dump($recipeItem);
+        // $recipeItem = new RecipeItem();
+        // $food = $em->getRepository('AppBundle:Food')->find(3);
+        // $recipeItem->setFoodId($food);
+        // $recipeItem->setValue(2);
+        // $recipeItem->setUnit('ml');
+        // $recipeItem->setRecipeId($recipe);
         $newRecipeForm = $this->createForm(RecipeType::class, $recipe);
         $newRecipeForm->handleRequest($request);
 
         if ($newRecipeForm->isSubmitted() && $newRecipeForm->isValid()) {
-
             $recipeImage = $recipe->getImage();
-            $recipeImageName = md5(uniqid()).'.'.$recipeImage->guessExtension();
-            $recipeImage->move(
-                $this->getParameter('image_directory'),
-                $recipeImageName
-            );
+            $recipeImageName = $fileUploader->upload($recipeImage);
+            // $recipeImage = $recipe->getImage();
+            // $recipeImageName = md5(uniqid()).'.'.$recipeImage->guessExtension();
+            // $recipeImage->move(
+            //     $this->getParameter('image_directory'),
+            //     $recipeImageName
+            // );
 
-            $recipe->addRecipeItem($recipeItem);
+            // $recipe->addRecipeItem($recipeItem);
             $recipe->setImage($recipeImageName);
+            $tags = $recipe->getTags();
+            dump($tags);
             $recipe->setUserId($user);
             $em = $this->getDoctrine()->getManager();
             
             $em->persist($recipe);
-            $em->persist($recipeItem);
+            // $em->persist($recipeItem);
             $em->flush();
-            dump($recipe);
 
             return $this->redirectToRoute('recipe_index');
+
         }
 
         return $this->render('recipe/new.html.twig', array(
@@ -106,22 +109,36 @@ class RecipeController extends Controller
      * Finds and displays a recipe entity.
      *
      * @Route("/{id}", name="recipe_show")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function showAction(Recipe $recipe)
+    public function showAction(Request $request, Recipe $recipe)
     {
         $em = $this->getDoctrine()->getManager();
-        
         $userId = $this->getUser()->getId();
         $tags = $recipe->getTags();
         $recipeItems = $recipe->getRecipeItems();
+        $recipeItem = new RecipeItem();
 
+        $newRecipeItemForm = $this->createForm(RecipeItemType::class, $recipeItem);
+        $newRecipeItemForm->handleRequest($request);
         $deleteForm = $this->createDeleteForm($recipe);
+
+        if ($newRecipeItemForm->isSubmitted() && $newRecipeItemForm->isValid()) {
+
+            $recipeItem->setRecipeId($recipe);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($recipeItem);
+            $em->flush();
+
+            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+        }
+
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'recipeItems' => $recipeItems,
             'tags' => $tags,
-            'delete_form' => $deleteForm->createView()
+            'delete_form' => $deleteForm->createView(),
+            'new_recipeItem_form' => $newRecipeItemForm->createView(),
         ]);
     }
 
@@ -130,15 +147,24 @@ class RecipeController extends Controller
      * @Route("/{id}/edit", name="recipe_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Recipe $recipe)
+    public function editAction(Request $request, Recipe $recipe, FileUploader $fileUploader)
     {
         $deleteForm = $this->createDeleteForm($recipe);
-
         $editForm = $this->createForm(RecipeType::class, $recipe);
+        dump($recipe->getImage());
+        $image = $recipe->getImage();
+        $recipe->setImage($image);
         $editForm->handleRequest($request);
 
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            //$this->getDoctrine()->getManager()->flush();
+            $recipeImage = $recipe->getImage();
+            $recipeImageName = $fileUploader->upload($recipeImage);
+            $em = $this->getDoctrine()->getManager();
+            $recipe->setImage($recipeImageName);
+            $em->persist($recipe);
+            $em->flush();
 
             return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
         }

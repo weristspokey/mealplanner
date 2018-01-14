@@ -263,7 +263,7 @@
                             <option>Eat away</option>
                             <option data-divider="true"></option>
                             {% for food in food %}
-                                <option data-subtext="{%if food.inStock == false %}  not in stock {% endif %}">{{ food.name }}</li>
+                                <option data-subtext="in stock">{{ food.name }}</li>
                             {% endfor %}
                         </select>
                     </div>
@@ -271,7 +271,7 @@
                         <p>Recipes</p>
                         <select class="selectpicker centered" style="margin: 0 auto" data-width="90%" multiple data-live-search="true" data-max-options="3" id="recipes_selectpicker">
                             {% for recipe in recipes %}
-                                <option data-subtext="{%if recipe.inStock == false %}  not in stock {% endif %}">{{ recipe.name }}</li>
+                                <option data-subtext="in stock">{{ recipe.name }}</li>
                             {% endfor %}
                         </select>
                     </div>

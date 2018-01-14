@@ -1,11 +1,9 @@
 $(document).ready(function(){
-  $('.img-thumbnail').mouseenter(
-    function() {
-      $('.box').css('display', '');
-  });
-  $('.img-thumbnail').mouseleave(
-    function() {
-      $('.box').css('display', 'none');
-  });
-  
+  $("#addRecipeItemBtn").click(function() {
+    $(".recipeItemsRow").css('display', '');
+});
+  $("#addGrocerylistItemBtn").click(function() {
+    $(this).css('display', 'none');
+    $(this).next().css('display', '');
+});
 });

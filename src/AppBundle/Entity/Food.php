@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use AppBundle\Entity\RecipeItem;
+use AppBundle\Entity\GrocerylistItem;
 
 /**
  * Food
@@ -50,9 +51,15 @@ class Food
      */
     private $recipeItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity="GrocerylistItem", mappedBy="foodId")
+     */
+    private $grocerylistItems;
+
     public function __construct()
     {
         $this->recipeItems = new ArrayCollection();
+        $this->grocerylistItems = new ArrayCollection();
     }
 
     /**
@@ -169,5 +176,39 @@ class Food
     public function getRecipeItems()
     {
         return $this->recipeItems;
+    }
+
+    /**
+     * Add grocerylistItem
+     *
+     * @param \AppBundle\Entity\GrocerylistItem $grocerylistItem
+     *
+     * @return Food
+     */
+    public function addGrocerylistItem(\AppBundle\Entity\GrocerylistItem $grocerylistItem)
+    {
+        $this->grocerylistItems[] = $grocerylistItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove grocerylistItem
+     *
+     * @param \AppBundle\Entity\GrocerylistItem $grocerylistItem
+     */
+    public function removeGrocerylistItem(\AppBundle\Entity\GrocerylistItem $grocerylistItem)
+    {
+        $this->grocerylistItems->removeElement($grocerylistItem);
+    }
+
+    /**
+     * Get grocerylistItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrocerylistItems()
+    {
+        return $this->grocerylistItems;
     }
 }

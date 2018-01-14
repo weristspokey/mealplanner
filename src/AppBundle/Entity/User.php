@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Tag;
+use AppBundle\Entity\Grocerylist;
 /**
  * User
  *
@@ -20,6 +21,7 @@ class User implements UserInterface, \Serializable
     {
         $this->recipes = new ArrayCollection();
         $this->tags = new ArrayCollection();
+        $this->grocerylists = new ArrayCollection();
     }
 
     /**
@@ -58,6 +60,11 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Recipe", mappedBy="id")
      */
     private $recipes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Grocerylist", mappedBy="id")
+     */
+    private $grocerylists;
 
     /**
      * @ORM\OneToMany(targetEntity="Tag", mappedBy="id")
@@ -273,5 +280,39 @@ class User implements UserInterface, \Serializable
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Add grocerylist
+     *
+     * @param \AppBundle\Entity\Grocerylist $grocerylist
+     *
+     * @return User
+     */
+    public function addGrocerylist(\AppBundle\Entity\Grocerylist $grocerylist)
+    {
+        $this->grocerylists[] = $grocerylist;
+
+        return $this;
+    }
+
+    /**
+     * Remove grocerylist
+     *
+     * @param \AppBundle\Entity\Grocerylist $grocerylist
+     */
+    public function removeGrocerylist(\AppBundle\Entity\Grocerylist $grocerylist)
+    {
+        $this->grocerylists->removeElement($grocerylist);
+    }
+
+    /**
+     * Get grocerylists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrocerylists()
+    {
+        return $this->grocerylists;
     }
 }

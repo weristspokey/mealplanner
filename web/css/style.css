@@ -339,3 +339,6 @@ body {
   width: 100%;
   object-fit: cover;
 }
+.bootstrap-tagsinput .tag {
+  color: black;
+}
