@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\RecipeItem;
 use App\Entity\GrocerylistItem;
+use App\Entity\KitchenListItem;
 
 /**
  * Food
@@ -56,10 +57,16 @@ class Food
      */
     private $grocerylistItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity="KitchenListItem", mappedBy="foodId")
+     */
+    private $kitchenListItems;
+
     public function __construct()
     {
         $this->recipeItems = new ArrayCollection();
         $this->grocerylistItems = new ArrayCollection();
+        $this->kitchenListItems = new ArrayCollection();
     }
 
     /**
@@ -210,5 +217,39 @@ class Food
     public function getGrocerylistItems()
     {
         return $this->grocerylistItems;
+    }
+
+    /**
+     * Add kitchenListItem
+     *
+     * @param \App\Entity\KitchenListItem $kitchenListItem
+     *
+     * @return Food
+     */
+    public function addKitchenListItem(\App\Entity\KitchenListItem $kitchenListItem)
+    {
+        $this->kitchenListItems[] = $kitchenListItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove kitchenListItem
+     *
+     * @param \App\Entity\ḰitchenListItem $kitchenListItem
+     */
+    public function removeKitchenListItem(\App\Entity\KitchenListItem $kitchenListItem)
+    {
+        $this->kitchenListItems->removeElement($kitchenListItem);
+    }
+
+    /**
+     * Get kitchenListItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getKitchenListItems()
+    {
+        return $this->kitchenListItems;
     }
 }

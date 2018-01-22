@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use App\Entity\Recipe;
 use App\Entity\Tag;
 use App\Entity\Grocerylist;
+use App\Entity\KitchenList;
 /**
  * User
  *
@@ -22,6 +23,7 @@ class User implements UserInterface, \Serializable
         $this->recipes = new ArrayCollection();
         $this->tags = new ArrayCollection();
         $this->grocerylists = new ArrayCollection();
+        $this->kitchenLists = new ArrayCollection();
     }
 
     /**
@@ -65,6 +67,11 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Grocerylist", mappedBy="id")
      */
     private $grocerylists;
+
+    /**
+     * @ORM\OneToMany(targetEntity="KitchenList", mappedBy="id")
+     */
+    private $kitchenLists;
 
     /**
      * @ORM\OneToMany(targetEntity="Tag", mappedBy="id")
@@ -314,5 +321,39 @@ class User implements UserInterface, \Serializable
     public function getGrocerylists()
     {
         return $this->grocerylists;
+    }
+
+    /**
+     * Add kitchenlist
+     *
+     * @param \App\Entity\KitchenList $kitchenList
+     *
+     * @return User
+     */
+    public function addKitchenList(\App\Entity\KitchenList $kitchenList)
+    {
+        $this->kitchenLists[] = $kitchenList;
+
+        return $this;
+    }
+
+    /**
+     * Remove kitchenList
+     *
+     * @param \App\Entity\KitchenList $kitchenList
+     */
+    public function removeKitchenList(\App\Entity\KitchenList $kitchenList)
+    {
+        $this->kitchenLists->removeElement($kitchenList);
+    }
+
+    /**
+     * Get kitchenLists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getKitchenLists()
+    {
+        return $this->kitchenLists;
     }
 }

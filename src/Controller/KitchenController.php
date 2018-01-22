@@ -13,7 +13,14 @@ class KitchenController extends Controller
      */
     public function routeAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $userId = $this->getUser()->getId();
+        $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
+            array('userId' => $userId)
+            );
+
         return $this->render('kitchen.html.twig', [
+            'kitchenLists' => $kitchenLists 
         ]);
     }
 }

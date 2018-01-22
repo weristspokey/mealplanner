@@ -3,6 +3,21 @@
     <section class="content-section">
         <div class="container">
             <h1 class="text-center">Kitchen</h1>
+            {% for kitchenList in kitchenLists %}
+                <div class="col-md-6" style="margin-bottom: 20px">
+                    <ul class="list-group">
+                        <li class="list-group-item text-center">
+                            {{ kitchenList.name }} 
+                            
+                        </li>
+                        <li class="list-group-item text-center">
+                            <button class="btn btn-default" id="addGrocerylistItemBtn" data-toggle="modal" data-target="#add_grocery_modal">
+                                <span class="fa fa-plus"></span>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
         </div>
     </section>
 {% endblock %}
