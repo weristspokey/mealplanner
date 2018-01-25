@@ -18,9 +18,8 @@ class KitchenController extends Controller
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
             array('userId' => $userId)
             );
-
         return $this->render('kitchen.html.twig', [
-            'kitchenLists' => $kitchenLists 
+            'kitchenLists' => $kitchenLists
         ]);
     }
 }
