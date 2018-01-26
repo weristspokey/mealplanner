@@ -36,11 +36,8 @@ class GrocerylistController extends Controller
         $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
             array('userId' => $userId)
             );
-        //$grocerylistItems = $em->getRepository('App:GrocerylistItem')->findAll();
-        $grocerylistItem = new GrocerylistItem();
 
-        //$add_grocerylistItem_form = $this->get('form.factory')->createNamedBuilder('ship_form_'.$orderRecord->getId(), ShippingTrackCodeReturnType::class, $orderRecord)->getForm();
-        //$add_grocerylistItem_form = $this->createForm('App\Form\GrocerylistItemType', $grocerylistItem);
+        $grocerylistItem = new GrocerylistItem();
 
         foreach ($grocerylists as $grocerylist) 
         {
@@ -52,32 +49,20 @@ class GrocerylistController extends Controller
               $grocerylistItem
            )->getForm();
 
-           $views[$grocerylist->getId()] = $form->createView();
+            $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) 
             {
-                $grocerylistItem->setGrocerylistId($grocerylist->getId());
+                $grocerylistItem->setGrocerylistId($grocerylist);
                 $em->persist($grocerylistItem);
                 $em->flush();
-
-
             }
-        }  
 
-        // if ($add_grocerylistItem_form->isSubmitted() && $add_grocerylistItem_form->isValid()) {
-        //     //$em = $this->getDoctrine()->getManager();
-        //     //$grocerylistItem->setGrocerylistId();
-        //     //$foodId = $grocerylistItem->getFoodId()->getId();
-        //     //$grocerylistItem->setFoodId($foodId);
-        //     $em->persist($grocerylistItem);
-        //     $em->flush();
-
-        //     //return $this->redirectToRoute('grocerylist');
-        // }
+            $views[$grocerylist->getId()] = $form->createView();
+        } 
 
         return $this->render('grocerylist/index.html.twig', array(
             'grocerylists' => $grocerylists,
-            //'add_grocerylistItem_form' => $add_grocerylistItem_form->createView(),
             'forms' => $views
 
         ));
