@@ -10,6 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Entity\Food;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Grocerylist controller.
@@ -31,24 +36,50 @@ class GrocerylistController extends Controller
         $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
             array('userId' => $userId)
             );
-
+        //$grocerylistItems = $em->getRepository('App:GrocerylistItem')->findAll();
         $grocerylistItem = new GrocerylistItem();
-        $add_grocerylistItem_form = $this->createForm('App\Form\GrocerylistItemType', $grocerylistItem);
-        $add_grocerylistItem_form->handleRequest($request);
 
-        if ($add_grocerylistItem_form->isSubmitted() && $add_grocerylistItem_form->isValid()) {
-            
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($grocerylistItem);
-            $em->flush();
+        //$add_grocerylistItem_form = $this->get('form.factory')->createNamedBuilder('ship_form_'.$orderRecord->getId(), ShippingTrackCodeReturnType::class, $orderRecord)->getForm();
+        //$add_grocerylistItem_form = $this->createForm('App\Form\GrocerylistItemType', $grocerylistItem);
 
-            return $this->redirectToRoute('grocerylist');
-        }
+        foreach ($grocerylists as $grocerylist) 
+        {
+            $form_name = "form_".$grocerylist->getId();
 
+            $form = $this->get('form.factory')->createNamedBuilder( 
+              $form_name, 
+              GrocerylistItemType::class, 
+              $grocerylistItem
+           )->getForm();
+
+           $views[$grocerylist->getId()] = $form->createView();
+
+            if ($form->isSubmitted() && $form->isValid()) 
+            {
+                $grocerylistItem->setGrocerylistId($grocerylist->getId());
+                $em->persist($grocerylistItem);
+                $em->flush();
+
+
+            }
+        }  
+
+        // if ($add_grocerylistItem_form->isSubmitted() && $add_grocerylistItem_form->isValid()) {
+        //     //$em = $this->getDoctrine()->getManager();
+        //     //$grocerylistItem->setGrocerylistId();
+        //     //$foodId = $grocerylistItem->getFoodId()->getId();
+        //     //$grocerylistItem->setFoodId($foodId);
+        //     $em->persist($grocerylistItem);
+        //     $em->flush();
+
+        //     //return $this->redirectToRoute('grocerylist');
+        // }
 
         return $this->render('grocerylist/index.html.twig', array(
             'grocerylists' => $grocerylists,
-            'add_grocerylistItem_form' => $add_grocerylistItem_form->createView(),
+            //'add_grocerylistItem_form' => $add_grocerylistItem_form->createView(),
+            'forms' => $views
+
         ));
     }
 

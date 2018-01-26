@@ -14,19 +14,17 @@
             </div>
             <div class="row">
             {% for grocerylist in grocerylists %}
-                <div class="col-md-6" style="margin-bottom: 20px">
+                <div class="col-md-4" style="margin-bottom: 20px">
                     <ul class="list-group">
                         <li class="list-group-item text-center">
                             {{ grocerylist.name }} 
                             <a class="pull-right" href="{{ path('grocerylist_edit', { 'id': grocerylist.id }) }}"> edit </a>
                         </li>
                         <li class="list-group-item text-center">
-                            <button class="btn btn-default" id="addGrocerylistItemBtn" data-toggle="modal" data-target="#add_grocery_modal">
-                                <span class="fa fa-plus"></span>
-                            </button>
-                            <div class="row grocerylistItemsRow" id="{{grocerylist.id}}" style="display: none; margin-top:10px">
-                                <div class="col-md-7 mx-auto">
-                                    {{form(add_grocerylistItem_form, {grocerylistId: grocerylist.id})}}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {{ form(forms[grocerylist.id]) }}
+
                                 </div>
                             </div>
                         </li>
