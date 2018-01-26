@@ -38,7 +38,7 @@ class GrocerylistController extends Controller
             );
 
         $grocerylistItem = new GrocerylistItem();
-
+        $views = [];
         foreach ($grocerylists as $grocerylist) 
         {
             $form_name = "form_".$grocerylist->getId();
@@ -147,11 +147,19 @@ class GrocerylistController extends Controller
      */
     public function deleteAction(Request $request, Grocerylist $grocerylist)
     {
+        $em = $this->getDoctrine()->getManager();
+        $grocerylistId = $grocerylist->getId();
+        $grocerylistItems = $em->getRepository('App:GrocerylistItem')->findBy(
+            array('grocerylistId' => $grocerylistId)
+            );
+
         $form = $this->createDeleteForm($grocerylist);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            foreach ($grocerylistItems as $item) {
+                $em->remove($item);
+            }
             $em->remove($grocerylist);
             $em->flush();
         }

@@ -45,7 +45,11 @@ class GrocerylistItemType extends AbstractType
                 ],
                 ]
             )
-            ->add('Submit', SubmitType::class);
+            ->add('Submit', SubmitType::class, [
+                // 'attr' => [
+                //     'class' => 'd-none'
+                // ],
+                ]);
     }
     
     /**
