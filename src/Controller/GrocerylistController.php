@@ -89,7 +89,7 @@ class GrocerylistController extends Controller
             $em->persist($grocerylist);
             $em->flush();
 
-            return $this->redirectToRoute('grocerylist', array('id' => $grocerylist->getId()));
+            return $this->redirectToRoute('grocerylist');
         }
 
         return $this->render('grocerylist/new.html.twig', array(
@@ -129,7 +129,7 @@ class GrocerylistController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('grocerylist', array('id' => $grocerylist->getId()));
+            return $this->redirectToRoute('grocerylist');
         }
 
         return $this->render('grocerylist/edit.html.twig', array(

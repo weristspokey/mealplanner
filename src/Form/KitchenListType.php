@@ -8,32 +8,25 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use App\Entity\KitchenListItem;
-use App\Entity\Food;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use App\Entity\User;
+use App\Entity\KitchenList;
 
-class KitchenListItemType extends AbstractType
+class KitchenListType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
-        ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+            ->add('name', TextType::class, [
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker',
-                    'data-live-search' => 'true'
-                ],
-                ]
+                'placeholder' => 'Name of the KitchenList']]
             )
-        ->add('Submit', SubmitType::class);
+            ->add('Submit', SubmitType::class);
     }
     
     /**
@@ -42,7 +35,7 @@ class KitchenListItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => KitchenListItem::class
+            'data_class' => KitchenList::class
         ));
     }
 
@@ -51,7 +44,7 @@ class KitchenListItemType extends AbstractType
      */
     public function getBlockPrefix()
     {
-         return 'KitchenListItemType';
+        return 'KitchenListType';
     }
 
 
