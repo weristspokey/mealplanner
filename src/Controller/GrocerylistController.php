@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -63,7 +64,7 @@ class GrocerylistController extends Controller
 
         return $this->render('grocerylist/index.html.twig', array(
             'grocerylists' => $grocerylists,
-            'forms' => $views
+            'forms' => $views,
 
         ));
     }
@@ -181,5 +182,37 @@ class GrocerylistController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+
+    /**
+     * Creates a form to delete a grocerylist item entity.
+     *
+     * @param GrocerylistItem $grocerylistItem The grocerylistItem entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteItemForm(GrocerylistItem $grocerylistItem)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('grocerylistItem_delete', array('id' => $grocerylistItem->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+        ;
+    }
+
+    /**
+     * Deletes a grocerylistItem entity.
+     *
+     * @Route("/item_delete/{id}", name="grocerylistItem_delete")
+     */
+    public function deleteItemAction(Request $request, GrocerylistItem $grocerylistItem)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $grocerylistItemId = $grocerylistItem->getId();
+
+        $em->remove($grocerylistItem);
+        $em->flush();
+
+        return $this->redirectToRoute('grocerylist');
     }
 }

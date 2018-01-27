@@ -159,6 +159,22 @@ class KitchenController extends Controller
             ->getForm()
         ;
     }
+
+     /**
+     * Deletes a kitchenListItem entity.
+     *
+     * @Route("/item_delete/{id}", name="kitchenListItem_delete")
+     */
+    public function deleteItemAction(Request $request, KitchenListItem $kitchenListItem)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $kitchenListItemId = $kitchenListItem->getId();
+
+        $em->remove($kitchenListItem);
+        $em->flush();
+
+        return $this->redirectToRoute('kitchen');
+    }
 }
 
 ?>
