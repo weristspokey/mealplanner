@@ -14,6 +14,7 @@ use App\Entity\GrocerylistItem;
 use App\Entity\Mealplan;
 use App\Entity\MealplanItem;
 use App\Form\MealplanItemType;
+use App\Form\MealplanType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -35,6 +36,7 @@ class MealplanController extends Controller
     public function indexAction(Request $request)
     {
         $userId = $this->getUser()->getId();
+        $user = $this->getUser();
         $days = array(
             'today' => date("D d.m.y", time()),
             'tomorrow' => date("D d.m.y", time() + 86400),
@@ -47,13 +49,32 @@ class MealplanController extends Controller
 
         $food = $this->getDoctrine()->getRepository('App:Food')->findAll();
 
-        $recipes =$this->getDoctrine()->getRepository('App:Recipe')->findAll();
-        $mealplans =$this->getDoctrine()->getRepository('App:Mealplan')->findBy(
-            array('userId' => $userId)
-            );
+        $recipes = $this->getDoctrine()->getRepository('App:Recipe')->findAll();
+        $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
+            ->findBy(
+                ['userId' => $userId],
+                ['date' => 'ASC']
+        );    
        // foreach ($mealplans as $mealplan) {
        //     dump($mealplan->getDate());
        // }
+
+        $mealplan = new Mealplan();
+        $addMealplanForm = $this->createForm(MealplanType::class, $mealplan);
+        $addMealplanForm->handleRequest($request);
+
+        if ($addMealplanForm->isSubmitted() && $addMealplanForm->isValid()) 
+            {
+                $mealplan->setUserId($user);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($mealplan);
+                $em->flush();
+                 $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
+            ->findBy(
+                ['userId' => $userId],
+                ['date' => 'ASC']
+        );    
+            }
 
         $mealplanItem = new MealplanItem();
         $form = $this->createForm(MealplanItemType::class, $mealplanItem);
@@ -61,7 +82,7 @@ class MealplanController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) 
             {
-                 $em = $this->getDoctrine()->getManager();
+                $em = $this->getDoctrine()->getManager();
                 $em->persist($mealplanItem);
                 $em->flush();
             }
@@ -77,6 +98,7 @@ class MealplanController extends Controller
             'food' => $food,
             'recipes' => $recipes,
             'form' => $form->createView(),
+            'add_mealplan_form' => $addMealplanForm->createView(),
             'mealplans' => $mealplans
         ]);
     }
@@ -91,7 +113,7 @@ class MealplanController extends Controller
     $userId = $this->getUser();
     $mealplan->setUserId($userId);
     $date = new \DateTime();
-    $date->modify('+4 day');
+    $date->modify('+2 day');
     $mealplan->setDate($date);
 
     $em = $this->getDoctrine()->getManager();
