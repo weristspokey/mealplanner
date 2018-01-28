@@ -10,6 +10,7 @@ use App\Entity\Recipe;
 use App\Entity\Tag;
 use App\Entity\Grocerylist;
 use App\Entity\KitchenList;
+use App\Entity\Mealplan;
 /**
  * User
  *
@@ -24,6 +25,7 @@ class User implements UserInterface, \Serializable
         $this->tags = new ArrayCollection();
         $this->grocerylists = new ArrayCollection();
         $this->kitchenLists = new ArrayCollection();
+        $this->mealplans = new ArrayCollection();
     }
 
     /**
@@ -77,6 +79,11 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(targetEntity="Tag", mappedBy="id")
      */
     private $tags;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Mealplan", mappedBy="id")
+     */
+    private $mealplans;
 
     /**
      * Get id
@@ -356,4 +363,39 @@ class User implements UserInterface, \Serializable
     {
         return $this->kitchenLists;
     }
+
+    /**
+     * Get mealplans
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMealplans()
+    {
+        return $this->mealplans;
+    }
+
+    /**
+     * Add mealplan
+     *
+     * @param \App\Entity\Mealplan $mealplan
+     *
+     * @return User
+     */
+    public function addMealplan(\App\Entity\Mealplan $mealplan)
+    {
+        $this->mealplans[] = $mealplan;
+
+        return $this;
+    }
+
+    /**
+     * Remove mealplan
+     *
+     * @param \App\Entity\Mealplan $mealplan
+     */
+    public function removeMealplan(\App\Entity\Mealplan $mealplan)
+    {
+        $this->mealplans->removeElement($mealplan);
+    }
+
 }
