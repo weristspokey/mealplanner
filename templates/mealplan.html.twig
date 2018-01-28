@@ -4,9 +4,15 @@
         <div class="container">
             <h1 class="text-center">Weekly mealplan</h1>
                     <div id="mealplanSlider">
+                        {% for mealplan in mealplans %}
                         <div class="slide col-md-3">
                             <div class="card">
-                                <div class="card-header"><p>{{today}} (Today)</p>
+                                <div class="card-header">
+                                    <p>{{mealplan.date | date("D d.m.Y")}}
+                                        <a href="{{ path('mealplan_delete', {'id': mealplan.id }) }}">
+                                            <span title="Delete Mealplan" class="fa fa-remove" aria-hidden="true"></span>
+                                        </a>
+                                    </p>
                                 </div>
                                 <div class="card-block">
                                     <div class="card-headline">
@@ -14,224 +20,65 @@
                                         <a href="" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Dapibus ac facilisis in <a href=""><i class="fa fa-remove pull-right" aria-hidden="true"></i></a></li>
-                                        <li class="list-group-item">Morbi leo risus <a href=""><i class="fa fa-remove pull-right" aria-hidden="true"></i></a></li>
-                                        <li class="list-group-item">Porta ac consectetur ac <a href=""><i class="fa fa-remove pull-right" aria-hidden="true"></i></a></li>
-                                        <li class="list-group-item">Vestibulum at eros <a href=""><i class="fa fa-remove pull-right" aria-hidden="true"></i></a></li>
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Breakfast" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Lunch</h5>
                                         <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Lunch" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Dinner</h5>
                                         <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Dinner" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Snacks</h5>
                                         <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
+                                    <ul class="list-group">
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Snacks" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header"><p>{{tomorrow}}</p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header"><p>{{twoDaysFromNow}}</p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header"><p>{{threeDaysFromNow}}</p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header"><p>{{fourDaysFromNow}}</p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header"><p>{{fiveDaysFromNow}}</p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header"><p>{{sixDaysFromNow}}</p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                    <ul class="list-group">
-                                        
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </section>
@@ -254,23 +101,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Foodstuff</p>
-                        <select class="form-control selectpicker centered" style="margin: 0 auto" data-width="90%" multiple data-live-search="true" data-max-options="3" id="food_selectpicker">
-                            <option>Leftovers</option>
-                            <option>Eat away</option>
-                            <option data-divider="true"></option>
-                            {% for food in food %}
-                                <option data-subtext="in stock">{{ food.name }}</li>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Recipes</p>
-                        <select class="selectpicker centered" style="margin: 0 auto" data-width="90%" multiple data-live-search="true" data-max-options="3" id="recipes_selectpicker">
-                            {% for recipe in recipes %}
-                                <option data-subtext="in stock">{{ recipe.name }}</li>
-                            {% endfor %}
-                        </select>
+                    {{form(form)}}
                     </div>
                 </div>
             </div>

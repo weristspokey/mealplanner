@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Food;
 use App\Entity\Mealplan;
+use App\Entity\Recipe;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -24,7 +25,7 @@ class MealplanItem
      */
     private $id;
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="Mealplan", inversedBy="mealplanItems")
      * @ORM\JoinColumn(name="mealplan_id", referencedColumnName="id")
      */
@@ -35,6 +36,12 @@ class MealplanItem
      * @ORM\JoinColumn(name="food_id", referencedColumnName="id")
      */
     private $foodId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="mealplanItems")
+     * @ORM\JoinColumn(name="recipe_id", referencedColumnName="id")
+     */
+    private $recipeId;
 
     /**
      * @var string
@@ -99,6 +106,30 @@ class MealplanItem
     public function getFoodId()
     {
         return $this->foodId;
+    }
+
+    /**
+     * Set recipeId
+     *
+     * @param integer $recipeId
+     *
+     * @return MealplanItem
+     */
+    public function setRecipeId($recipeId)
+    {
+        $this->recipeId = $recipeId;
+
+        return $this;
+    }
+
+    /**
+     * Get recipeId
+     *
+     * @return int
+     */
+    public function getRecipeId()
+    {
+        return $this->recipeId;
     }
 
     /**

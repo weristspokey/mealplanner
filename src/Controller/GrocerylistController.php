@@ -81,7 +81,7 @@ class GrocerylistController extends Controller
         $user = $this->getUser();
         
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm('App\Form\GrocerylistType', $grocerylist);
+        $form = $this->createForm(GrocerylistType::class, $grocerylist);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

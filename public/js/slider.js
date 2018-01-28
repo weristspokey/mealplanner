@@ -4,7 +4,8 @@ $(document).ready(function(){
     minSlides: 1,
     maxSlides: 6,
     moveSlides: 1,
-    slideMargin: 2
+    slideMargin: 2,
+    infiniteLoop: false
   });
   $('#recipesSlider').bxSlider({
     slideWidth: 200,

@@ -5,16 +5,36 @@ namespace App\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 use App\Entity\Food;
+use App\Entity\User;
 use App\Entity\Recipe;
+use App\Entity\Grocerylist;
+use App\Entity\GrocerylistItem;
+use App\Entity\Mealplan;
+use App\Entity\MealplanItem;
+use App\Form\MealplanItemType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+/**
+ * Mealplan controller.
+ *
+ * @Route("mealplan")
+ */
 class MealplanController extends Controller
 {
     /**
-     * @Route("/mealplan", name="mealplan")
+     * @Route("/", name="mealplan")
+     * @Method({"GET", "POST"})
      */
-    public function routeAction()
+    public function indexAction(Request $request)
     {
+        $userId = $this->getUser()->getId();
         $days = array(
             'today' => date("D d.m.y", time()),
             'tomorrow' => date("D d.m.y", time() + 86400),
@@ -28,7 +48,23 @@ class MealplanController extends Controller
         $food = $this->getDoctrine()->getRepository('App:Food')->findAll();
 
         $recipes =$this->getDoctrine()->getRepository('App:Recipe')->findAll();
+        $mealplans =$this->getDoctrine()->getRepository('App:Mealplan')->findBy(
+            array('userId' => $userId)
+            );
+       // foreach ($mealplans as $mealplan) {
+       //     dump($mealplan->getDate());
+       // }
 
+        $mealplanItem = new MealplanItem();
+        $form = $this->createForm(MealplanItemType::class, $mealplanItem);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) 
+            {
+                 $em = $this->getDoctrine()->getManager();
+                $em->persist($mealplanItem);
+                $em->flush();
+            }
 
         return $this->render('mealplan.html.twig', [
             'today' => $days['today'],
@@ -39,25 +75,29 @@ class MealplanController extends Controller
             'fiveDaysFromNow' => $days['fiveDaysFromNow'],
             'sixDaysFromNow' => $days['sixDaysFromNow'],
             'food' => $food,
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'form' => $form->createView(),
+            'mealplans' => $mealplans
         ]);
     }
 
+
     /**
-     * @Route("/create/{text}")
+     * @Route("/create")
      */
-    public function createAction($text)
+    public function createAction()
     {
-    $newFood = new Food();
-    $newFood->setName($text);
-    $newFood->setInStock(false);
-    $newFood->setIsVegetarian(true);
-    $newFood->setIsVegan(false);
+    $mealplan = new Mealplan();
+    $userId = $this->getUser();
+    $mealplan->setUserId($userId);
+    $date = new \DateTime();
+    $date->modify('+4 day');
+    $mealplan->setDate($date);
 
     $em = $this->getDoctrine()->getManager();
 
     // tells Doctrine you want to (eventually) save the Product (no queries yet)
-    $em->persist($newFood);
+    $em->persist($mealplan);
 
     // actually executes the queries (i.e. the INSERT query)
     $em->flush();
@@ -66,6 +106,35 @@ class MealplanController extends Controller
     return $this->redirectToRoute('mealplan');
     }
 
+    /**
+     * Deletes a mealplanItem entity.
+     *
+     * @Route("/item_delete/{id}", name="mealplanItem_delete")
+     */
+    public function deleteItemAction(Request $request, MealplanItem $mealplanItem)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($mealplanItem);
+        $em->flush();
+
+        return $this->redirectToRoute('mealplan');
+    }
+
+    /**
+     * Deletes a mealplan entity.
+     *
+     * @Route("/mealplan_delete/{id}", name="mealplan_delete")
+     */
+    public function deleteMealplanAction(Request $request, Mealplan $mealplan)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($mealplan);
+        $em->flush();
+
+        return $this->redirectToRoute('mealplan');
+    }
 }
 
 ?>

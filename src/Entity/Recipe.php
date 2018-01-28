@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\Entity\RecipeItem;
+use App\Entity\MealplanItem;
 use App\Entity\User;
 /**
  * Recipe
@@ -66,9 +67,15 @@ class Recipe
      */
     private $recipeItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity="MealplanItem", mappedBy="recipeId")
+     */
+    private $mealplanItems;
+
      public function __construct()
     {
         $this->recipeItems = new ArrayCollection();
+        $this->mealplanItems = new ArrayCollection();
     }
 
     /**
@@ -234,5 +241,39 @@ class Recipe
     public function getRecipeItems()
     {
         return $this->recipeItems;
+    }
+
+    /**
+     * Add mealplanItem
+     *
+     * @param \App\Entity\MealplanItem $mealplanItem
+     *
+     * @return Mealplan
+     */
+    public function addMealplanItem(\App\Entity\MealplanItem $mealplanItem)
+    {
+        $this->mealplanItems[] = $mealplanItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove mealplanItem
+     *
+     * @param \App\Entity\MealplanItem $mealplanItem
+     */
+    public function removeMealplanItem(\App\Entity\MealplanItem $mealplanItem)
+    {
+        $this->mealplanItems->removeElement($mealplanItem);
+    }
+
+    /**
+     * Get mealplanItems
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMealplanItems()
+    {
+        return $this->mealplanItems;
     }
 }
