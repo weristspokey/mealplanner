@@ -31,7 +31,7 @@ class MealplanItemType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'd-none',
+                    //'class' => 'd-none',
                     'data-live-search' => 'true'
                 ],]
             )
@@ -51,14 +51,20 @@ class MealplanItemType extends AbstractType
                 'class'         => Food::class,
                 'choice_label'  => 'name',
                 'label' => false,
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'class' => 'selectpicker'
+                ]
                 ]
         )
         ->add('recipeId', EntityType::class, [
                 'class'         => Recipe::class,
                 'choice_label'  => 'name',
                 'label' => false,
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'class' => 'selectpicker'
+                ]
                 ]
         )
         ->add('Submit', SubmitType::class);

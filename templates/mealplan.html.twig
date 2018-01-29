@@ -17,7 +17,7 @@
                                 <div class="card-block">
                                     <div class="card-headline">
                                         <h5>Breakfast</h5>
-                                        <a href="" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                        <a href="" id="category-breakfast" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -32,7 +32,7 @@
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Lunch</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                        <a href="" id="category-lunch" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -47,7 +47,7 @@
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Dinner</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                        <a href="" id="category-dinner" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -62,7 +62,7 @@
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Snacks</h5>
-                                        <a href="" data-toggle="modal" data-target="#addEditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                        <a href="" id="category-snacks" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -95,10 +95,9 @@
                     </div>
                 </div>
             </section>
-
 {# Edit Meal Modal Panel #}
 <div class="modal fade" id="EditMealModal" tabindex="-1" role="dialog" aria-labelledby="EditMealModalLabel">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Meal</h5>
@@ -109,17 +108,14 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <p>Mo | 15.05.17</p>
+                        <p></p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                     {{form(form)}}
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default">Gogogo</button>
             </div>
         </div>
     </div>

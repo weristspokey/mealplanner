@@ -78,15 +78,16 @@ class MealplanController extends Controller
 
         $mealplanItem = new MealplanItem();
         $form = $this->createForm(MealplanItemType::class, $mealplanItem);
+        
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) 
             {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($mealplanItem);
                 $em->flush();
-            }
+                return $this->redirectToRoute('mealplan');
 
+        }
         return $this->render('mealplan.html.twig', [
             'today' => $days['today'],
             'tomorrow' => $days['tomorrow'],
@@ -157,6 +158,7 @@ class MealplanController extends Controller
 
         return $this->redirectToRoute('mealplan');
     }
+
 }
 
 ?>
