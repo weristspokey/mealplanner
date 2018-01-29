@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content-section">
+        <div class="container">
+             <div class="row">
+                <div class="col-md-6 m-auto">
+                    <h1 class="text-center">{{recipe.name}}</h1>
+                </div>
+                <div class="col-md-1">
+                    <a href="{{ path('recipe_edit', { 'id': recipe.id }) }}">
+                        <span class="fa fa-edit" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-12" style="margin:auto">
+                    <a href="#" title="{{recipe.name}}"><img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail img-recipe"></a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 text-center" style="margin:auto; margin-top: 10px">
+                    <p>Tags: 
+                    {% for tag in tags %}
+                        <a href="" class="btn btn-default" style="background-color:{{ tag.color }}" role="button">{{tag.name}}</a>
+                    {% endfor %}
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-12 text-center">
+                    <h3>Description</h3>
+                    <p>{{recipe.description}}</p>
+                </div>
+                <div class="col-lg-6 col-12 text-center">
+                    <h3>Ingredients</h3>
+                        <button class="btn btn-default" id="addRecipeItemBtn">
+                            <span class="fa fa-plus"></span>
+                        </button>
+                    <div class="row recipeItemsRow" style="display: none; margin-top:10px">
+                        <div class="col-md-7 mx-auto">
+                        {{form(new_recipeItem_form)}}
+                        </div>
+                    </div>
+                    <p>
+                        {% for item in recipeItems %}
+                        {{item.value}} {{item.unit}} {{item.foodId.name}}<br>
+                    {% endfor %}
+
+                    </p>
+                </div>
+                {{ form_start(delete_form) }}
+                        <input type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <section class="content-section">
+        <div class="container">
+            <h1 class="text-center">Add Recipe</h1>
+
+            {{ form_start(new_recipe_form) }}
+                    {{ form_end(new_recipe_form) }}
+        </div>
+    </section>
+{% endblock %}

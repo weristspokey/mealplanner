@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <!-- Intro Header -->
+    <header class="masthead">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h1 class="brand-heading">Easy meal organisation</h1>
+                        <p class="intro-text">stuff stuff</p>
+                        <a href="#about" class="btn btn-circle js-scroll-trigger">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="content-section text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2>About mealplanner</h2>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <div class="col-md-6">
+                            <img src="http://placehold.it/250x250&text=FooBar1">
+                            </div>
+                            <div class="col-md-6">
+                                <p>Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on<a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
+                            <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                        </div>
+                <div class="col-md-6">
+                <img src="http://placehold.it/250x250&text=FooBar1">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="http://placehold.it/250x250&text=FooBar1">
+                </div>
+                <div class="col-md-6">
+                    <p>Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
+                    <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Grayscale is a free Bootstrap theme created by Start Bootstrap. It can be yours right now, simply download the template on
+                    <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+                </div>
+                <div class="col-md-6">
+                <img src="http://placehold.it/250x250&text=FooBar1">
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download-section content-section text-center">
+      <div class="container">
+        <div class="col-lg-8 mx-auto">
+          <h2>Download Grayscale</h2>
+          <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
+          <a href="http://startbootstrap.com/template-overviews/grayscale/" class="btn btn-default btn-lg">Visit Download Page</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="content-section text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <h2>Contact Start Bootstrap</h2>
+            <p>Feel free to leave us a comment on the
+              <a href="http://startbootstrap.com/template-overviews/grayscale/">Grayscale template overview page</a>
+              on Start Bootstrap to give some feedback about this theme!</p>
+            <ul class="list-inline banner-social-buttons">
+              <li class="list-inline-item">
+                <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg">
+                  <i class="fa fa-twitter fa-fw"></i>
+                  <span class="network-name">Twitter</span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">
+                  <i class="fa fa-github fa-fw"></i>
+                  <span class="network-name">Github</span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg">
+                  <i class="fa fa-google-plus fa-fw"></i>
+                  <span class="network-name">Google+</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+      <div class="container text-center">
+        <p>Copyright &copy; mealplanner 2017 by sherlockspok</p>
+        <a href="" data-toggle="modal" data-target="#contactModal">Contact</a>
+      </div>
+    </footer>
+    <script src="{{ asset('js/grayscale.js') }}"></script>
+
+ <!-- Create Account Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">        
+                    <h4 class="modal-title" id="registerModalLabel">Create account</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                {{form(register_form)}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
+           <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                   <div class="modal-header"> 
+                       <h4 class="modal-title" id="loginModalLabel">Login</h4>
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   </div>
+                   <div class="modal-body">
+                       <form class="form-signin" action="{{ path('login') }}" method="POST">
+                           <div class="form-group">
+                               <input type="text" class="form-control" id="_username" name="_username" placeholder="Username" required autofocus>
+                           </div>
+                           <div class="form-group">
+                               <input type="password" class="form-control" id="_password"
+                               name="_password" placeholder="Password" required>
+                           </div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="submit" class="btn btn-default">Login</button>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+{% endblock %}

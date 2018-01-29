@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content-section">
+        <div class="container">
+            <h1 class="text-center">Weekly mealplan</h1>
+                    <div id="mealplanSlider">
+                        {% for mealplan in mealplans%}
+                        <div class="slide col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p>{{mealplan.date | date("D d.m.Y")}}
+                                        <a href="{{ path('mealplan_delete', {'id': mealplan.id }) }}">
+                                            <span title="Delete Mealplan" class="fa fa-remove" aria-hidden="true"></span>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="card-block">
+                                    <div class="card-headline">
+                                        <h5>Breakfast</h5>
+                                        <a href="" id="category-breakfast" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                    </div>
+                                    <ul class="list-group">
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Breakfast" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="card-headline">
+                                        <h5>Lunch</h5>
+                                        <a href="" id="category-lunch" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                    </div>
+                                    <ul class="list-group">
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Lunch" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="card-headline">
+                                        <h5>Dinner</h5>
+                                        <a href="" id="category-dinner" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                    </div>
+                                    <ul class="list-group">
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Dinner" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="card-headline">
+                                        <h5>Snacks</h5>
+                                        <a href="" id="category-snacks" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                    </div>
+                                    <ul class="list-group">
+                                        {% for mealplanItem in mealplan.mealplanItems %}
+                                            {% if mealplanItem.category == "Snacks" %}
+                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
+                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="slide col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <p>  <a href="" data-toggle="modal" data-target="#AddMealplanModal">
+                                            <span title="Add Mealplan" class="fa fa-plus" aria-hidden="true"></span>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="card-block">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{# Edit Meal Modal Panel #}
+<div class="modal fade" id="EditMealModal" tabindex="-1" role="dialog" aria-labelledby="EditMealModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Meal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                    {{form(form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddMealplanModal" tabindex="-1" role="dialog" aria-labelledby="AddMealplanModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Mealplan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                    {{form(add_mealplan_form)}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('js/mealplan.js') }}"></script>
+        <script src="{{ asset('bxslider/jquery.bxslider.js') }}"></script>
+        <script src="{{ asset('js/slider.js') }}"></script>
+{% endblock %}

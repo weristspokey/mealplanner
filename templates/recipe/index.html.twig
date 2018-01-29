@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 m-auto">
+                    <h1 class="text-center">Recipes</h1>
+                </div>
+                <div class="col-md-2">
+                    <a href="{{ path('recipe_new') }}">
+                        <span class="fa fa-plus" aria-hidden="true"> Add Recipe</span>
+                    </a>
+                    <a href="{{ path('tag_new') }}">
+                        <span class="fa fa-plus" aria-hidden="true"> Add Tag</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row thumbnail-gallery recipes-gallery">
+                {% for recipe in recipes %}
+                <div class="col-lg-3 col-sm-4 col-6">
+                    <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
+                    <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}"><div class="thumbnail-hoverbox">
+                        <p>{{ recipe.name }}</p>
+                        <p style="font-size:14px">Tags:
+                        {% for tag in recipe.tags %}
+                           {{tag.name}}
+                        {% endfor %}
+                        </p>
+                    </div></a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="navigation mx-auto">
+                    {{ knp_pagination_render(recipes) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
