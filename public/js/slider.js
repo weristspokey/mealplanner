@@ -13,6 +13,17 @@ $(document).ready(function(){
     maxSlides: 3,
     slideMargin: 10
   });
+  $('#addMealplanItemBtn').click(function() {
+    var target = $(this).attr('rel');
+    $("#"+target).show();
+  });
+  $('#close-addMealplanItemForm').click(function() {
+    alert($($this).parent());
+    alert($($this).parent().parent());
+    alert($($this).parent().parent().parent());
+    $($this).parent().parent().parent().css('display', 'none');
+  });
+
 });
 
 /*

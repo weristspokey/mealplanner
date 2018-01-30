@@ -12,12 +12,12 @@
                                         <a href="{{ path('mealplan_delete', {'id': mealplan.id }) }}">
                                             <span title="Delete Mealplan" class="fa fa-remove" aria-hidden="true"></span>
                                         </a>
+                                        <a id="addMealplanItemBtn" rel="addMealplanItemForm-{{mealplan.id}}"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </p>
                                 </div>
                                 <div class="card-block">
                                     <div class="card-headline">
                                         <h5>Breakfast</h5>
-                                        <a href="" id="category-breakfast" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -32,7 +32,6 @@
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Lunch</h5>
-                                        <a href="" id="category-lunch" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -47,7 +46,6 @@
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Dinner</h5>
-                                        <a href="" id="category-dinner" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -62,7 +60,6 @@
                                     </ul>
                                     <div class="card-headline">
                                         <h5>Snacks</h5>
-                                        <a href="" id="category-snacks" data-toggle="modal" data-target="#EditMealModal"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </div>
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
@@ -77,6 +74,24 @@
                                     </ul>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-4" id="addMealplanItemForm-{{mealplan.id}}" style="margin-bottom: 20px; display:none">
+                            <ul class="list-group">
+                                <li class="list-group-item text-center">
+                                    Edit Meal
+                                    <button type="button" class="close close-addMealplanItemFrom" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </li>
+                                <li class="list-group-item text-center">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {{ form(forms[mealplan.id]) }}
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                         {% endfor %}
                         <div class="slide col-md-3">
@@ -95,31 +110,6 @@
                     </div>
                 </div>
             </section>
-{# Edit Meal Modal Panel #}
-<div class="modal fade" id="EditMealModal" tabindex="-1" role="dialog" aria-labelledby="EditMealModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Meal</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p></p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                    {{form(form)}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="AddMealplanModal" tabindex="-1" role="dialog" aria-labelledby="AddMealplanModalLabel">
     <div class="modal-dialog modal-sm" role="document">
