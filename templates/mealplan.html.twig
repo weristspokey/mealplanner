@@ -12,7 +12,7 @@
                                         <a href="{{ path('mealplan_delete', {'id': mealplan.id }) }}">
                                             <span title="Delete Mealplan" class="fa fa-remove" aria-hidden="true"></span>
                                         </a>
-                                        <a id="addMealplanItemBtn" rel="addMealplanItemForm-{{mealplan.id}}"><span class="fa fa-edit" aria-hidden="true"></span></a>
+                                        <a class="addMealplanItemBtn" rel="addMealplanItemForm-{{mealplan.id}}"><span class="fa fa-edit" aria-hidden="true"></span></a>
                                     </p>
                                 </div>
                                 <div class="card-block">
@@ -78,8 +78,8 @@
                         <div class="col-md-4" id="addMealplanItemForm-{{mealplan.id}}" style="margin-bottom: 20px; display:none">
                             <ul class="list-group">
                                 <li class="list-group-item text-center">
-                                    Edit Meal
-                                    <button type="button" class="close close-addMealplanItemFrom" data-dismiss="modal" aria-label="Close">
+                                    Add Mealplan Item
+                                    <button type="button" class="close close-addMealplanItemForm" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </li>
@@ -87,7 +87,6 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             {{ form(forms[mealplan.id]) }}
-
                                         </div>
                                     </div>
                                 </li>

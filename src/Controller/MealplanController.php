@@ -73,6 +73,7 @@ class MealplanController extends Controller
 
             if ($form->isSubmitted() && $form->isValid()) 
             {
+                $mealplanItem->setMealplanId($mealplan);
                 $em->persist($mealplanItem);
                 $em->flush();
             }
@@ -92,11 +93,13 @@ class MealplanController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($newMealplan);
                 $em->flush();
-                $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
-            ->findBy(
-                ['userId' => $userId],
-                ['date' => 'ASC']
-        );    
+
+                // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
+                //     ->findBy(
+                //             ['userId' => $userId],
+                //             ['date' => 'ASC']
+                //     );    
+                return $this->redirectToRoute('mealplan');
             }
 
         return $this->render('mealplan.html.twig', [
@@ -156,6 +159,22 @@ class MealplanController extends Controller
     }
 
     /**
+     * Adds a mealplanItem entity.
+     *
+     * @Route("/item_add", name="mealplanItem_add")
+     */
+    public function addItemAction(Request $request, Mealplan $mealplan)
+    {
+        $mealplanItem = new MealplanItem();
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($mealplanItem);
+        $em->flush();
+
+        return $this->redirectToRoute('mealplan');
+    }
+
+    /**
      * Deletes a mealplan entity.
      *
      * @Route("/mealplan_delete/{id}", name="mealplan_delete")
@@ -163,6 +182,15 @@ class MealplanController extends Controller
     public function deleteMealplanAction(Request $request, Mealplan $mealplan)
     {
         $em = $this->getDoctrine()->getManager();
+
+
+        $mealplanId = $mealplan->getId();
+        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+            array('mealplanId' => $mealplanId)
+            );
+        foreach ($mealplanItems as $item) {
+                $em->remove($item);
+            }
 
         $em->remove($mealplan);
         $em->flush();

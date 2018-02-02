@@ -25,16 +25,16 @@ class MealplanItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('mealplanId', EntityType::class, [
-                'class'         => Mealplan::class,
-                'choice_label'  => 'id',
-                'label' => false,
-                'required' => true,
-                'attr' => [
-                    //'class' => 'd-none',
-                    'data-live-search' => 'true'
-                ],]
-            )
+        // ->add('mealplanId', EntityType::class, [
+        //         'class'         => Mealplan::class,
+        //         'choice_label'  => 'id',
+        //         'label' => false,
+        //         'required' => true,
+        //         'attr' => [
+        //             //'class' => 'd-none',
+        //             'data-live-search' => 'true'
+        //         ],]
+        //     )
         ->add('category', ChoiceType::class, [
             'choices'  => [
                 'Breakfast' => 'Breakfast',
@@ -53,7 +53,10 @@ class MealplanItemType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker'
+                    'class' => 'selectpicker',
+                    'multiple' => true,
+                    'data-live-search' => true,
+                    'data-max-options' => '1'
                 ]
                 ]
         )
