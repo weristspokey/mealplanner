@@ -22,7 +22,13 @@
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
                                             {% if mealplanItem.category == "Breakfast" %}
-                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                <li class="list-group-item">
+                                                    {% if mealplanItem.foodId %}
+                                                    {{mealplanItem.foodId.name}} 
+                                                    {% endif %}
+                                                    {% if mealplanItem.recipeId %}
+                                                    {{mealplanItem.recipeId.name}} 
+                                                    {% endif %}
                                                     <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
                                                         <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
                                                     </a>
@@ -36,7 +42,13 @@
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
                                             {% if mealplanItem.category == "Lunch" %}
-                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                <li class="list-group-item">
+                                                    {% if mealplanItem.foodId %}
+                                                    {{mealplanItem.foodId.name}} 
+                                                    {% endif %}
+                                                    {% if mealplanItem.recipeId %}
+                                                    {{mealplanItem.recipeId.name}} 
+                                                    {% endif %}
                                                     <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
                                                         <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
                                                     </a>
@@ -50,7 +62,13 @@
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
                                             {% if mealplanItem.category == "Dinner" %}
-                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                <li class="list-group-item">
+                                                    {% if mealplanItem.foodId %}
+                                                    {{mealplanItem.foodId.name}} 
+                                                    {% endif %}
+                                                    {% if mealplanItem.recipeId %}
+                                                    {{mealplanItem.recipeId.name}} 
+                                                    {% endif %}
                                                     <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
                                                         <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
                                                     </a>
@@ -64,7 +82,13 @@
                                     <ul class="list-group">
                                         {% for mealplanItem in mealplan.mealplanItems %}
                                             {% if mealplanItem.category == "Snacks" %}
-                                                <li class="list-group-item">{{mealplanItem.foodId.name}}
+                                                <li class="list-group-item">
+                                                    {% if mealplanItem.foodId %}
+                                                    {{mealplanItem.foodId.name}} 
+                                                    {% endif %}
+                                                    {% if mealplanItem.recipeId %}
+                                                    {{mealplanItem.recipeId.name}} 
+                                                    {% endif %}
                                                     <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
                                                         <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
                                                     </a>

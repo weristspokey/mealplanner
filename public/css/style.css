@@ -266,11 +266,11 @@ body {
   margin-top: 8px;
 }
 
-.list-group .list-group-item a {
+.list-group .list-group-item > a {
   opacity: 0.2;
 }
 
-.list-group .list-group-item a:hover {
+.list-group .list-group-item > a:hover {
   opacity: 1;
 }
 /*Fix for bootstrap-select with bootstrap4 */

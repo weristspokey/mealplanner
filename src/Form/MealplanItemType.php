@@ -66,7 +66,10 @@ class MealplanItemType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker'
+                    'class' => 'selectpicker',
+                    'multiple' => true,
+                    'data-live-search' => true,
+                    'data-max-options' => '1'
                 ]
                 ]
         )
