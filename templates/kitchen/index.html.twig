@@ -30,7 +30,12 @@
                         </li>
                         {% for item in kitchenList.kitchenListItems %}
                         <li class="list-group-item text-center">
-                             {{ item.foodId.name}}                      <a href="{{ path('kitchenListItem_delete', {'id': item.id }) }}">
+                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}"
+                            data-food-id="{{item.foodId.id}}">
+                                <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
+                            </a>
+                            {{ item.foodId.name}}                      
+                            <a href="{{ path('kitchenListItem_delete', {'id': item.id }) }}">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
                         </li>
@@ -41,4 +46,30 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="MoveItemModal" tabindex="-1" role="dialog" aria-labelledby="MoveItemModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item to Grocerylist</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_start(moveItemForm) }}
+                            <input type="number" class="form-control d-none" name="itemId" id="itemId">
+                            {{ form_widget(moveItemForm) }}
+                            {{ form_end(moveItemForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('js/kitchen.js') }}"></script>
 {% endblock %}

@@ -7,9 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\KitchenList;
+use App\Entity\Grocerylist;
 use App\Entity\KitchenListItem;
+use App\Entity\GrocerylistItem;
 use App\Form\KitchenListType;
 use App\Form\KitchenListItemType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Entity\Food;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
  * Kitchen controller.
@@ -54,8 +59,54 @@ class KitchenController extends Controller
             $views[$kitchenList->getId()] = $form->createView();
         } 
 
+        $grocerylistItem = new GrocerylistItem();
+        $moveItemForm = $this->createFormBuilder($grocerylistItem)
+            ->add('grocerylistId', EntityType::class, [
+                'label' => false,
+                'choice_label'  => 'name',
+                'class' => Grocerylist::class,
+                'attr' => [
+                    'class' => 'selectpicker'
+                    ]
+                ]
+            )
+            ->add('foodId', EntityType::class, [
+                'class'         => Food::class,
+                'choice_label'  => 'name',
+                'label' => false,
+                'required' => true,
+                'attr' => [
+                    'class' => 'selectpicker d-none',
+                    'name' => 'food-id'
+                    ]
+                ]
+            )
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+            $moveItemForm->handleRequest($request);
+
+        if ($moveItemForm->isSubmitted() && $moveItemForm->isValid()) 
+            {
+                $kItemId = (int)$_POST['itemId'];
+                $kItem = $em->getRepository('App:KitchenListItem')->findBy(
+                    array('id' => $kItemId)
+                );
+
+    
+                $em->persist($grocerylistItem);
+
+                $em->remove($kItem[0]);
+                $em->flush();
+                
+                return $this->redirectToRoute('kitchen');
+
+            }
+
+
         return $this->render('kitchen/index.html.twig', [
             'kitchenLists' => $kitchenLists,
+            'moveItemForm' => $moveItemForm->createView(),
             'forms' => $views
         ]);
     }
