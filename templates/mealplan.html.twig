@@ -3,6 +3,17 @@
     <section class="content-section">
         <div class="container">
             <h1 class="text-center">Weekly mealplan</h1>
+            <div class="row">
+                <div class="col-md-4 m-auto" style="margin-bottom: 20px">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="" data-toggle="modal" data-target="#AddMealplanModal">
+                        <span class="fa fa-plus" aria-hidden="true"> Add Mealplan</span>
+                    </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
                     <div id="mealplanSlider">
                         {% for mealplan in mealplans%}
                         <div class="slide col-md-3">
@@ -117,19 +128,6 @@
                             </ul>
                         </div>
                         {% endfor %}
-                        <div class="slide col-md-3">
-                            <div class="card">
-                                <div class="card-header">
-                                    <p>  <a href="" data-toggle="modal" data-target="#AddMealplanModal">
-                                            <span title="Add Mealplan" class="fa fa-plus" aria-hidden="true"></span>
-                                        </a>
-                                    </p>
-                                </div>
-                                <div class="card-block">
-                                    
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>

@@ -3,16 +3,28 @@
     <section class="content-section">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 m-auto">
+                <div class="col-md-12">
                     <h1 class="text-center">Recipes</h1>
                 </div>
-                <div class="col-md-2">
-                    <a href="{{ path('recipe_new') }}">
+            </div>
+            <div class="row">
+                <div class="col-md-4 m-auto" style="margin-bottom: 20px">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="{{ path('recipe_new') }}">
                         <span class="fa fa-plus" aria-hidden="true"> Add Recipe</span>
                     </a>
-                    <a href="{{ path('tag_new') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 m-auto" style="margin-bottom: 20px">
+                    <div class="card">
+                        <div class="card-header">
+                           <a href="{{ path('tag_new') }}">
                         <span class="fa fa-plus" aria-hidden="true"> Add Tag</span>
                     </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row thumbnail-gallery recipes-gallery">

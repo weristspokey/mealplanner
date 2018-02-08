@@ -61,15 +61,6 @@ class KitchenController extends Controller
 
         $grocerylistItem = new GrocerylistItem();
         $moveItemForm = $this->createFormBuilder($grocerylistItem)
-            ->add('grocerylistId', EntityType::class, [
-                'label' => false,
-                'choice_label'  => 'name',
-                'class' => Grocerylist::class,
-                'attr' => [
-                    'class' => 'selectpicker'
-                    ]
-                ]
-            )
             ->add('foodId', EntityType::class, [
                 'class'         => Food::class,
                 'choice_label'  => 'name',
@@ -78,6 +69,15 @@ class KitchenController extends Controller
                 'attr' => [
                     'class' => 'selectpicker d-none',
                     'name' => 'food-id'
+                    ]
+                ]
+            )
+            ->add('grocerylistId', EntityType::class, [
+                'label' => false,
+                'choice_label'  => 'name',
+                'class' => Grocerylist::class,
+                'attr' => [
+                    'class' => 'selectpicker'
                     ]
                 ]
             )
