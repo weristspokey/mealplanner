@@ -58,7 +58,11 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        {{form(moveItemForm)}}
+                        {{ form_start(moveItemForm) }}
+                        <input type="number" class="form-control" name="itemId" id="itemId">
+                        {{ form_widget(moveItemForm) }}
+                        {{ form_end(moveItemForm) }}
+                   
                     </div>
                 </div>
             </div>

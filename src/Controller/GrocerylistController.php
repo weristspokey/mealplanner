@@ -99,18 +99,18 @@ class GrocerylistController extends Controller
 
         if ($moveItemForm->isSubmitted() && $moveItemForm->isValid()) 
             {
-                // $kitchenListItem->setFoodId(1);
-                // $kitchenListItem->setKitchenListId(4);
-                // $gItemId = $grocerylistItem->getId();
-                // $gItem = $em->getRepository('App:GrocerylistItem')->findBy(
-                //     array('id' => $gItemId)
-                // );
-                //$kitchenListItem->setFoodId($gItem->getFoodId());
+                $gItemId = (int)$_POST['itemId'];
+                $gItem = $em->getRepository('App:GrocerylistItem')->findBy(
+                    array('id' => $gItemId)
+                );
+
+    
                 $em->persist($kitchenListItem);
-                //$em->remove($grocerylistItem);
+
+                $em->remove($gItem[0]);
                 $em->flush();
                 
-                return $this->redirectToRoute('grocerylistItem_delete', array('id' => $grocerylist->getId());
+                return $this->redirectToRoute('grocerylist');
 
             }
 
