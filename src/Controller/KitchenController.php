@@ -176,7 +176,6 @@ class KitchenController extends Controller
      * Deletes a kitchenList entity.
      *
      * @Route("/{id}", name="kitchenList_delete")
-     * @Method("DELETE")
      */
     public function deleteAction(Request $request, KitchenList $kitchenList)
     {
@@ -186,16 +185,11 @@ class KitchenController extends Controller
             array('kitchenListId' => $kitchenListId)
             );
 
-        $form = $this->createDeleteForm($kitchenList);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
             foreach ($kitchenListItems as $item) {
                 $em->remove($item);
             }
             $em->remove($kitchenList);
             $em->flush();
-        }
 
         return $this->redirectToRoute('kitchen');
     }

@@ -24,7 +24,9 @@
                     <ul class="list-group">
                         <li class="list-group-item text-center">
                             {{ kitchenList.name }} 
-                            <a class="pull-right" href="{{ path('kitchenList_edit', { 'id': kitchenList.id }) }}"> edit </a>
+                            <a href="{{ path('kitchenList_delete', {'id': kitchenList.id }) }}">
+                                <span title="Delete KitchenList" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                            </a>  
                         </li>
                         <li class="list-group-item text-center">
                             <div class="row">
