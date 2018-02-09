@@ -61,14 +61,14 @@ class RecipeType extends AbstractType
                 'placeholder' => 'Description',
                 'rows' => '9']]
             )
-            ->add('tags', TaglistType::class, array(
+            ->add('tags', EntityType::class, array(
+                'class' => Tag::class,
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'data-role' => 'tagsinput',
                     'placeholder' => 'Tags',
                     'class' => 'selectpicker',
-                    'data-live-search' => 'true'
+                    'multiple' => 'true'
                 ]
             ))
             //->add('tags', TagSelectpickerType::class)

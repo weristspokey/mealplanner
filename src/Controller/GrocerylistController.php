@@ -9,6 +9,7 @@ use App\Entity\KitchenListItem;
 use App\Form\KitchenListItemType;
 use App\Form\GrocerylistType;
 use App\Form\GrocerylistItemType;
+use App\Repository\KitchenListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,7 +18,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Food;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Grocerylist controller.
@@ -35,7 +39,8 @@ class GrocerylistController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $userId = $this->getUser()->getId();
+        $user = $this->getUser();
+ $userId = $this->getUser()->getId();
         $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
             array('userId' => $userId)
             );
@@ -67,18 +72,20 @@ class GrocerylistController extends Controller
             $views[$grocerylist->getId()] = $form->createView();
         } 
 
-
         $kitchenListItem = new KitchenListItem();
         $moveItemForm = $this->createFormBuilder($kitchenListItem)
             ->add('kitchenListId', EntityType::class, [
-                'label' => false,
-                'choice_label'  => 'name',
                 'class' => KitchenList::class,
+                'choice_label'  => 'name',
+                'label' => false,
                 'attr' => [
                     'class' => 'selectpicker'
-                    ]
-                ]
-            )
+                    ],
+                'query_builder' => function (KitchenListRepository $repo) {
+                    $userId = $this->getUser()->getId();
+                    return $repo->showListsOfCurrentUser($userId);
+                    }
+                ])
             ->add('foodId', EntityType::class, [
                 'class'         => Food::class,
                 'choice_label'  => 'name',

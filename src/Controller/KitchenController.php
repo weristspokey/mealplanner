@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\KitchenList;
+use App\Repository\GrocerylistRepository;
 use App\Entity\Grocerylist;
 use App\Entity\KitchenListItem;
 use App\Entity\GrocerylistItem;
@@ -69,7 +70,7 @@ class KitchenController extends Controller
                 'attr' => [
                     'class' => 'selectpicker d-none',
                     'name' => 'food-id'
-                    ]
+                    ],
                 ]
             )
             ->add('grocerylistId', EntityType::class, [
@@ -78,7 +79,11 @@ class KitchenController extends Controller
                 'class' => Grocerylist::class,
                 'attr' => [
                     'class' => 'selectpicker'
-                    ]
+                    ],
+                'query_builder' => function (GrocerylistRepository $repo) {
+                    $userId = $this->getUser()->getId();
+                    return $repo->showListsOfCurrentUser($userId);
+                    }
                 ]
             )
             ->add('submit', SubmitType::class)
