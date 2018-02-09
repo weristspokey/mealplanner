@@ -33,6 +33,10 @@ h6 {
 }
 
 /* Recipe View */
+.btn-tag {
+  border: none;
+  color: #FFFFFF;
+}
 /* Grocerylist View */
 /* Kitchen View */
 p {

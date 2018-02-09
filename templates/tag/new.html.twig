@@ -5,7 +5,7 @@
         <div class="container">
             <h1 class="text-center">Tags</h1>
             {% for tag in tags %}
-                <a href="{{ path('tag_edit', { 'id': tag.id }) }}" class="btn btn-default" style="background-color:{{ tag.color }}" role="button"> {{ tag.name }}</a>
+                <a href="{{ path('tag_edit', { 'id': tag.id }) }}" class="btn btn-tag" style="background-color:{{ tag.color }}" role="button"> {{ tag.name }}</a>
             {% endfor %}
             <h1 class="text-center">Add Tag</h1>
             {{form(new_tag_form)}}
