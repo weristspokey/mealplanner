@@ -40,7 +40,7 @@ class GrocerylistController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
- $userId = $this->getUser()->getId();
+        $userId = $this->getUser()->getId();
         $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
             array('userId' => $userId)
             );
@@ -48,6 +48,7 @@ class GrocerylistController extends Controller
             array('userId' => $userId)
             );
 
+        /* Add GrocerylistItem */
         $grocerylistItem = new GrocerylistItem();
         $views = [];
         foreach ($grocerylists as $grocerylist) 
@@ -72,6 +73,7 @@ class GrocerylistController extends Controller
             $views[$grocerylist->getId()] = $form->createView();
         } 
 
+        /* Move GrocerylistItem to Kitchen */
         $kitchenListItem = new KitchenListItem();
         $moveItemForm = $this->createFormBuilder($kitchenListItem)
             ->add('kitchenListId', EntityType::class, [
@@ -119,12 +121,28 @@ class GrocerylistController extends Controller
 
             }
 
+        /* New Grocerylist */
+
+        $grocerylist = new Grocerylist();
+
+        $form = $this->createForm(GrocerylistType::class, $grocerylist);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $grocerylist->setUserId($user);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($grocerylist);
+            $em->flush();
+
+            return $this->redirectToRoute('grocerylist');
+        }
 
         return $this->render('grocerylist/index.html.twig', array(
             'grocerylists' => $grocerylists,
             'kitchenLists' => $kitchenLists,
             'moveItemForm' => $moveItemForm->createView(),
-            'forms' => $views
+            'forms' => $views,
+            'form' => $form->createView()
 
         ));
     }

@@ -11,7 +11,7 @@
                 <div class="col-md-4 m-auto">
                     <div class="card">
                         <div class="card-header">
-                            <a href="{{ path('grocerylist_new') }}">
+                            <a data-toggle="modal" data-target="#AddGrocerylistModal">
                         <span class="fa fa-plus" aria-hidden="true"> Add Grocerylist</span>
                     </a>
                         </div>
@@ -69,6 +69,27 @@
                             <input type="number" class="form-control d-none" name="itemId" id="itemId">
                             {{ form_widget(moveItemForm) }}
                             {{ form_end(moveItemForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AddGrocerylistModal" tabindex="-1" role="dialog" aria-labelledby="AddGrocerylistModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Grocerylist</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>

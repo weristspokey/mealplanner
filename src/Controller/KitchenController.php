@@ -31,11 +31,13 @@ class KitchenController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
         $userId = $this->getUser()->getId();
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
             array('userId' => $userId)
             );
 
+        /* Add KitchenListItem */
         $kitchenListItem = new KitchenListItem();
         $views = [];
         foreach ($kitchenLists as $kitchenList) 
@@ -60,6 +62,7 @@ class KitchenController extends Controller
             $views[$kitchenList->getId()] = $form->createView();
         } 
 
+        /* Move KitchenListItem to Grocerylist */
         $grocerylistItem = new GrocerylistItem();
         $moveItemForm = $this->createFormBuilder($grocerylistItem)
             ->add('foodId', EntityType::class, [
@@ -108,11 +111,25 @@ class KitchenController extends Controller
 
             }
 
+        $kitchenList = new KitchenList();
+
+        $form = $this->createForm('App\Form\KitchenListType', $kitchenList);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $kitchenList->setUserId($user);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($kitchenList);
+            $em->flush();
+
+            return $this->redirectToRoute('kitchen');
+        }
 
         return $this->render('kitchen/index.html.twig', [
             'kitchenLists' => $kitchenLists,
             'moveItemForm' => $moveItemForm->createView(),
-            'forms' => $views
+            'forms' => $views,
+            'form' => $form->createView()
         ]);
     }
 
