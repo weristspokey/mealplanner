@@ -29,13 +29,6 @@ class TagType extends AbstractType
                 'label' => 'Color',
                 'required' => true]
             )
-            // ->add('color', TextType::class, [
-            //     'label' => false,
-            //     'required' => true,
-            //     'attr' => [
-            //     'placeholder' => 'Color',
-            //     'type' => 'color']]
-            // )
             ->add('Submit', SubmitType::class);
     }
     

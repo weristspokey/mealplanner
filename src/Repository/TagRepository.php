@@ -10,4 +10,11 @@ namespace App\Repository;
  */
 class TagRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function showListsOfCurrentUser($userId) 
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->where('t.userId = :value')->setParameter('value', $userId)
+            ->orderBy('t.name', 'ASC');
+        return $qb;
+    }
 }

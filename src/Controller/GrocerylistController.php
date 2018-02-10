@@ -9,17 +9,19 @@ use App\Entity\KitchenListItem;
 use App\Form\KitchenListItemType;
 use App\Form\GrocerylistType;
 use App\Form\GrocerylistItemType;
+use App\Repository\KitchenListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Food;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Service\ItemMover;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Grocerylist controller.
@@ -37,6 +39,7 @@ class GrocerylistController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
         $userId = $this->getUser()->getId();
         $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
             array('userId' => $userId)
@@ -45,6 +48,7 @@ class GrocerylistController extends Controller
             array('userId' => $userId)
             );
 
+        /* Add GrocerylistItem */
         $grocerylistItem = new GrocerylistItem();
         $views = [];
         foreach ($grocerylists as $grocerylist) 
@@ -69,18 +73,21 @@ class GrocerylistController extends Controller
             $views[$grocerylist->getId()] = $form->createView();
         } 
 
-
+        /* Move GrocerylistItem to Kitchen */
         $kitchenListItem = new KitchenListItem();
         $moveItemForm = $this->createFormBuilder($kitchenListItem)
             ->add('kitchenListId', EntityType::class, [
-                'label' => false,
-                'choice_label'  => 'name',
                 'class' => KitchenList::class,
+                'choice_label'  => 'name',
+                'label' => false,
                 'attr' => [
                     'class' => 'selectpicker'
-                    ]
-                ]
-            )
+                    ],
+                'query_builder' => function (KitchenListRepository $repo) {
+                    $userId = $this->getUser()->getId();
+                    return $repo->showListsOfCurrentUser($userId);
+                    }
+                ])
             ->add('foodId', EntityType::class, [
                 'class'         => Food::class,
                 'choice_label'  => 'name',
@@ -114,12 +121,28 @@ class GrocerylistController extends Controller
 
             }
 
+        /* New Grocerylist */
+
+        $grocerylist = new Grocerylist();
+
+        $form = $this->createForm(GrocerylistType::class, $grocerylist);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $grocerylist->setUserId($user);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($grocerylist);
+            $em->flush();
+
+            return $this->redirectToRoute('grocerylist');
+        }
 
         return $this->render('grocerylist/index.html.twig', array(
             'grocerylists' => $grocerylists,
             'kitchenLists' => $kitchenLists,
             'moveItemForm' => $moveItemForm->createView(),
-            'forms' => $views
+            'forms' => $views,
+            'form' => $form->createView()
 
         ));
     }
@@ -197,11 +220,11 @@ class GrocerylistController extends Controller
 
 
 
+
     /**
      * Deletes a grocerylist entity.
      *
-     * @Route("/{id}", name="grocerylist_delete")
-     * @Method("DELETE")
+     * @Route("/grocerylist_delete/{id}", name="grocerylist_delete")
      */
     public function deleteAction(Request $request, Grocerylist $grocerylist)
     {
@@ -210,17 +233,11 @@ class GrocerylistController extends Controller
         $grocerylistItems = $em->getRepository('App:GrocerylistItem')->findBy(
             array('grocerylistId' => $grocerylistId)
             );
-
-        $form = $this->createDeleteForm($grocerylist);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($grocerylistItems as $item) {
-                $em->remove($item);
-            }
-            $em->remove($grocerylist);
-            $em->flush();
+        foreach ($grocerylistItems as $item) {
+            $em->remove($item);
         }
+        $em->remove($grocerylist);
+        $em->flush();
 
         return $this->redirectToRoute('grocerylist');
     }
@@ -249,87 +266,9 @@ class GrocerylistController extends Controller
     public function deleteItemAction(Request $request, GrocerylistItem $grocerylistItem)
     {
         $em = $this->getDoctrine()->getManager();
-        $grocerylistItemId = $grocerylistItem->getId();
-
         $em->remove($grocerylistItem);
         $em->flush();
 
         return $this->redirectToRoute('grocerylist');
-    }
-
-    /**
-     * Moves a grocerylistItem entity.
-     * @Route("/{grocerylistItem}/item_move", name="grocerylistItem_move")
-     * @Method({"POST"})
-     */
-    public function moveItemAction(GrocerylistItem $grocerylistItem)
-    {   
-        dump($grocerylistItem);
-        return $this->json([$grocerylistItem->getFoodId()->getName()]);
-    }
-
-    /**
-     * Moves a grocerylistItem entity.
-     * @Route("/item_move/{id}", name="grocerylistItem_moveeeee")
-     * @Method({"GET", "POST"})
-     */
-    public function moveeeeItemAction(Request $request, GrocerylistItem $grocerylistItem)
-    {   
-        $em = $this->getDoctrine()->getManager();
-
-        $kitchenListItem = new KitchenListItem();
-        $moveItemForm = $this->createFormBuilder($kitchenListItem)
-            ->add('kitchenListId', EntityType::class, [
-                'label' => false,
-                'choice_label'  => 'name',
-                'class' => KitchenList::class])
-            ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
-                'label' => false,
-                'required' => true,
-                'attr' => [
-                    'class' => 'selectpicker',
-                    'data-live-search' => 'true'
-                ],
-               ]
-            )
-            ->add('save', SubmitType::class)
-            ->getForm();
-            //dump($grocerylistItem);
-        if ($moveItemForm->isSubmitted()) 
-            {
-                dump($grocerylistItem);
-                $gItemId = $grocerylistItem->getId();
-                $gItem = $em->getRepository('App:GrocerylistItem')->findBy(
-                    array('id' => $gItemId)
-                );
-                //$kitchenListItem->setFoodId($gItem->getFoodId());
-                $em->persist($kitchenListItem);
-                $em->remove($grocerylistItem);
-                $em->flush();
-                return $this->redirectToRoute('grocerylist');
-            }
-
-        //$kitchenListItem = new KitchenListItem();
-        //$em = $this->getDoctrine()->getManager();
-        //dump($grocerylistItem);
-        //deleteItemAction($_POST['itemId']);
-        // if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        //     $itemId = $_POST['itemId'];
-        //     dump($itemId);
-        // }
-
-        // $item = $em->getRepository('App:GrocerylistItem')->findBy(
-        //     array('id' => $itemId)
-        //     );
-        // $grocerylistItemFoodId = $grocerylistItem->getFoodId();
-        // $kitchenListItem = new KitchenListItem($grocerylistItemFoodId);
-        // $kitchenListItem->setFoodId();
-
-        return $this->render('grocerylist/move.html.twig', array(
-            'moveItemForm' => $moveItemForm->createView()
-
-        ));
     }
 }

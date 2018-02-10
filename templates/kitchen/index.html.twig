@@ -3,13 +3,19 @@
     <section class="content-section">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 m-auto">
+                <div class="col-md-12">
                     <h1 class="text-center">Kitchen</h1>
                 </div>
-                <div class="col-md-2">
-                    <a href="{{ path('kitchenList_new') }}">
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 m-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <a data-toggle="modal" data-target="#AddKitchenListModal">
                         <span class="fa fa-plus" aria-hidden="true"> Add KitchenList</span>
                     </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -18,7 +24,9 @@
                     <ul class="list-group">
                         <li class="list-group-item text-center">
                             {{ kitchenList.name }} 
-                            <a class="pull-right" href="{{ path('kitchenList_edit', { 'id': kitchenList.id }) }}"> edit </a>
+                            <a href="{{ path('kitchenList_delete', {'id': kitchenList.id }) }}">
+                                <span title="Delete KitchenList" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                            </a>  
                         </li>
                         <li class="list-group-item text-center">
                             <div class="row">
@@ -30,7 +38,12 @@
                         </li>
                         {% for item in kitchenList.kitchenListItems %}
                         <li class="list-group-item text-center">
-                             {{ item.foodId.name}}                      <a href="{{ path('kitchenListItem_delete', {'id': item.id }) }}">
+                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}"
+                            data-food-id="{{item.foodId.id}}">
+                                <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
+                            </a>
+                            {{ item.foodId.name}}                      
+                            <a href="{{ path('kitchenListItem_delete', {'id': item.id }) }}">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
                         </li>
@@ -41,4 +54,53 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="MoveItemModal" tabindex="-1" role="dialog" aria-labelledby="MoveItemModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item to Grocerylist</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_start(moveItemForm) }}
+                            <input type="number" class="form-control d-none" name="itemId" id="itemId">
+                            {{ form_widget(moveItemForm) }}
+                            
+                            
+                            {{ form_end(moveItemForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="AddKitchenListModal" tabindex="-1" role="dialog" aria-labelledby="AddKitchenListModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add KitchenList</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('js/kitchen.js') }}"></script>
 {% endblock %}

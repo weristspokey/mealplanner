@@ -10,4 +10,11 @@ namespace App\Repository;
  */
 class GrocerylistRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function showListsOfCurrentUser($userId) 
+    {
+        $qb = $this->createQueryBuilder('g')
+            ->where('g.userId = :value')->setParameter('value', $userId)
+            ->orderBy('g.name', 'ASC');
+        return $qb;
+    }
 }

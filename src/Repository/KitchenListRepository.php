@@ -25,4 +25,11 @@ class KitchenListRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function showListsOfCurrentUser($userId) 
+    {
+        $qb = $this->createQueryBuilder('k')
+            ->where('k.userId = :value')->setParameter('value', $userId)
+            ->orderBy('k.name', 'ASC');
+        return $qb;
+    }
 }

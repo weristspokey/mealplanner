@@ -24,7 +24,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-
+use App\Repository\TagRepository;
 
 class RecipeType extends AbstractType
 {
@@ -71,38 +71,18 @@ class RecipeType extends AbstractType
                     'data-live-search' => 'true'
                 ]
             ))
-            //->add('tags', TagSelectpickerType::class)
-            // ->add('tags', EntityType::class, [
-            //     'class'         => Tag::class,
-            //     'choice_label'  => 'name',
+            // ->add('tags', EntityType::class, array(
+            //     'class' => Tag::class,
             //     'label' => false,
             //     'required' => true,
-            //     'placeholder' => 'Tags',
-            //     'multiple' => true,
-            //     'query_builder' => function(EntityRepository $er) use ($user)
-            //     {
-            //         return $er->createQueryBuilder('tag')
-            //         ->where('tag.userId ='.  $user->getId())
-            //         ->orderBy('tag.name', 'ASC');
-            //     },
             //     'attr' => [
+            //         'placeholder' => 'Tags',
             //         'class' => 'selectpicker',
-            //         'title' => 'Tags']
-            //     ]
-            // )
-            // ->add('recipeItems', EntityType::class, [
-            //     'class'         => Food::class,
-            //     'choice_label' => 'name',
-            //     'label' => false,
-            //     'required' => true,
-            //     'allow_extra_fields' => true,
-            //     'attr' => [
-            //     'placeholder' => 'Ingredients',
-            //     'class' => 'selectpicker']]
-            // )
-            // ->add('recipeItems', CollectionType::class, array(
-            // 'entry_type' => RecipeItemType::class,
-            // 'entry_options' => array('label' => false),
+            //         'multiple' => 'true'
+            //     ],
+            //     'query_builder' => function (TagRepository $repo) use ($user){
+            //         return $repo->showListsOfCurrentUser($user);
+            //         }
             // ))
             ->add('image', FileType::class, [
                 'label' => false,
