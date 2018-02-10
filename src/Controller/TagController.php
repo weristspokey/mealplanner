@@ -57,7 +57,7 @@ class TagController extends Controller
             $tag->setUserId($user);
             $em->persist($tag);
             $em->flush();
-
+            $this->addFlash('success', 'New Tag added!');
             return $this->redirectToRoute('tag_new', array('id' => $tag->getId()));
         }
 
@@ -124,6 +124,7 @@ class TagController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($tag);
             $em->flush();
+            $this->addFlash('success', 'Tag deleted!');
         }
 
         return $this->redirectToRoute('tag_new');

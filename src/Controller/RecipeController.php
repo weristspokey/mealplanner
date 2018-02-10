@@ -94,7 +94,7 @@ class RecipeController extends Controller
             $em->persist($recipe);
             // $em->persist($recipeItem);
             $em->flush();
-
+            $this->addFlash('success', 'New Recipe added!');
             return $this->redirectToRoute('recipe_index');
 
         }
@@ -191,6 +191,7 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);
             $em->flush();
+            $this->addFlash('success', 'Recipe deleted!');
         }
 
         return $this->redirectToRoute('recipe_index');

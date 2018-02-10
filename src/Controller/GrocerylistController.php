@@ -133,7 +133,7 @@ class GrocerylistController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($grocerylist);
             $em->flush();
-
+            $this->addFlash('success', 'New Grocerylist added!');
             return $this->redirectToRoute('grocerylist');
         }
 
@@ -238,7 +238,7 @@ class GrocerylistController extends Controller
         }
         $em->remove($grocerylist);
         $em->flush();
-
+        $this->addFlash('success', 'Grocerylist deleted!');
         return $this->redirectToRoute('grocerylist');
     }
 
