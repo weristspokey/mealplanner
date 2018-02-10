@@ -122,6 +122,7 @@ class KitchenController extends Controller
             $em->persist($kitchenList);
             $em->flush();
 
+            $this->addFlash('success', 'New KitchenList added!');
             return $this->redirectToRoute('kitchen');
         }
 
@@ -207,7 +208,7 @@ class KitchenController extends Controller
             }
             $em->remove($kitchenList);
             $em->flush();
-
+        $this->addFlash('success', 'KitchenList deleted!');
         return $this->redirectToRoute('kitchen');
     }
 

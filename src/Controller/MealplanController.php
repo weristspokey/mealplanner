@@ -99,6 +99,8 @@ class MealplanController extends Controller
                 //             ['userId' => $userId],
                 //             ['date' => 'ASC']
                 //     );    
+                $this->addFlash('success', 'New Mealplan added!');
+
                 return $this->redirectToRoute('mealplan');
             }
 
@@ -182,8 +184,6 @@ class MealplanController extends Controller
     public function deleteMealplanAction(Request $request, Mealplan $mealplan)
     {
         $em = $this->getDoctrine()->getManager();
-
-
         $mealplanId = $mealplan->getId();
         $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
             array('mealplanId' => $mealplanId)
@@ -194,7 +194,7 @@ class MealplanController extends Controller
 
         $em->remove($mealplan);
         $em->flush();
-
+        $this->addFlash('success', 'Mealplan deleted!');
         return $this->redirectToRoute('mealplan');
     }
 

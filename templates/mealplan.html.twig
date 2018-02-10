@@ -2,14 +2,19 @@
 {% block body %}
     <section class="content-section">
         <div class="container">
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-md-4 m-auto">
+                {% include ('flash-messages.html.twig') %}
+            </div>
+        </div>
             <h1 class="text-center">Weekly mealplan</h1>
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-4 m-auto">
                     <div class="card">
                         <div class="card-header">
                             <a data-toggle="modal" data-target="#AddMealplanModal">
-                        <span class="fa fa-plus" aria-hidden="true"> Add Mealplan</span>
-                    </a>
+                                <span class="fa fa-plus" aria-hidden="true"> Add Mealplan</span>
+                            </a>
                         </div>
                     </div>
                 </div>
