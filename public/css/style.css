@@ -27,18 +27,6 @@ h6 {
   letter-spacing: 1px;
   text-transform: uppercase; }
 
-/* Mealplan View */
-.thumbnail-gallery div {
-  margin-bottom: 15px;
-}
-
-/* Recipe View */
-.btn-tag {
-  border: none;
-  color: #FFFFFF;
-}
-/* Grocerylist View */
-/* Kitchen View */
 p {
   font-size: 16px;
   line-height: 1.5;
@@ -155,9 +143,24 @@ a {
     outline: none;
     background: rgba(255, 255, 255, 0.1); }
 
+/* Mealplan View */
+.thumbnail-gallery div {
+  margin-bottom: 15px;
+}
+
+/* Recipe View */
+.btn-tag {
+  border: none;
+  color: #FFFFFF;
+}
+/* Grocerylist View */
+/* Kitchen View */
+
 .content-section {
   padding-top: 120px;
-  padding-bottom: 150px; }
+  padding-bottom: 50px;
+  /*min-height: 700px;*/
+}
 
 .download-section {
   color: white;
