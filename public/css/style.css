@@ -162,10 +162,9 @@ a {
 
 .content-section {
   padding-top: 120px;
-  padding-bottom: 50px;
   /*min-height: 700px;*/
 }
-.download-section {
+.download-section, .goals-section {
   color: white;
   background: url("../img/downloads-bg.jpg") no-repeat center center scroll;
   background-color: #9d5281;
@@ -180,8 +179,7 @@ a {
 
 @media (min-width: 992px) {
   .content-section {
-    padding-top: 120px;
-    padding-bottom: 200px; }
+    padding-top: 120px;}
   #map {
     height: 350px; } }
 
