@@ -8,10 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Recipe;
 use App\Entity\RecipeItem;
+use App\Entity\RecipeItemCollection;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Form\RecipeType;
 use App\Form\RecipeItemType;
+use App\Form\RecipeItemCollectionType;
 use App\Form\TagSelectpickerType;
 use App\Entity\Tag;
 use App\Service\FileUploader;
@@ -133,12 +135,36 @@ class RecipeController extends Controller
             return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
         }
 
+        /* NEW FORM */
+        $recipeItemCollection = new RecipeItemCollection();
+
+        $item = new RecipeItem();
+        $recipeItemCollection->getRecipeItemCollection()->add($item);
+
+        $form = $this->createForm(RecipeItemCollectionType::class, $recipeItemCollection);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$data = $form->getData();
+            $item->setRecipeId($recipe);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $em->flush();
+
+            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+        }
+
+
+
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'recipeItems' => $recipeItems,
             'tags' => $tags,
             'delete_form' => $deleteForm->createView(),
-            'new_recipeItem_form' => $newRecipeItemForm->createView(),
+            'newform' => $newRecipeItemForm->createView(),
+            'form' => $form->createView(),
+            'data' => $recipeItemCollection,
         ]);
     }
 
@@ -213,6 +239,19 @@ class RecipeController extends Controller
         ;
     }
 
+    /**
+     * Deletes a recipeItem entity.
+     *
+     * @Route("/item_delete/{id}", name="recipeItem_delete")
+     */
+    public function deleteItemAction(Request $request, Recipe $recipe, RecipeItem $recipeItem)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($recipeItem);
+        $em->flush();
+
+        return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+    }
 }
 
 ?>

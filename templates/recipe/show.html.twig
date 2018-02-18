@@ -3,13 +3,19 @@
     <section class="content-section">
         <div class="container">
              <div class="row">
-                <div class="col-md-6 m-auto">
+                <div class="col-md-12">
                     <h1 class="text-center">{{recipe.name}}</h1>
                 </div>
-                <div class="col-md-1">
-                    <a href="{{ path('recipe_edit', { 'id': recipe.id }) }}">
-                        <span class="fa fa-edit" aria-hidden="true"></span>
+            </div>
+            <div class="row" style="margin-bottom: 20px">
+                <div class="col-md-4 m-auto">
+                    <div class="card">
+                        <div class="card-header">
+                            <a href="{{ path('recipe_edit', { 'id': recipe.id }) }}">
+                        <span class="fa fa-edit" aria-hidden="true">Edit Recipe</span>
                     </a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -27,26 +33,39 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-12 text-center">
+                <div class="col-lg-8 text-center">
                     <h3>Description</h3>
                     <p>{{recipe.description}}</p>
                 </div>
-                <div class="col-lg-6 col-12 text-center">
+                <div class="col-md-4 text-center">
                     <h3>Ingredients</h3>
-                        <button class="btn btn-default" id="addRecipeItemBtn">
-                            <span class="fa fa-plus"></span>
-                        </button>
-                    <div class="row recipeItemsRow" style="display: none; margin-top:10px">
-                        <div class="col-md-7 mx-auto">
-                        {{form(new_recipeItem_form)}}
+                    <div class="card">
+                        <div class="card-header">
+                            <a id="addRecipeItemBtn">
+                                <span class="fa fa-edit" aria-hidden="true">Add RecipeItem</span>
+                            </a>
                         </div>
                     </div>
-                    <p>
+                    <div class="row recipeItemsRow" style="display: none; margin-top:10px">
+                        <div class="col-md-12 mx-auto">
+                            {% form_theme form
+                            'jquery.collection.html.twig'
+                            'formtheme.html.twig'
+                            %}
+                            {{ form(form) }}
+                        </div>
+                    </div>
+                    <ul class="list-group">
                         {% for item in recipeItems %}
-                        {{item.value}} {{item.unit}} {{item.foodId.name}}<br>
+                        <li class="list-group-item">
+                            {{item.value}} {{item.unit}} {{item.foodId.name}} 
+                            <a href="{{ path('recipeItem_delete', {'id': item.id }) }}">
+                                <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                            </a></li>
+                        
                     {% endfor %}
-
-                    </p>
+                    </ul>
+                
                 </div>
                 {{ form_start(delete_form) }}
                         <input type="submit" value="Delete">

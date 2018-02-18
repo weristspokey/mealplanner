@@ -36,6 +36,7 @@ h6 {
 .btn-tag {
   border: none;
   color: #FFFFFF;
+  border-radius: 20px !important;
 }
 /* Grocerylist View */
 /* Kitchen View */
@@ -359,3 +360,7 @@ body {
     color: #9D759D;
 }
 
+.recipeItemsRow .col-md-3, .recipeItemsRow .col-md-6 {
+  padding-left: 3px;
+  padding-right: 3px;
+}
