@@ -26,7 +26,7 @@ class RecipeItemCollectionType extends AbstractType
         ]);
 
         $builder->add('save', SubmitType::class, [
-            'label' => 'Save',
+            'label' => 'Add',
         ]);
     }
 

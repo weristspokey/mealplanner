@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $("#addRecipeItemBtn").click(function() {
-        $(".recipeItemsRow").css('display', '');
+        $(".recipeItemsRow").toggle();
     });
     $("#addGrocerylistItemBtn").click(function() {
         $(this).css('display', 'none');
