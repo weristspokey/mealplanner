@@ -334,7 +334,7 @@ body {
     color: #9d5281;
 }
 .recipes-gallery img {
-  width: 250px;
+  width: 300px;
   max-height: 150px;
   object-fit: cover;
 }
@@ -356,4 +356,7 @@ body {
 }
 .content-section .container {
   min-height: 710px;
+}
+.container {
+    max-width: 1340px;
 }
