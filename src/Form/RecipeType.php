@@ -78,7 +78,8 @@ class RecipeType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Tags',
                     'class' => 'selectpicker col-md-6',
-                    'multiple' => 'true'
+                    'data-live-search' => true,
+                    'multiple' => true
                 ],
                 'query_builder' => function (TagRepository $repo) use ($user){
                     return $repo->showListsOfCurrentUser($user);
