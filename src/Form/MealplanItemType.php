@@ -42,7 +42,7 @@ class MealplanItemType extends AbstractType
                 'Dinner' => 'Dinner',
                 'Snacks' => 'Snacks'
                 ],
-            'label' => false,
+            'label' => 'Choose Type',
             'attr' => [
                     'class' => 'selectpicker'
                 ]
@@ -50,10 +50,10 @@ class MealplanItemType extends AbstractType
         ->add('foodId', EntityType::class, [
                 'class'         => Food::class,
                 'choice_label'  => 'name',
-                'label' => false,
+                'label' => 'Choose Food',
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'class' => 'selectpicker food-select',
                     'multiple' => true,
                     'data-live-search' => true,
                     'data-max-options' => '1'
@@ -63,10 +63,10 @@ class MealplanItemType extends AbstractType
         ->add('recipeId', EntityType::class, [
                 'class'         => Recipe::class,
                 'choice_label'  => 'name',
-                'label' => false,
+                'label' => 'Choose Recipe',
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker',
+                    'class' => 'selectpicker recipe-select',
                     'multiple' => true,
                     'data-live-search' => true,
                     'data-max-options' => '1'

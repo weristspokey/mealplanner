@@ -1,24 +1,27 @@
 $(document).ready(function(){
   $('#mealplanSlider').bxSlider({
-    slideWidth: 300,
+    slideWidth: 353,
     minSlides: 1,
-    maxSlides: 6,
+    maxSlides: 2,
     moveSlides: 1,
-    slideMargin: 2,
+    slideMargin: 20,
     infiniteLoop: false
   });
   $('#recipesSlider').bxSlider({
-    slideWidth: 200,
-    minSlides: 2,
-    maxSlides: 3,
-    slideMargin: 10
+    slideWidth: 300,
+    minSlides: 1,
+    maxSlides: 1,
+    moveSlides: 1,
+    slideMargin: 20,
+    infiniteLoop: false
   });
   $('.addMealplanItemBtn').click(function() {
     var target = $(this).attr('rel');
+    //$("#"+target).show();
     $("#"+target).show();
   });
   $('.close-addMealplanItemForm').click(function() {
-    $(this).closest('.col-md-4').hide();
+    $(this).closest('.slide').hide();
   });
 
 });
