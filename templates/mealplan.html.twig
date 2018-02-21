@@ -15,9 +15,12 @@
                     </div>
                 </div>
             </div>
+
+
+
                     <div id="mealplanSlider">
                         {% for mealplan in mealplans%}
-                        <div class="slide col-md-3">
+                        <div class="slide">
                             <div class="card">
                                 <div class="card-header">
                                     <p>{{mealplan.date | date("D d.m.Y")}}
@@ -111,15 +114,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" id="addMealplanItemForm-{{mealplan.id}}" style="margin-bottom: 20px; display:none">
+
+                        <div class="slide"id="addMealplanItemForm-{{mealplan.id}}" style="margin-bottom: 20px; display:none">
                             <ul class="list-group">
                                 <li class="list-group-item text-center">
-                                    Add Mealplan Item
-                                    <button type="button" class="close close-addMealplanItemForm" aria-label="Close">
+                                     <button type="button" class="close close-addMealplanItemForm" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                </li>
-                                <li class="list-group-item text-center">
                                     <div class="row">
                                         <div class="col-md-12">
                                             {{ form(forms[mealplan.id]) }}
@@ -130,6 +131,7 @@
                         </div>
                         {% endfor %}
                     </div>
+                    
                 </div>
             </section>
 

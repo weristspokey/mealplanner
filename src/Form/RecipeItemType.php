@@ -36,37 +36,28 @@ class RecipeItemType extends AbstractType
         $builder
             ->add('value', NumberType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
                 'attr' => [
                 'placeholder' => 'Value',
                 ]]
             )
             ->add('unit', ChoiceType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
                 'choices'  => array(
-                    'ml',
-                    'mg',
-                    'l'
-                ),
-                'attr' => [
-                'placeholder' => 'Unit',
-                'class' => 'selectpicker',
-                'data-live-search' => 'true'
-                ]]
+                    'ml' => 'ml',
+                    'mg' => 'mg',
+                    'l'  => 'l'
+                )]
             )
             ->add('foodId', EntityType::class, [
                 'class'         => Food::class,
                 'choice_label'  => 'name',
                 'label' => false,
-                'required' => true,
-                'attr' => [
-                    'class' => 'selectpicker',
-                    'data-live-search' => 'true'
-                ],
+                'required' => true
                 ]
-            )
-            ->add('Submit', SubmitType::class);
+            );
+            // ->add('Submit', SubmitType::class);
 
     }
     
@@ -85,7 +76,7 @@ class RecipeItemType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'app_recipeItem';
+        return 'RecipeItemType';
     }
 
 

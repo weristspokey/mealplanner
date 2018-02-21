@@ -1,0 +1,30 @@
+{% block RecipeItemType_row %}
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="text-center">{{ form_label(form.value) }}</div>
+            <div>{{ form_widget(form.value) }}</div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-center">{{ form_label(form.unit) }}</div>
+            <div>{{ form_widget(form.unit) }}</div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-center">{{ form_label(form.foodId) }}</div>
+            <div>{{ form_widget(form.foodId) }}</div>
+        </div>
+        <!--
+        <div class="col-md-2">
+            <a href="#" class="collection-up btn btn-default" title="Move element up"><span class="fa fa-arrow-up"></span></a>
+            <a href="#" class="collection-down btn btn-default" title="Move element down"><span class="fa fa-arrow-down"></span></a>
+        </div> 
+        <div class="col-md-2">
+            <a href="#" class="collection-remove" title="Delete element"><span class="fa fa-trash"></span></a>
+            <a href="#" class="collection-add" title="Add element"><span class="fa fa-plus"></span></a>
+        </div>
+         <div class="col-md-2">
+            <a href="#" class="collection-duplicate btn btn-default" title="Duplicate element"><span class="fa fa-th-large"></span></a>
+        </div> -->
+    </div>
+
+{% endblock %}
