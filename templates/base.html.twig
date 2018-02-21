@@ -68,6 +68,23 @@
             </div>
         </nav>
         {% block body %}{% endblock %}
+        {% block footer %}
+        <footer>
+            <div class="container text-center">
+                <p>Copyright &copy; mealplanner 2017 by sherlockspok</p>
+                <a href="" data-toggle="modal" data-target="#contactModal"><i class="fa fa-envelope fa-fw"></i>Contact</a>
+            </div>
+            <!--
+            <div class="col-md-4">
+                <span title="Add to Kitchen" class="fa fa-arrow-left fa-4x pull-left" aria-hidden="true"></span>
+                <p>You can download Grayscale for free on the preview page at Start Bootstrap.</p>
+                <a href="https://github.com/BlackrockDigital/startbootstrap" class="btn btn-default btn-lg">
+                    <i class="fa fa-github fa-fw"></i>
+                    <span class="network-name">Github</span>
+                </a>
+            </div>-->
+        </footer>
+        {% endblock %}
         {% block javascripts %}
         <script src="{{ asset('jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('popper/popper.min.js') }}"></script>
