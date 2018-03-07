@@ -367,9 +367,12 @@ body {
 }
 .container {
     max-width: 1340px;
-
+}
 .recipeItemsRow .col-md-3, .recipeItemsRow .col-md-6 {
   padding-left: 3px;
   padding-right: 3px;
 
+}
+input#tag_color {
+  height: 40px;
 }
