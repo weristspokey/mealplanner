@@ -59,10 +59,11 @@ class MealplanController extends Controller
 
         $mealplanItem = new MealplanItem();
         $views = [];
+        
         foreach ($mealplans as $mealplan) 
         {
             $form_name = "form_".$mealplan->getId();
-
+            dump($mealplan->getDate()->format('Y-m-d'));
             $form = $this->get('form.factory')->createNamedBuilder( 
               $form_name, 
               MealplanItemType::class, 
@@ -90,6 +91,8 @@ class MealplanController extends Controller
         if ($addMealplanForm->isSubmitted() && $addMealplanForm->isValid()) 
             {
                 $newMealplan->setUserId($user);
+                //$newDate = $newMealplan->getDate()->format('Y-m-d');
+                //$newMealplan->setDate($newDate);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($newMealplan);
                 $em->flush();

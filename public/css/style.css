@@ -376,3 +376,8 @@ body {
 input#tag_color {
   height: 40px;
 }
+#calendar .fc-day h5 {
+  text-align: center;
+  border-bottom: 2px solid aliceblue;
+  margin-top: 10px;
+}

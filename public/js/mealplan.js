@@ -27,6 +27,20 @@ $(document).ready(function(){
         item.remove();
 
     });
+
+    var calendar = $('#calendar').fullCalendar('getCalendar');
+
+    $('#calendar').fullCalendar({
+        defaultView: 'basicWeek',
+        height: 650,
+        firstDay: 1,
+        titleFormat: 'DD. MMM YYYY',
+        columnHeaderFormat: 'ddd DD.MMM',
+        dayClick: function() {
+            alert('a day has been clicked!');
+        }
+    });
+
 });
 
 
