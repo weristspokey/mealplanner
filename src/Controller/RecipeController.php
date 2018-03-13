@@ -36,22 +36,51 @@ class RecipeController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $userId = $this->getUser()->getId();
-
-        $recipes = $em->getRepository('App:Recipe')->findBy(
+        $tags = $em->getRepository('App:Tag')->findBy(
             array('userId' => $userId)
             );
 
+        // $recipes = $em->getRepository('App:Recipe')->findBy(
+        //     array('userId' => $userId)
+        //     );
+        $queryBuilder = $em->getRepository('App:Recipe')
+                            ->createQueryBuilder('recipe')
+                            ->where('recipe.userId = :userId')
+                            ->setParameter('userId', $userId)
+                            ->orderBy('recipe.name', 'ASC');
+        
+        if($request->query->getAlnum('filter')) {
+            $queryBuilder
+                ->where('recipe.name LIKE :name')
+                ->andWhere('recipe.userId = :userId')
+                ->setParameter('userId', $userId)
+                ->setParameter('name', '%' . $request->query->getAlnum('filter') . '%');
+        }
+
+        // if($request->query->getAlnum('filter')) {
+        //     $queryBuilder
+        //         ->where('recipe.tag = :tag')
+        //         ->andWhere('recipe.userId = :userId')
+        //         ->setParameter('userId', $userId)
+        //         ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
+        // }
+
+
+        //$dql = "SELECT recipe FROM App:Recipe recipe WHERE recipe.userId = $userId";
+        $query = $queryBuilder->getQuery();
+
         $recipePaginator = $this->get('knp_paginator');
         $pagination = $recipePaginator->paginate(
-            $recipes,
+            //$recipes,
+            $query,
             $request->query->getInt('page', 1),
-            8
+            4
             );
 
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $pagination
+            'recipes' => $pagination,
+            'tags' => $tags
         ]);
     }
 
@@ -252,6 +281,7 @@ class RecipeController extends Controller
 
         return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
     }
-}
+
+
 
 ?>

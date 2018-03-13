@@ -35,6 +35,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   border-radius: 20px !important;
 }
+form button[data-id="tagFilter"] {
+  line-height: 0.83em;
+}
 /* Grocerylist View */
 /* Kitchen View */
 
