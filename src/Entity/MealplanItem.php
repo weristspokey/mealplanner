@@ -26,8 +26,7 @@ class MealplanItem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mealplan", inversedBy="mealplanItems")
-     * @ORM\JoinColumn(name="mealplan_id", referencedColumnName="id")
+     * @ORM\Column(name="mealplanId", type="date")
      */
     private $mealplanId;
 

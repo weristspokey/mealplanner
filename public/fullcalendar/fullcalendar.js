@@ -2721,6 +2721,7 @@ exports.globalDefaults = {
     },
     // buttonIcons: null,
     allDayText: 'all-day',
+    breakfastText: 'Breakfast',
     // allows setting a min-height to the event segment to prevent short events overlapping each other
     agendaEventMinHeight: 0,
     // jquery-ui theming
@@ -6292,7 +6293,7 @@ var DayTableMixin = /** @class */ (function (_super) {
                 view.buildGotoAnchorHtml({ date: date, forceOff: t.rowCnt > 1 || t.colCnt === 1 }, innerHtml) :
                 // if not valid, display text, but no link
                 innerHtml) +
-            '<a><span class="fa fa-edit" data-toggle="modal" data-target="#AddMealplanItemModal" aria-hidden="true"></span></a></th>';
+            '  <a href="#"><span class="fa fa-plus addMealplanItemButton" data-toggle="modal" data-target="#AddMealplanItemModal" aria-hidden="true"></span></a></th>';
     };
 
     /* Background Rendering
@@ -6324,14 +6325,17 @@ var DayTableMixin = /** @class */ (function (_super) {
         var isDateValid = t.dateProfile.activeUnzonedRange.containsDate(date); // TODO: called too frequently. cache somehow.
         var classes = t.getDayClasses(date);
         classes.unshift('fc-day', view.calendar.theme.getClass('widgetContent'));
-        return '<td class="' + classes.join(' ') + '"' +
+        return '<td id="' + date.format('YYYY-MM-DD') + '" class="' + classes.join(' ') + '"' +
             (isDateValid ?
                 ' data-date="' + date.format('YYYY-MM-DD') + '"' : // if date has a time, won't format it
                 '') +
             (otherAttrs ?
                 ' ' + otherAttrs :
                 '') +
-            '><h5>Breakfast</h5><h5>Lunch</h5><h5>Dinner</h5><h5>Snacks</h5></td>';
+            '><h5 style="margin-bottom: 5px">Breakfast</h5><ul class="list-group breakfast-section"></ul>' + 
+            '<h5>Lunch</h5><div class="lunch-section"></div>' + 
+            '<h5>Dinner</h5><div class="dinner-section"></div>' + 
+            '<h5>Snacks</h5><div class="snacks-section"></div></td>'; /*<h5>Breakfast</h5><h5>Lunch</h5><h5>Dinner</h5><h5>Snacks</h5>*/
     };
     /* Generic
     ------------------------------------------------------------------------------------------------------------------*/
@@ -7376,7 +7380,10 @@ var BasicView = /** @class */ (function (_super) {
                 '') +
             '<tbody class="fc-body">' +
             '<tr>' +
-            '<td class="' + theme.getClass('widgetContent') + '"></td>' +
+            '<td class="' + theme.getClass('widgetContent') + '">' + (this.dayGrid ?
+                '<div class="fc-day-grid"/>' +
+                    '<hr class="fc-divider ' + theme.getClass('widgetHeader') + '"/>' :
+                '') + '</td>' +
             '</tr>' +
             '</tbody>' +
             '</table>';

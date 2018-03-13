@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use App\Entity\Food;
@@ -25,16 +26,14 @@ class MealplanItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        // ->add('mealplanId', EntityType::class, [
-        //         'class'         => Mealplan::class,
-        //         'choice_label'  => 'id',
-        //         'label' => false,
-        //         'required' => true,
-        //         'attr' => [
-        //             //'class' => 'd-none',
-        //             'data-live-search' => 'true'
-        //         ],]
-        //     )
+        ->add('mealplanId', DateType::class, [
+            'widget' => 'single_text',
+            'label' => false,
+            'attr' => [
+                    'class' => 'form-control',
+                    'type' => 'date'
+                ]
+            ])
         ->add('category', ChoiceType::class, [
             'choices'  => [
                 'Breakfast' => 'Breakfast',
@@ -92,7 +91,7 @@ class MealplanItemType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'app_mealplanItem';
+        return 'MealplanItem';
     }
 
 

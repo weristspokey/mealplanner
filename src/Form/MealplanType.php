@@ -31,8 +31,7 @@ class MealplanType extends AbstractType
             'label' => false,
             'attr' => [
                     'class' => 'form-control',
-                    'type' => 'date',
-                    'value' => '2018-01-27'
+                    'type' => 'date'
                 ]
             ])
         ->add('Submit', SubmitType::class);

@@ -4,130 +4,17 @@
         <div class="container">
             {% include ('flash-messages.html.twig') %}
             <h1 class="text-center">Weekly mealplan</h1>
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-4 m-auto">
-                    <div class="card">
-                        <div class="card-header">
-                            <a data-toggle="modal" data-target="#AddMealplanModal">
-                                <span class="fa fa-plus" aria-hidden="true"> Add Mealplan</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="mealplanSlider">
-                        {% for mealplan in mealplans%}
-                        <div class="slide">
-                            <div class="card">
-                                <div class="card-header">
-                                    <p>{{mealplan.date | date("D d.m.Y")}}
-                                        <a href="{{ path('mealplan_delete', {'id': mealplan.id }) }}">
-                                            <span title="Delete Mealplan" class="fa fa-remove" aria-hidden="true"></span>
-                                        </a>
-                                        <a class="addMealplanItemBtn" rel="addMealplanItemForm-{{mealplan.id}}"><span class="fa fa-edit" aria-hidden="true"></span></a>
-                                    </p>
-                                </div>
-                                <div class="card-block">
-                                    <div class="card-headline">
-                                        <h5>Breakfast</h5>
-                                    </div>
-                                    <ul class="list-group">
-                                        {% for mealplanItem in mealplan.mealplanItems %}
-                                            {% if mealplanItem.category == "Breakfast" %}
-                                                <li class="list-group-item">
-                                                    {% if mealplanItem.foodId %}
-                                                    {{mealplanItem.foodId.name}} 
-                                                    {% endif %}
-                                                    {% if mealplanItem.recipeId %}
-                                                    {{mealplanItem.recipeId.name}} 
-                                                    {% endif %}
-                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
-                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Lunch</h5>
-                                    </div>
-                                    <ul class="list-group">
-                                        {% for mealplanItem in mealplan.mealplanItems %}
-                                            {% if mealplanItem.category == "Lunch" %}
-                                                <li class="list-group-item">
-                                                    {% if mealplanItem.foodId %}
-                                                    {{mealplanItem.foodId.name}} 
-                                                    {% endif %}
-                                                    {% if mealplanItem.recipeId %}
-                                                    {{mealplanItem.recipeId.name}} 
-                                                    {% endif %}
-                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
-                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Dinner</h5>
-                                    </div>
-                                    <ul class="list-group">
-                                        {% for mealplanItem in mealplan.mealplanItems %}
-                                            {% if mealplanItem.category == "Dinner" %}
-                                                <li class="list-group-item">
-                                                    {% if mealplanItem.foodId %}
-                                                    {{mealplanItem.foodId.name}} 
-                                                    {% endif %}
-                                                    {% if mealplanItem.recipeId %}
-                                                    {{mealplanItem.recipeId.name}} 
-                                                    {% endif %}
-                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
-                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    <div class="card-headline">
-                                        <h5>Snacks</h5>
-                                    </div>
-                                    <ul class="list-group">
-                                        {% for mealplanItem in mealplan.mealplanItems %}
-                                            {% if mealplanItem.category == "Snacks" %}
-                                                <li class="list-group-item">
-                                                    {% if mealplanItem.foodId %}
-                                                    {{mealplanItem.foodId.name}} 
-                                                    {% endif %}
-                                                    {% if mealplanItem.recipeId %}
-                                                    {{mealplanItem.recipeId.name}} 
-                                                    {% endif %}
-                                                    <a href="{{ path('mealplanItem_delete', {'id': mealplanItem.id }) }}">
-                                                        <span title="Delete from Mealplan" class="fa fa-remove pull-right" aria-hidden="true"></span>
-                                                    </a>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="slide"id="addMealplanItemForm-{{mealplan.id}}" style="margin-bottom: 20px; display:none">
-                            <ul class="list-group">
-                                <li class="list-group-item text-center">
-                                     <button type="button" class="close close-addMealplanItemForm" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            {{ form(forms[mealplan.id]) }}
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        {% endfor %}
-                    </div>
+            <ul>
+             {% for item in mealplanItems %}
+             <li>{{item.mealplanId| date("d.m.Y")}}
+                {% if item.foodId %}
+                    {{item.foodId.name}} {{item.category}}
+                {% endif %}
+                {% if item.recipeId %}
+                    {{item.recipeId.name}} {{item.category}}
+                {% endif %}
+            {% endfor %}</li>
+            </ul>
             <div id='calendar'>
             </div>
         </div>
@@ -153,7 +40,7 @@
     </div>
 </div>
 <div class="modal fade" id="AddMealplanItemModal" tabindex="-1" role="dialog" aria-labelledby="AddMealplanItemModalLabel">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add MealplanItem</h5>
@@ -164,7 +51,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                    form for item
+                    {{form(newMealplanItemForm)}}
                     </div>
                 </div>
             </div>
