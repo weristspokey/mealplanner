@@ -21,8 +21,13 @@ $(document).ready(function(){
         enableRecipeSelect();
         disableFoodSelect();
     });
-});
 
+    $('#recipes-gallery').jplist({             
+        itemsBox: '.thumbnail-gallery', 
+        itemPath: '.item', 
+        panelPath: '.jplist-panel'    
+    });
+});
 
 function disableFoodSelect() {
     $(".btn-group.food-select").addClass('disabled');

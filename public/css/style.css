@@ -35,6 +35,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #FFFFFF;
   border-radius: 20px !important;
 }
+form button[data-id="tagFilter"] {
+  line-height: 0.83em;
+}
 /* Grocerylist View */
 /* Kitchen View */
 
@@ -321,26 +324,26 @@ body {
   background-color: grey; width: 255px; height:100px; position: absolute; top: 0px; opacity: 0.5; border-radius: 5px; display:none;
 }
 
-.thumbnail-gallery .col-md-3:hover .thumbnail-hoverbox{
+#recipes-gallery .col-md-3:hover .thumbnail-hoverbox{
     opacity: 0.8;
 }
-.thumbnail-gallery .col-md-3:hover .img-thumbnail {
+#recipes-gallery .col-md-3:hover .img-thumbnail {
     opacity: 0.8;
 }
-.thumbnail-gallery .col-md-3 .thumbnail-hoverbox p {
+#recipes-gallery .col-md-3 .thumbnail-hoverbox p {
     margin-bottom: 5px;
     margin-top: 5px; 
     margin-left: 5px;
     color: #9d5281;
 }
-.recipes-gallery img {
+#recipes-gallery img {
   width: 100%;
   max-height: 150px;
   min-height: 150px;
   object-fit: cover;
 }
 @media (max-width: 735px) {
-  .recipes-gallery img {
+  #recipes-gallery img {
     max-height: 100px;
     min-height: 100px;
   }
@@ -353,7 +356,7 @@ body {
 .bootstrap-tagsinput .tag {
   color: black;
 }
-.pagination .page-item.active .page-link {
+.pagination .active .page-link {
     color: white;
     background-color: #8C4973;
     border-color: #8C4973;
@@ -361,7 +364,6 @@ body {
 .pagination .page-item .page-link {
     color: #9D759D;
 }
-
 .content-section .container {
   min-height: 710px;
 }
@@ -380,4 +382,25 @@ input#tag_color {
   text-align: center;
   border-bottom: 2px solid aliceblue;
   margin-top: 10px;
+}
+#recipes-gallery .jplist-pagination li {
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+}
+#recipes-gallery .jplist-pagination li[data-type="first"] {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+#recipes-gallery .jplist-pagination li[data-type="last"] {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#recipes-gallery .jplist-pagination li:hover {
+  background-color: #e9ecef;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+#recipes-gallery .jplist-drop-down ul {
+  width: 100%;
 }

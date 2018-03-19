@@ -36,22 +36,18 @@ class RecipeController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $userId = $this->getUser()->getId();
+        $tags = $em->getRepository('App:Tag')->findBy(
+            array('userId' => $userId)
+            );
 
         $recipes = $em->getRepository('App:Recipe')->findBy(
             array('userId' => $userId)
             );
 
-        $recipePaginator = $this->get('knp_paginator');
-        $pagination = $recipePaginator->paginate(
-            $recipes,
-            $request->query->getInt('page', 1),
-            8
-            );
-
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $pagination
+            'recipes' => $recipes,
+            'tags' => $tags
         ]);
     }
 
@@ -252,6 +248,7 @@ class RecipeController extends Controller
 
         return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
     }
-}
 
+
+}
 ?>
