@@ -28,49 +28,105 @@
                     </div>
                 </div>
             </div>
-            <p style="margin-bottom: 2px">{{ knp_pagination_sortable(recipes, 'Name', 'recipe.name') }}</p>
-                <p style="margin-bottom: 2px">{{ knp_pagination_sortable(recipes, 'Tags', 'recipe.tags') }}</p>
-            <div class="row" style="border-bottom: 1px solid #9D759D; margin-bottom: 10px; padding-bottom: 5px">
-                <div class="col-md-3">
-                    <form action="{{ path('recipe_index') }}" method="GET">
-                    <input name="filter" type="text" placeholder="Filter by name" size="19">
-                    <button style="margin-bottom: 4px;" type="submit" class="btn btn-default btn-sm">Search</button>
-                    </form>
-                </div>
-                <div class="col-md-2">
-                    <form action="{{ path('recipe_index') }}" method="GET">
-                        <select id="tagFilter" name="filter" class="selectpicker" data-width="75%">
+            <div id="recipes-gallery">
+                <div class="jplist-panel row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #9D759D">                       
+                    <!-- filter by title -->
+                    <div class="text-filter-box col-md-2">
+                        <i class="fa fa-search  jplist-icon"></i>
+                        <input 
+                            data-path=".title" 
+                           type="text" 
+                           value="" 
+                           placeholder="Filter by Name" 
+                           data-control-type="textbox" 
+                           data-control-name="title-filter" 
+                           data-control-action="filter"
+                        />
+                    </div>
+
+                    <!-- Filter DropDown Control -->
+                    <div 
+                        class="jplist-drop-down col-md-2" 
+                        data-control-type="filter-drop-down" 
+                        data-control-name="category-filter" 
+                        data-control-action="filter">
+                        <ul>
+                            <li><span data-path="default">Filter by Tag</span></li>
                             {% for tag in tags %}
-                                <option>{{tag.name}}</option>
+                            <li><span data-path=".{{tag.name}}">{{tag.name}}</span></li>
                             {% endfor %}
-                        </select>
-                        <button type="submit" class="btn btn-default btn-sm">Go</button>
-                    </form>
-                </div>
-                <div class="col-md-1 pull-right">
-                    <a href="{{ path('recipe_index') }}">Show all</a>
-                </div>
-            </div>
-            <div class="row thumbnail-gallery recipes-gallery">
+                        </ul>
+                    </div>
+                </div>                
+                <div class="row thumbnail-gallery">
                 {% for recipe in recipes %}
-                <div class="col-lg-3 col-sm-3 col-md-3">
-                    <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
-                    <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}"><div class="thumbnail-hoverbox">
-                        <p>{{ recipe.name }}</p>
-                        <p style="font-size:14px">Tags:
-                        {% for tag in recipe.tags %}
-                           {{tag.name}}
-                        {% endfor %}
-                        </p>
-                    </div></a>
-                </div>
+                    <div class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
+                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
+                        <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}">
+                            <div class="thumbnail-hoverbox">
+                                <p class="title">{{ recipe.name }}</p>
+                                <p style="font-size:14px">Tags:
+                                {% for tag in recipe.tags %}
+                                    <span class="{{tag.name}}">{{tag.name}}</span>
+                                {% endfor %}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
                 {% endfor %}
-            </div>
-            <div class="row">
-                <div class="navigation mx-auto">
-                    {{ knp_pagination_render(recipes) }}
+                </div>
+                <div class="jplist-panel row">                       
+                        <ul 
+                            class="pagination pull-left jplist-pagination m-auto"
+                            data-control-type="boot-pagination" 
+                            data-control-name="paging" 
+                            data-control-action="paging"
+                            data-range="4"
+                            data-mode="google-like">
+                        </ul>
+                        <!-- pagination info label -->
+                        <div 
+                            class="pull-left jplist-pagination-info d-none"
+                            data-type="<strong>Page {current} of {pages}</strong><br/> <small>{start} - {end} of {all}</small>" 
+                            data-control-type="pagination-info" 
+                            data-control-name="paging" 
+                            data-control-action="paging">
+                        </div>
+         
+                        <!-- items per page dropdown -->
+                        <div 
+                            class="dropdown pull-left jplist-items-per-page d-none"
+                            data-control-type="boot-items-per-page-dropdown" 
+                            data-control-name="paging" 
+                            data-control-action="paging">
+                            <button 
+                                class="btn btn-primary dropdown-toggle" 
+                                type="button" 
+                                data-toggle="dropdown" 
+                                id="dropdown-menu-1"
+                                aria-expanded="true">                   
+                                <span data-type="selected-text">Items per Page</span>
+                                <span class="caret"></span>                     
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-menu-1">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="3">3 per page</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="5">5 per page</a>
+                                </li> 
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="8"  data-default="true">8 per page</a>
+                                </li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="all">View All</a>
+                                </li>
+                            </ul>                        
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div> 
     </section>
 {% endblock %}

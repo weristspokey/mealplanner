@@ -41,45 +41,12 @@ class RecipeController extends Controller
             array('userId' => $userId)
             );
 
-        // $recipes = $em->getRepository('App:Recipe')->findBy(
-        //     array('userId' => $userId)
-        //     );
-        $queryBuilder = $em->getRepository('App:Recipe')
-                            ->createQueryBuilder('recipe')
-                            ->where('recipe.userId = :userId')
-                            ->setParameter('userId', $userId)
-                            ->orderBy('recipe.name', 'ASC');
-        
-        if($request->query->getAlnum('filter')) {
-            $queryBuilder
-                ->where('recipe.name LIKE :name')
-                ->andWhere('recipe.userId = :userId')
-                ->setParameter('userId', $userId)
-                ->setParameter('name', '%' . $request->query->getAlnum('filter') . '%');
-        }
-
-        // if($request->query->getAlnum('filter')) {
-        //     $queryBuilder
-        //         ->where('recipe.tag = :tag')
-        //         ->andWhere('recipe.userId = :userId')
-        //         ->setParameter('userId', $userId)
-        //         ->setParameter('tag', '%' . $request->query->getAlnum('filter') . '%');
-        // }
-
-
-        //$dql = "SELECT recipe FROM App:Recipe recipe WHERE recipe.userId = $userId";
-        $query = $queryBuilder->getQuery();
-
-        $recipePaginator = $this->get('knp_paginator');
-        $pagination = $recipePaginator->paginate(
-            //$recipes,
-            $query,
-            $request->query->getInt('page', 1),
-            4
+        $recipes = $em->getRepository('App:Recipe')->findBy(
+            array('userId' => $userId)
             );
 
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $pagination,
+            'recipes' => $recipes,
             'tags' => $tags
         ]);
     }
@@ -283,5 +250,5 @@ class RecipeController extends Controller
     }
 
 
-
+}
 ?>
