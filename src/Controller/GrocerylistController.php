@@ -168,6 +168,7 @@ class GrocerylistController extends Controller
             $em->persist($grocerylist);
             $em->flush();
 
+            $this->addFlash('success', 'New Grocerylist added!');
             return $this->redirectToRoute('grocerylist');
         }
 

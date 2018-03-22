@@ -6,13 +6,12 @@
                 <div class="col-md-6 m-auto">
                     <h1 class="text-center">Edit Recipe</h1>
                 </div>
-                <div class="col-md-2">
-                    {{ form_start(delete_form) }}
-                        <input type="submit" value="Delete">
-                    {{ form_end(delete_form) }}
+            </div>
+            <div class="row">
+                <div class="col-md-6 m-auto">
+                    {{form(edit_form)}}
                 </div>
             </div>
-            {{form(edit_form)}}
         </div>
     </section>
 {% endblock %}
