@@ -33,7 +33,11 @@
                         <ul>
                             <li><span data-path="default">Filter by Tag</span></li>
                             {% for tag in tags %}
-                            <li><span data-path=".{{tag.name}}">{{tag.name}}</span></li>
+                            <li>
+                                <span data-path=".{{tag.name}}">
+                                    <button class="btn btn-tag" style="background-color:{{ tag.color }}" role="button"> {{ tag.name }}</button>
+                                </span>
+                            </li>
                             {% endfor %}
                         </ul>
                     </div>

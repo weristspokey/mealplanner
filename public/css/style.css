@@ -237,6 +237,10 @@ img::-moz-selection {
   color: #FFFFFF;
   border-radius: 20px !important;
 }
+.btn-tag:hover {
+  color: #FFFFFF;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 form button[data-id="tagFilter"] {
   line-height: 0.83em;
 }
@@ -491,4 +495,18 @@ input#tag_color {
 }
 #mainNav .dropdown .dropdown-content a {
     text-transform: none;
+}
+.jplist-panel .jplist-drop-down .btn-tag {
+    border: none;
+  color: #FFFFFF !important;
+  border-radius: 20px !important;
+  text-shadow: none;
+  background: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  padding: 0.2rem 0.75rem;
+}
+.jplist-panel .jplist-drop-down li {
+ height: auto;
 }

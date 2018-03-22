@@ -8,7 +8,7 @@
                     <div class="caption-recipe text-center">
                         <p>Tags: 
                         {% for tag in tags %}
-                            <a href="" class="btn btn-tag" style="background-color:{{ tag.color }}" role="button">{{tag.name}}</a>
+                            <button class="btn btn-tag" style="background-color:{{ tag.color }}">{{tag.name}}</button>
                         {% endfor %}
                         </p>
                     </div>
