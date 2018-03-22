@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class RecipeRepository extends ServiceEntityRepository
 {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Recipe::class);
@@ -32,5 +33,15 @@ class RecipeRepository extends ServiceEntityRepository
             ->where('r.userId = :value')->setParameter('value', $userId)
             ->orderBy('r.name', 'ASC');
         return $qb;
+    }
+    public function findAllRecipesOfCurrentUser($userId)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT recipe
+                FROM App:Recipe recipe
+                WHERE recipe.userId = :value'
+            )->setParameter('value', $userId)
+            ->getResult();
     }
 }

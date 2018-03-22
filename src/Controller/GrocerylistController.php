@@ -22,6 +22,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Grocerylist controller.
@@ -240,6 +241,8 @@ class GrocerylistController extends Controller
         $em->remove($grocerylist);
         $em->flush();
         $this->addFlash('success', 'Grocerylist deleted!');
+
+        //return new JsonResponse(array('message' => 'Success!'), 200);
         return $this->redirectToRoute('grocerylist');
     }
 

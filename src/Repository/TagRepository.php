@@ -17,4 +17,15 @@ class TagRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('t.name', 'ASC');
         return $qb;
     }
+
+    public function findAllTagsOfCurrentUser($userId)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                'SELECT tag
+                FROM App:Tag tag
+                WHERE tag.userId = :value'
+            )->setParameter('value', $userId)
+            ->getResult();
+    }
 }

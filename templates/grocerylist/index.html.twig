@@ -14,7 +14,7 @@
                     <ul class="list-group">
                         <li class="list-group-item text-center">
                             {{ grocerylist.name }}
-                            <a href="{{ path('grocerylist_delete', {'id': grocerylist.id }) }}">
+                            <a id="deleteGrocerylistBtn" data-item-id="{{grocerylist.id}}" href="{{ path('grocerylist_delete', {'id': grocerylist.id }) }}">
                                 <span title="Delete grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>  
                         </li>
