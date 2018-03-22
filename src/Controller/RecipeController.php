@@ -206,12 +206,21 @@ class RecipeController extends Controller
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
+        $em = $this->getDoctrine()->getManager();
+        $recipeId = $recipe->getId();
+        $recipeItems = $em->getRepository('App:RecipeItem')->findBy(
+            array('recipeId' => $recipeId)
+            );
+
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);
+            foreach ($recipeItems as $item) {
+                $em->remove($item);
+            }
             $em->flush();
             $this->addFlash('success', 'Recipe deleted!');
         }
