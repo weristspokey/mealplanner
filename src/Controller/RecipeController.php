@@ -211,7 +211,9 @@ class RecipeController extends Controller
         $recipeItems = $em->getRepository('App:RecipeItem')->findBy(
             array('recipeId' => $recipeId)
             );
-
+        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+            array('recipeId' => $recipeId)
+            );
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
 
@@ -219,6 +221,9 @@ class RecipeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);
             foreach ($recipeItems as $item) {
+                $em->remove($item);
+            }
+            foreach ($mealplanItems as $item) {
                 $em->remove($item);
             }
             $em->flush();
