@@ -13,18 +13,32 @@ use App\Entity\Food;
 use App\Entity\Mealplan;
 use App\Entity\MealplanItem;
 use App\Entity\Recipe;
+use App\Repository\RecipeRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class MealplanItemType extends AbstractType
 {
+    private $tokenStorage;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->tokenStorage = $tokenStorage;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $this->tokenStorage->getToken()->getUser();
+            if (!$user) 
+            {
+                throw new \LogicException(
+                    'The MealplanItemFormType cannot be used without an authenticated user!'
+                );
+            }
         $builder
         ->add('mealplanId', DateType::class, [
             'widget' => 'single_text',
@@ -69,7 +83,11 @@ class MealplanItemType extends AbstractType
                     'multiple' => true,
                     'data-live-search' => true,
                     'data-max-options' => '1'
-                ]
+                ],
+                'query_builder' => function (RecipeRepository $repo) {
+                    $user = $this->tokenStorage->getToken()->getUser();
+                    return $repo->showRecipesOfCurrentUser($user);
+                    }
                 ]
         )
         ->add('Submit', SubmitType::class);

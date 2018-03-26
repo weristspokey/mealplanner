@@ -5,18 +5,7 @@
             {% include ('flash-messages.html.twig') %}
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-center">You have {{grocerylists|length }} Grocerylists</h1>
-                </div>
-            </div>
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-3 m-auto">
-                    <div class="card">
-                        <div class="card-header">
-                            <a data-toggle="modal" data-target="#AddGrocerylistModal">
-                        <span class="fa fa-plus" aria-hidden="true"> Add Grocerylist</span>
-                    </a>
-                        </div>
-                    </div>
+                    <h1 class="text-center">Grocerylists</h1>
                 </div>
             </div>
             <div class="row">
@@ -25,9 +14,11 @@
                     <ul class="list-group">
                         <li class="list-group-item text-center">
                             {{ grocerylist.name }}
-                            <a href="{{ path('grocerylist_delete', {'id': grocerylist.id }) }}">
+                            <a class="delete-grocerylist-button" data-item-id="{{grocerylist.id}}" href="#">
                                 <span title="Delete grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
-                            </a>  
+                            </a>
+                            <form class="delete-form" action="{{ path('grocerylist_delete', {'id': grocerylist.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         <li class="list-group-item text-center">
                             <div class="row">
@@ -42,10 +33,12 @@
                             data-food-id="{{item.foodId.id}}">
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            {{ item.foodId.name}}                
-                            <a href="{{ path('grocerylistItem_delete', {'id': item.id }) }}">
+                            {{ item.foodId.name}}
+                            <a href="#" class="delete-button">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
-                            </a>          
+                            </a>
+                            <form class="delete-form" action="{{ path('grocerylistItem_delete', {'id': item.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         {% endfor %}
                     </ul>

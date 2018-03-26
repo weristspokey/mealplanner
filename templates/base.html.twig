@@ -37,19 +37,29 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('mealplan') }}">Mealplan</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('kitchen') }}">Kitchen</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropbtn" href="{{ path('kitchen') }}">Kitchen</a>
+                                <div class="dropdown-content">
+                                <a href="{{ path('kitchenList_new') }}">Add KitchenList</a>
+                              </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('recipe_index') }}">Recipes</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropbtn" href="{{ path('recipe_index') }}">Recipes</a>
+                                <div class="dropdown-content">
+                                <a href="{{ path('recipe_new') }}">Add Recipe</a>
+                                <a href="{{ path('tag_new') }}">Tags</a>
+                              </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('grocerylist') }}">Grocerylists</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropbtn" href="{{ path('grocerylist') }}">Grocerylists</a>
+                                <div class="dropdown-content">
+                                <a href="{{ path('grocerylist_new') }}">Add Grocerlist</a>
+                              </div>
                             </li>
                         </ul>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="">Signed in as {{app.user.getUsername()}}</a>
+                                <a class="nav-link" href="{{ path('profile_index') }}">Signed in as {{app.user.getUsername()}}</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ logout_path('main')}}" class="btn btn-default">Logout</a>
@@ -74,7 +84,15 @@
         <footer>
             <div class="container text-center">
                 <p>Copyright &copy; mealplanner 2017 by sherlockspok</p>
-                <a href="" data-toggle="modal" data-target="#contactModal"><i class="fa fa-envelope fa-fw"></i>Contact</a>
+                <a id="twitter-btn" href="https://twitter.com/sherlockspok" class="btn btn-default btn-circle">
+                  <i class="fa fa-twitter fa"></i>
+                </a>
+                <a id="github-btn" href="https://github.com/weristspokey" class="btn btn-default btn-circle">
+                  <i class="fa fa-github fa"></i>
+                </a>
+                <a id="mail-btn"href="#" data-toggle="modal" data-target="#contactModal"class="btn btn-default btn-circle">
+                  <i class="fa fa-envelope"></i>
+                </a>
             </div>
             <!--
             <div class="col-md-4">
@@ -89,6 +107,7 @@
         {% endblock %}
         {% block javascripts %}
         <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('jquery/jquery.form.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="{{ asset('popper/popper.min.js') }}"></script>
         <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
