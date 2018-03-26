@@ -226,7 +226,8 @@ class GrocerylistController extends Controller
     /**
      * Deletes a grocerylist entity.
      *
-     * @Route("/grocerylist_delete/{id}", name="grocerylist_delete")
+     * @Route("/delete/{id}", name="grocerylist_delete")
+     * @Method({"POST"})
      */
     public function deleteAction(Request $request, Grocerylist $grocerylist)
     {
@@ -265,7 +266,8 @@ class GrocerylistController extends Controller
     /**
      * Deletes a grocerylistItem entity.
      *
-     * @Route("/item_delete/{id}", name="grocerylistItem_delete")
+     * @Route("/delete_item/{id}", name="grocerylistItem_delete")
+     * @Method({"POST"})
      */
     public function deleteItemAction(Request $request, GrocerylistItem $grocerylistItem)
     {

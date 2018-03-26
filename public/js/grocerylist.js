@@ -8,34 +8,21 @@ $(document).ready(function(){
         $('#form_foodId').selectpicker('refresh');
     });
 
-    $("#deleteGrocerylistBtn").click(function() 
-     {
-        var $id = this.getAttribute('data-item-id');
-        bootbox.confirm("Are you sure?", function(result) {
-            url = "{{ path('grocerylist_delete', {'id': grocerylist.id }) }}";
-            url = $url.replace("0",$id);
-            if(result){
-                $.ajax({ 
-                    url: url,
-                    type: 'delete', 
-                    success: function(result) {
-                        console.log('Delete');
-                    },
-                    error: function(e){
-                        console.log(e.responseText);
-                    }
-                });
-            }
-        });
-    });
-
-    $("#deleteGrocerylistBtn").click(function(){
-        $.ajax({
-            url: "{{ path('grocerylist_delete', {'id': grocerylist.id }) }}",
-            async: false, 
-            success: function(result){
-            $("div").html(result);
-        }});
+    var element;
+    $('.delete-button').on('click', function(event) {
+        event.preventDefault();
+        element = $(this).closest('li');
+        element.find('.delete-form').submit();
+    })
+    $('.delete-grocerylist-button').on('click', function(event) {
+        event.preventDefault();
+        element = $(this).closest('.col-md-3');
+        element.find('.delete-form').submit();
+    })
+    $('.delete-form').ajaxForm({
+        success: function() {
+            element.remove();
+        }
     });
 });
 
