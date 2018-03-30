@@ -24,16 +24,18 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     {{ form(forms[grocerylist.id]) }} 
+                                    <!-- <form class="add-item-form" method="POST"> 
+                                         <input name="item" type="text" placeholder="Add Item">
+                                    </form> -->
                                 </div>
                             </div>
                         </li>{# href="{{ path('grocerylistItem_move', {'id': item.id })}}"#}
                         {% for item in grocerylist.grocerylistItems %}
                         <li class="list-group-item text-center">
-                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}"
-                            data-food-id="{{item.foodId.id}}">
+                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}">
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            {{ item.foodId.name}}
+                            {{ item.name}}
                             <a href="#" class="delete-button">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
@@ -81,9 +83,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            {{ form_start(form) }}
-                                {{ form_widget(form) }}
-                            {{ form_end(form) }}
+                             form_start(form) 
+                                 form_widget(form) 
+                            form_end(form) 
                         </div>
                     </div>
                 </div>

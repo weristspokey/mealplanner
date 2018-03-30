@@ -69,6 +69,14 @@ class GrocerylistController extends Controller
                 $grocerylistItem->setGrocerylistId($grocerylist);
                 $em->persist($grocerylistItem);
                 $em->flush();
+                unset($grocerylistItem);
+                unset($form);
+                $grocerylistItem = new GrocerylistItem();
+                $form = $this->get('form.factory')->createNamedBuilder( 
+                    $form_name, 
+                    GrocerylistItemType::class, 
+                    $grocerylistItem
+                    )->getForm();
             }
 
             $views[$grocerylist->getId()] = $form->createView();
@@ -143,7 +151,7 @@ class GrocerylistController extends Controller
             'kitchenLists' => $kitchenLists,
             'moveItemForm' => $moveItemForm->createView(),
             'forms' => $views,
-            'form' => $form->createView()
+            //'form' => $form->createView()
 
         ));
     }
