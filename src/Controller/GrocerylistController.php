@@ -12,6 +12,7 @@ use App\Form\GrocerylistItemType;
 use App\Repository\KitchenListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -97,16 +98,13 @@ class GrocerylistController extends Controller
                     return $repo->showListsOfCurrentUser($userId);
                     }
                 ])
-            ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+            ->add('name', TextType::class, [
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker d-none',
-                    'name' => 'food-id'
-                    ]
-                ]
+                    'placeholder' => 'Add item',
+                    'class' => 'd-none'
+                ]]
             )
             ->add('submit', SubmitType::class)
             ->getForm();

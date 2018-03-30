@@ -23,7 +23,7 @@
                         <li class="list-group-item text-center">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{ form(forms[grocerylist.id]) }} 
+                                    {{ form(forms[grocerylist.id], {'attr': {'class': 'add-item-form'}}) }} 
                                     <!-- <form class="add-item-form" method="POST"> 
                                          <input name="item" type="text" placeholder="Add Item">
                                     </form> -->
@@ -32,11 +32,11 @@
                         </li>{# href="{{ path('grocerylistItem_move', {'id': item.id })}}"#}
                         {% for item in grocerylist.grocerylistItems %}
                         <li class="list-group-item text-center">
-                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}">
+                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
                             {{ item.name}}
-                            <a href="#" class="delete-button">
+                            <a href="#" class="delete-grocerylist-item-button">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
                             <form class="delete-form" action="{{ path('grocerylistItem_delete', {'id': item.id }) }}" method="POST"> 

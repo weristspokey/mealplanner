@@ -22,18 +22,14 @@ class KitchenListItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+        ->add('name', TextType::class, [
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker',
-                    'data-live-search' => 'true'
-                ],
+                    'placeholder' => 'Add item'
                 ]
-            )
-        ->add('Submit', SubmitType::class);
+                ]
+            );
     }
     
     /**

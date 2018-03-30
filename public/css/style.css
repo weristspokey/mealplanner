@@ -510,3 +510,9 @@ input#tag_color {
 .jplist-panel .jplist-drop-down li {
  height: auto;
 }
+form.add-item-form .col-sm-12 {
+  padding: 0;
+}
+form.add-item-form .form-group {
+  margin: 0;
+}

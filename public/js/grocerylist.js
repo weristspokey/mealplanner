@@ -2,14 +2,13 @@ $(document).ready(function(){
     $('.moveItemBtn').click(function() {
         //e.preventDefault();
         var itemId = this.getAttribute('data-item-id');
-        var foodId = this.getAttribute('data-food-id');
+        var itemName = this.getAttribute('data-item-name');
         $('input[name=itemId]').val(itemId);
-        $('#form_foodId').val(foodId);
-        $('#form_foodId').selectpicker('refresh');
+        $('#form_name').val(itemName);
     });
 
     var element;
-    $('.delete-button').on('click', function(event) {
+    $('.delete-grocerylist-item-button').on('click', function(event) {
         event.preventDefault();
         element = $(this).closest('li');
         element.find('.delete-form').submit();
