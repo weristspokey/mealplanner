@@ -51,11 +51,12 @@ class RecipeItemType extends AbstractType
                     'Stück' => 'Stück'
                 )]
             )
-            ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+            ->add('name', TextType::class, [
                 'label' => false,
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Name'
+                ]
                 ]
             );
 

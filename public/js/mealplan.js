@@ -28,26 +28,6 @@ $(document).ready(function(){
 
     });
 
-    //var calendar = $('#calendar').fullCalendar('getCalendar');
-
-    // $('#calendar').fullCalendar({
-    //     defaultView: 'basicWeek',
-    //     height: 650,
-    //     firstDay: 1,
-    //     titleFormat: 'DD. MMM YYYY',
-    //     columnHeaderFormat: 'ddd DD.MMM',
-    //     // dayClick: function() {
-    //     //     alert('a day has been clicked!');
-    //     // }
-    //     dayClick: function(date, jsEvent, view) {
-    //         alert('Clicked on: ' + date.format());
-    //         alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-    //         alert('Current view: ' + view.name);
-    //     // change the day's background color just for fun
-    //     //$(this).css('background-color', 'red');
-    //     }
-    // });
-
     var calendar = $('#calendar').fullCalendar({
         defaultView: 'basicWeek',
         //slotLabelFormat: '"Breakfast"',
@@ -68,8 +48,76 @@ $(document).ready(function(){
         // selectHelper:true,
     
     });
-    var targetDiv = document.getElementById("2018-03-12").getElementsByClassName("breakfast-section")[0];
-    targetDiv.innerHTML = "<li class='list-group-item text-center'>Eier <a href='#'>" + 
-    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a></li>";
 
+    $('td.fc-day').each(function() {
+        var breakfastSection = $(this).find('.breakfast-section');
+        var lunchSection = $(this).find('.lunch-section'); 
+        var dinnerSection = $(this).find('.dinner-section'); 
+        var snacksSection = $(this).find('.snacks-section'); 
+        //breakfastSection.html("na");
+        var calendarRow = $(this);
+        var targetId = calendarRow.attr('id');
+        $('#mealplanItemList li').each(function() {
+            if (this.getAttribute('data-item-id')== targetId) {
+                if (this.getAttribute('data-category') == "Breakfast") {
+                    if(this.hasAttribute('data-item-name')) {
+                        var item = this.getAttribute('data-item-name');
+                    }
+                    if(this.hasAttribute('data-item-recipe')) {
+                        var item = this.getAttribute('data-item-recipe');
+                    }
+                    var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a></li>";
+                    breakfastSection.append(content);
+                };
+                if (this.getAttribute('data-category') == "Lunch") {
+                    if(this.hasAttribute('data-item-name')) {
+                        var item = this.getAttribute('data-item-name');
+                    }
+                    if(this.hasAttribute('data-item-recipe')) {
+                        var item = this.getAttribute('data-item-recipe');
+                    }
+                    var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a></li>";
+                    lunchSection.append(content);
+                };
+                if (this.getAttribute('data-category') == "Dinner") {
+                    if(this.hasAttribute('data-item-name')) {
+                        var item = this.getAttribute('data-item-name');
+                    }
+                    if(this.hasAttribute('data-item-recipe')) {
+                        var item = this.getAttribute('data-item-recipe');
+                    }
+                    var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a></li>" +
+                    "<form class='delete-form' action='{{ path('mealplanItem_delete', {'id':" + targetId + " }) }}' method='POST'>" +
+                    "</form>";
+                    dinnerSection.append(content);
+                };
+                if (this.getAttribute('data-category') == "Snacks") {
+                    if(this.hasAttribute('data-item-name')) {
+                        var item = this.getAttribute('data-item-name');
+                    }
+                    if(this.hasAttribute('data-item-recipe')) {
+                        var item = this.getAttribute('data-item-recipe');
+                    }
+                    var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a></li>";
+                    snacksSection.append(content);
+                };
+            };
+        });
+    });
+
+    var element;
+    $('.delete-item-button').on('click', function(event) {
+        event.preventDefault();
+        element = $(this).closest('li');
+        element.find('.delete-form').submit();
+    })
+    $('.delete-form').ajaxForm({
+        success: function() {
+            element.remove();
+        }
+    });
 });

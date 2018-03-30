@@ -6332,10 +6332,10 @@ var DayTableMixin = /** @class */ (function (_super) {
             (otherAttrs ?
                 ' ' + otherAttrs :
                 '') +
-            '><h5 style="margin-bottom: 5px">Breakfast</h5><ul class="list-group breakfast-section"></ul>' + 
-            '<h5>Lunch</h5><div class="lunch-section"></div>' + 
-            '<h5>Dinner</h5><div class="dinner-section"></div>' + 
-            '<h5>Snacks</h5><div class="snacks-section"></div></td>'; /*<h5>Breakfast</h5><h5>Lunch</h5><h5>Dinner</h5><h5>Snacks</h5>*/
+            '><h5>Breakfast</h5><ul class="list-group breakfast-section"></ul>' + 
+            '<h5>Lunch</h5><ul class="list-group lunch-section"></ul>' + 
+            '<h5>Dinner</h5><ul class="list-group dinner-section"></ul>' + 
+            '<h5>Snacks</h5><ul class="list-group snacks-section"></ul></td>'; /*<h5>Breakfast</h5><h5>Lunch</h5><h5>Dinner</h5><h5>Snacks</h5>*/
     };
     /* Generic
     ------------------------------------------------------------------------------------------------------------------*/

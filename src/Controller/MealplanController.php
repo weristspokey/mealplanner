@@ -172,6 +172,7 @@ class MealplanController extends Controller
      * Deletes a mealplanItem entity.
      *
      * @Route("/item_delete/{id}", name="mealplanItem_delete")
+     * @Method({"POST"})
      */
     public function deleteItemAction(Request $request, MealplanItem $mealplanItem)
     {

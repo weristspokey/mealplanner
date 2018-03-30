@@ -13,11 +13,11 @@ $(document).ready(function(){
 
     disableRecipeSelect();
 
-    $(".btn-group.food-select").find('.btn').click(function() {
+    $(".food").click(function() {
         enableFoodSelect();
         disableRecipeSelect();
     });
-    $(".btn-group.recipe-select").find('.btn').click(function() {
+    $(".recipe").click(function() {
         enableRecipeSelect();
         disableFoodSelect();
     });
@@ -69,21 +69,21 @@ $(document).ready(function(){
 });
 
 function disableFoodSelect() {
-    $(".btn-group.food-select").addClass('disabled');
-    $(".btn-group.food-select").find('.btn').addClass('disabled');
-    $(".selectpicker.food-select").attr('disabled', 'true');
+    $(".food").removeClass('active');
+    $(".food-select").prop('disabled', true);
 }
 function disableRecipeSelect() {
+    $(".recipe").removeClass('active');
     $(".btn-group.recipe-select").addClass('disabled');
     $(".btn-group.recipe-select").find('.btn').addClass('disabled');
     $(".selectpicker.recipe-select").attr('disabled', 'true');
 }
 function enableFoodSelect() {
-    $(".btn-group.food-select").removeClass('disabled');
-    $(".btn-group.food-select").find('.btn').removeClass('disabled');
-    $(".selectpicker.food-select").removeAttr('disabled');
+    $(".food").addClass('active');
+    $('.food-select').prop('disabled', false);
 }
 function enableRecipeSelect() {
+    $(".recipe").addClass('active');
     $(".btn-group.recipe-select").removeClass('disabled');
     $(".btn-group.recipe-select").find('.btn').removeClass('disabled');
     $(".selectpicker.recipe-select").removeAttr('disabled');

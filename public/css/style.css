@@ -236,7 +236,9 @@ img::-moz-selection {
 .thumbnail-gallery div {
   margin-bottom: 15px;
 }
-
+.fc-day h5 {
+  margin-bottom: 5px;
+}
 /* Recipe View */
 .btn-tag {
   border: none;

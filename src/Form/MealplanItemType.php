@@ -44,7 +44,7 @@ class MealplanItemType extends AbstractType
             'widget' => 'single_text',
             'label' => false,
             'attr' => [
-                    'class' => 'form-control',
+                    'class' => 'form-control d-none',
                     'type' => 'date'
                 ]
             ])
@@ -55,28 +55,23 @@ class MealplanItemType extends AbstractType
                 'Dinner' => 'Dinner',
                 'Snacks' => 'Snacks'
                 ],
-            'label' => 'Choose Type',
+            'label' => 'Meal for',
             'attr' => [
                     'class' => 'selectpicker'
                 ]
             ])
-        ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
-                'label' => 'Choose Food',
-                'required' => true,
+        ->add('name', TextType::class, [
+                'label' => false,
                 'attr' => [
-                    'class' => 'selectpicker food-select',
-                    'multiple' => true,
-                    'data-live-search' => true,
-                    'data-max-options' => '1'
+                    'placeholder' => 'Name',
+                    'class' => 'food-select'
                 ]
                 ]
-        )
+            )
         ->add('recipeId', EntityType::class, [
                 'class'         => Recipe::class,
                 'choice_label'  => 'name',
-                'label' => 'Choose Recipe',
+                'label' => false,
                 'required' => true,
                 'attr' => [
                     'class' => 'selectpicker recipe-select',

@@ -72,7 +72,7 @@ class GrocerylistItem
         return $this->grocerylistId;
     }
 
-   /**
+    /**
      * Set name
      *
      * @param string $name
