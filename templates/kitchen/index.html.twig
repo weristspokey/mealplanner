@@ -14,9 +14,11 @@
                     <ul class="list-group">
                         <li class="list-group-item text-center">
                             {{ kitchenList.name }} 
-                            <a href="{{ path('kitchenList_delete', {'id': kitchenList.id }) }}">
+                            <a class="delete-kitchenList-button" href="#">
                                 <span title="Delete KitchenList" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>  
+                            <form class="delete-form" action="{{ path('kitchenList_delete', {'id': kitchenList.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         <li class="list-group-item text-center">
                             <div class="row">
@@ -32,9 +34,11 @@
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
                             {{ item.name}}                      
-                            <a href="{{ path('kitchenListItem_delete', {'id': item.id }) }}">
+                            <a href="#" class="delete-kitchenList-item-button">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
+                            <form class="delete-form" action="{{ path('kitchenListItem_delete', {'id': item.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         {% endfor %}
                     </ul>

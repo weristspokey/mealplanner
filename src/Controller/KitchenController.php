@@ -192,7 +192,8 @@ class KitchenController extends Controller
     /**
      * Deletes a kitchenList entity.
      *
-     * @Route("/{id}", name="kitchenList_delete")
+     * @Route("/delete/{id}", name="kitchenList_delete")
+     * @Method({"POST"})
      */
     public function deleteAction(Request $request, KitchenList $kitchenList)
     {
