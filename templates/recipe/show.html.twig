@@ -24,10 +24,25 @@
                 </div>
                 <div class="col-md-4 text-center">
                     <h3>Ingredients</h3>
+                    <ul class="nav nav-pills serving-nav">
+                        <p style="margin-top: 5px; margin-right: 5px">Servings:</p>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-value="1" href="#">1</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-value="2" href="#">2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-value="4" href="#">4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-value="6" href="#">6</a>
+                        </li>
+                    </ul>
                     <ul class="list-group">
                         {% for item in recipeItems %}
                         <li class="list-group-item">
-                            {{item.value}} {{item.unit}} {{item.foodId.name}} 
+                            <span class="item-value">{{item.value}}</span> {{item.unit}} {{item.foodId.name}} 
                             <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>

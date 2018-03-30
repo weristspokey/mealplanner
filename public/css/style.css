@@ -170,6 +170,12 @@ img::selection {
 img::-moz-selection {
   background: transparent; }
 
+.nav-pills .nav-link:hover {
+  background-color: #E8E8E8;
+}
+.nav-pills .nav-link.active {
+  background-color: #9D759D;
+}
 /* Index View */
 .masthead {
   display: table;

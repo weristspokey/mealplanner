@@ -54,6 +54,18 @@ $(document).ready(function(){
             element.remove();
         }
     });
+
+    $('.serving-nav .nav-item .nav-link').click(function(event) {
+        event.preventDefault();
+        $('.nav-link').removeClass('active');
+        $(this).addClass('active');
+        var multiplikator = this.getAttribute('data-value');
+        $('.item-value').each(function(){
+            var value = parseInt($(this).html());
+            $(this).html(value * multiplikator);
+        });
+
+    });
 });
 
 function disableFoodSelect() {
