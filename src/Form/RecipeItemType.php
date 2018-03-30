@@ -47,7 +47,8 @@ class RecipeItemType extends AbstractType
                 'choices'  => array(
                     'ml' => 'ml',
                     'mg' => 'mg',
-                    'l'  => 'l'
+                    'l'  => 'l',
+                    'Stück' => 'Stück'
                 )]
             )
             ->add('foodId', EntityType::class, [
@@ -57,7 +58,6 @@ class RecipeItemType extends AbstractType
                 'required' => true
                 ]
             );
-            // ->add('Submit', SubmitType::class);
 
     }
     

@@ -149,7 +149,7 @@ class GrocerylistController extends Controller
             'kitchenLists' => $kitchenLists,
             'moveItemForm' => $moveItemForm->createView(),
             'forms' => $views,
-            //'form' => $form->createView()
+            'form' => $form->createView()
 
         ));
     }

@@ -25,21 +25,18 @@
                 <div class="col-md-4 text-center">
                     <h3>Ingredients</h3>
                     <ul class="list-group">
-                        <li class="list-group-item text-center">
-                            <a id="addRecipeItemBtn">
-                                <span class="fa fa-edit" aria-hidden="true">Add RecipeItem</span>
-                            </a>
-                        </li>
                         {% for item in recipeItems %}
                         <li class="list-group-item">
                             {{item.value}} {{item.unit}} {{item.foodId.name}} 
-                            <a href="{{ path('recipeItem_delete', {'id': item.id }) }}">
+                            <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
+                            <form class="delete-form" action="{{ path('recipeItem_delete', {'id': item.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         {% endfor %}
                      </ul>
-                    <div class="row recipeItemsRow" style="display: none; margin-top:10px">
+                    <div class="row" style="margin-top:10px">
                         <div class="col-md-12 mx-auto">
                             {% form_theme form
                             'jquery.collection.html.twig'

@@ -5,7 +5,11 @@
             {% include ('flash-messages.html.twig') %}
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-center">Grocerylists</h1>
+                    <h1 class="text-center">Grocerylists
+                        <a href="#" data-toggle="modal" data-target="#AddGrocerylistModal">
+                        <span title="Add" class="fa fa-plus pull-right" aria-hidden="true"></span>
+                        </a>
+                    </h1>
                 </div>
             </div>
             <div class="row">
@@ -83,9 +87,9 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                             form_start(form) 
-                                 form_widget(form) 
-                            form_end(form) 
+                            {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>

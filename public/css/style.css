@@ -379,6 +379,10 @@ form input[value="Delete"] {
 input#tag_color {
   height: 40px;
 }
+form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .col-md-3,
+form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .col-md-6 {
+  padding: 0;
+}
 /* Grocerylist View */
 /* Kitchen View */
 
