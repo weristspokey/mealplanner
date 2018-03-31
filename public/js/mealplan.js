@@ -30,7 +30,6 @@ $(document).ready(function(){
 
     var calendar = $('#calendar').fullCalendar({
         defaultView: 'basicWeek',
-        //slotLabelFormat: '"Breakfast"',
         slotLabelInterval: {hours:6},
         slotDuration: '06:00:00',
         titleFormat: 'DD. MMMM YYYY',
@@ -40,8 +39,8 @@ $(document).ready(function(){
         firstDay: 1,
         editable:true,
         header:{
-            left:'',
-            center:'title'
+            left:'title',
+            center:''
         },
         //events: '',
         // selectable:true,
