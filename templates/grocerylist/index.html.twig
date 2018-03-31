@@ -36,7 +36,7 @@
                         </li>{# href="{{ path('grocerylistItem_move', {'id': item.id })}}"#}
                         {% for item in grocerylist.grocerylistItems %}
                         <li class="list-group-item text-center">
-                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
+                            <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
                             {{ item.name}}
