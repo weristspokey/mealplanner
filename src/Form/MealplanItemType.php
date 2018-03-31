@@ -62,6 +62,7 @@ class MealplanItemType extends AbstractType
             ])
         ->add('name', TextType::class, [
                 'label' => false,
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Name',
                     'class' => 'food-select'

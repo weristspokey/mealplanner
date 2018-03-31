@@ -23,9 +23,9 @@ class UserController extends Controller
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
             array('userId' => $userId)
             );
-        // $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
-        //     array('userId' => $userId)
-        //     );
+        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+             array('userId' => $userId)
+             );
         $tags = $em->getRepository('App:Tag')->findBy(
             array('userId' => $userId)
             );
@@ -35,7 +35,7 @@ class UserController extends Controller
         return $this->render('profile/index.html.twig', [
             'grocerylists' => $grocerylists,
             'kitchenLists' => $kitchenLists,
-            // 'mealplanItems' => $mealplanItems,
+            'mealplanItems' => $mealplanItems,
             'tags' => $tags,
             'recipes' => $recipes
         ]);

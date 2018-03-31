@@ -207,7 +207,9 @@ img::-moz-selection {
     .masthead .intro-body .brand-heading {
       font-size: 50px; }
     .masthead .intro-body .intro-text {
-      font-size: 18px; }
+      font-size: 18px;
+      font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      text-transform: uppercase;  }
   @media (min-width: 768px) {
     .masthead {
       height: 80%;
@@ -280,6 +282,17 @@ form button[data-id="tagFilter"] {
   -moz-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
 }
+#recipes-gallery .jplist-pagination li.active {
+   background-color: #9D759D;
+   border-color: #8C4973 !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+#recipes-gallery .jplist-pagination li.active a{
+  color: white;
+}
+
 #recipes-gallery .jplist-drop-down ul {
   width: 100%;
 }
@@ -405,8 +418,13 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
   padding: 0;
 }
 /* Grocerylist View */
+.grocerylist li:first-child, .grocerylist li:nth-child(2)  {
+  font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
 /* Kitchen View */
-
+.kitchenList li:first-child, .kitchenList li:nth-child(2)  {
+  font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
 .card {
     border-color: #8C4973; 
     text-align:center; 
