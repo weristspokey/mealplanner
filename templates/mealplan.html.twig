@@ -4,9 +4,10 @@
         <div class="container">
             {% include ('flash-messages.html.twig') %}
             <h1 class="text-center">Weekly mealplan</h1>
-            <ul id="mealplanItemList" class="d-none">
+            <ul id="mealplanItemList">
              {% for item in mealplanItems %}
-             <li data-item-id="{{item.mealplanId| date('Y-m-d')}}"
+             <li data-item-mealplan="{{item.mealplanId| date('Y-m-d')}}"
+                data-item-id="{{item.id}}"
                 {% if item.name %}
                     data-item-name="{{item.name}}"
                 {% endif %}

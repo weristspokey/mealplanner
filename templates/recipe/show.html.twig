@@ -13,7 +13,10 @@
                         </p>
                     </div>
                     <div class="thumbnail-box text-center">
-                        <h1 class="title">{{ recipe.name }}</h1>
+                        {% for tag in tags %}
+                            <button class="btn btn-tag pull-left" style="background-color:{{ tag.color }}; margin-right: 5px">{{tag.name}}</button>
+                        {% endfor %}<br>
+                        <h1 class="title pull-left" style="margin-top:10px">{{ recipe.name }}</h1>
                     </div>
                 </div>
             </div>

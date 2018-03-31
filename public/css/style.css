@@ -176,6 +176,13 @@ img::-moz-selection {
 .nav-pills .nav-link.active {
   background-color: #9D759D;
 }
+.grocerylist .list-group-item:first-child, .kitchenList .list-group-item:first-child {
+  background-color: #9d5281;
+  color: white;
+} 
+.grocerylist .list-group-item:first-child a, .kitchenList .list-group-item:first-child a {
+  color: white;
+}
 /* Index View */
 .masthead {
   display: table;
@@ -244,6 +251,9 @@ img::-moz-selection {
   border: none;
   color: #FFFFFF;
   border-radius: 20px !important;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.7rem;
+  line-height: 1.0;
 }
 .btn-tag:hover {
   color: #FFFFFF;
@@ -286,14 +296,17 @@ form button[data-id="tagFilter"] {
   width: 100%;
 }
 .thumbnail-box {
-background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.8);
+  color: #9D759D;
   position: absolute;
   width: 100%; 
   height: auto;
-  top: 10%;
-    overflow: hidden;
-    padding: 10px;
+  top: 60%;
+  overflow: hidden;
+  padding: 10px;
+  padding-left: 40px;
 }
+
 .thumbnail-box .title{
     margin: 0px;
 }
@@ -509,7 +522,7 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
     text-transform: none;
 }
 .jplist-panel .jplist-drop-down .btn-tag {
-    border: none;
+  border: none;
   color: #FFFFFF !important;
   border-radius: 20px !important;
   text-shadow: none;

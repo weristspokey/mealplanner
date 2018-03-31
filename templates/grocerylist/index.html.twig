@@ -15,7 +15,7 @@
             <div class="row">
             {% for grocerylist in grocerylists %}
                 <div class="col-md-3" style="margin-bottom: 20px">
-                    <ul class="list-group">
+                    <ul class="list-group grocerylist">
                         <li class="list-group-item text-center">
                             {{ grocerylist.name }}
                             <a class="delete-grocerylist-button" data-item-id="{{grocerylist.id}}" href="#">

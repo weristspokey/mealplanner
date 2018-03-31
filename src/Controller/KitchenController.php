@@ -58,6 +58,14 @@ class KitchenController extends Controller
                 $kitchenListItem->setKitchenListId($kitchenList);
                 $em->persist($kitchenListItem);
                 $em->flush();
+                unset($kitchenListItem);
+                unset($form);
+                $kitchenListItem = new kitchenListItem();
+                $form = $this->get('form.factory')->createNamedBuilder( 
+                    $form_name, 
+                    kitchenListItemType::class, 
+                    $kitchenListItem
+                    )->getForm();
             }
 
             $views[$kitchenList->getId()] = $form->createView();

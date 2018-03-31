@@ -58,7 +58,7 @@ $(document).ready(function(){
         var calendarRow = $(this);
         var targetId = calendarRow.attr('id');
         $('#mealplanItemList li').each(function() {
-            if (this.getAttribute('data-item-id')== targetId) {
+            if (this.getAttribute('data-item-mealplan')== targetId) {
                 if (this.getAttribute('data-category') == "Breakfast") {
                     if(this.hasAttribute('data-item-name')) {
                         var item = this.getAttribute('data-item-name');
@@ -88,10 +88,11 @@ $(document).ready(function(){
                     if(this.hasAttribute('data-item-recipe')) {
                         var item = this.getAttribute('data-item-recipe');
                     }
+                    var id = this.getAttribute('data-item-id');
                     var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
-                    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a></li>" +
-                    "<form class='delete-form' action='{{ path('mealplanItem_delete', {'id':" + targetId + " }) }}' method='POST'>" +
-                    "</form>";
+                    "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
+                    "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
+                    "</form></li>";
                     dinnerSection.append(content);
                 };
                 if (this.getAttribute('data-category') == "Snacks") {
