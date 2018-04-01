@@ -1,6 +1,6 @@
 $(document).ready(function(){
   $('#mealplanSlider').bxSlider({
-    slideWidth: 353,
+    slideWidth: 300,
     minSlides: 1,
     maxSlides: 2,
     moveSlides: 1,

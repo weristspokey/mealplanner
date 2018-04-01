@@ -61,29 +61,30 @@ class RecipeType extends AbstractType
                 'placeholder' => 'Description',
                 'rows' => '9']]
             )
-            ->add('tags', TaglistType::class, array(
-                'label' => false,
-                'required' => true,
-                'attr' => [
-                    'data-role' => 'tagsinput',
-                    'placeholder' => 'Tags',
-                    'class' => 'selectpicker',
-                    'data-live-search' => 'true'
-                ]
-            ))
-            // ->add('tags', EntityType::class, array(
-            //     'class' => Tag::class,
+            // ->add('tags', TaglistType::class, array(
             //     'label' => false,
             //     'required' => true,
             //     'attr' => [
+            //         'data-role' => 'tagsinput',
             //         'placeholder' => 'Tags',
             //         'class' => 'selectpicker',
-            //         'multiple' => 'true'
-            //     ],
-            //     'query_builder' => function (TagRepository $repo) use ($user){
-            //         return $repo->showListsOfCurrentUser($user);
-            //         }
+            //         'data-live-search' => 'true'
+            //     ]
             // ))
+            ->add('tags', EntityType::class, array(
+                'class' => Tag::class,
+                'label' => false,
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Tags',
+                    'class' => 'selectpicker col-md-6',
+                    'data-live-search' => true,
+                    'multiple' => true
+                ],
+                'query_builder' => function (TagRepository $repo) use ($user){
+                    return $repo->showListsOfCurrentUser($user);
+                    }
+            ))
             ->add('image', FileType::class, [
                 'label' => false,
                 'required' => false,
