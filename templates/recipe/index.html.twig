@@ -5,49 +5,116 @@
             {% include ('flash-messages.html.twig') %}
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-center">Recipes</h1>
+                    <h1 class="text-center">Recipes
+                        <a href="{{ path('recipe_new') }}">
+                        <span title="Add" class="fa fa-plus pull-right" aria-hidden="true"></span>
+                        </a>
+                    </h1>
                 </div>
             </div>
-            <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-3 m-auto">
-                    <div class="card">
-                        <div class="card-header">
-                            <a href="{{ path('recipe_new') }}">
-                        <span class="fa fa-plus" aria-hidden="true"> Add Recipe</span>
-                    </a>
-                        </div>
+            <div id="recipes-gallery">
+                <div class="jplist-panel row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #9D759D">                       
+                    <!-- filter by title -->
+                    <div class="text-filter-box col-md-2">
+
+                        <input 
+                            data-path=".title" 
+                           type="text" 
+                           value="" 
+                           placeholder="Filter by Name" 
+                           data-control-type="textbox" 
+                           data-control-name="title-filter" 
+                           data-control-action="filter"
+                        />
                     </div>
-                </div>
-                <div class="col-md-3 m-auto">
-                    <div class="card">
-                        <div class="card-header">
-                           <a href="{{ path('tag_new') }}">
-                        <span class="fa fa-plus" aria-hidden="true"> Add Tag</span>
-                    </a>
-                        </div>
+
+                    <!-- Filter DropDown Control -->
+                    <div 
+                        class="jplist-drop-down col-md-2" 
+                        data-control-type="filter-drop-down" 
+                        data-control-name="category-filter" 
+                        data-control-action="filter">
+                        <ul>
+                            <li><span data-path="default">Filter by Tag</span></li>
+                            {% for tag in tags %}
+                            <li>
+                                <span data-path=".{{tag.name}}">
+                                    <button class="btn btn-tag" style="background-color:{{ tag.color }}" role="button"> {{ tag.name }}</button>
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                </div>
-            </div>
-            <div class="row thumbnail-gallery recipes-gallery">
+                </div>                
+                <div class="row thumbnail-gallery">
                 {% for recipe in recipes %}
-                <div class="col-lg-3 col-sm-3 col-md-3">
-                    <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
-                    <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}"><div class="thumbnail-hoverbox">
-                        <p>{{ recipe.name }}</p>
-                        <p style="font-size:14px">Tags:
-                        {% for tag in recipe.tags %}
-                           {{tag.name}}
-                        {% endfor %}
-                        </p>
-                    </div></a>
-                </div>
+                    <div class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
+                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
+                        <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}">
+                            <div class="thumbnail-hoverbox">
+                                <h3 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
+                                <p style="font-size:14px">Tags:
+                                {% for tag in recipe.tags %}
+                                    <span class="{{tag.name}}">{{tag.name}}</span>
+                                {% endfor %}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
                 {% endfor %}
-            </div>
-            <div class="row">
-                <div class="navigation mx-auto">
-                    {{ knp_pagination_render(recipes) }}
+                </div>
+                <div class="jplist-panel row">                       
+                        <ul 
+                            class="pagination pull-left jplist-pagination m-auto"
+                            data-control-type="boot-pagination" 
+                            data-control-name="paging" 
+                            data-control-action="paging"
+                            data-range="4"
+                            data-mode="google-like">
+                        </ul>
+                        <!-- pagination info label -->
+                        <div 
+                            class="pull-left jplist-pagination-info d-none"
+                            data-type="<strong>Page {current} of {pages}</strong><br/> <small>{start} - {end} of {all}</small>" 
+                            data-control-type="pagination-info" 
+                            data-control-name="paging" 
+                            data-control-action="paging">
+                        </div>
+         
+                        <!-- items per page dropdown -->
+                        <div 
+                            class="dropdown pull-left jplist-items-per-page d-none"
+                            data-control-type="boot-items-per-page-dropdown" 
+                            data-control-name="paging" 
+                            data-control-action="paging">
+                            <button 
+                                class="btn btn-primary dropdown-toggle" 
+                                type="button" 
+                                data-toggle="dropdown" 
+                                id="dropdown-menu-1"
+                                aria-expanded="true">                   
+                                <span data-type="selected-text">Items per Page</span>
+                                <span class="caret"></span>                     
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-menu-1">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="3">3 per page</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="5">5 per page</a>
+                                </li> 
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="8"  data-default="true">8 per page</a>
+                                </li>
+                                <li role="presentation" class="divider"></li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="all">View All</a>
+                                </li>
+                            </ul>                        
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </div> 
     </section>
 {% endblock %}

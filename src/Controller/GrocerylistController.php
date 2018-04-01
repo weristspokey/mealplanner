@@ -12,6 +12,7 @@ use App\Form\GrocerylistItemType;
 use App\Repository\KitchenListRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -22,6 +23,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Grocerylist controller.
@@ -68,6 +70,14 @@ class GrocerylistController extends Controller
                 $grocerylistItem->setGrocerylistId($grocerylist);
                 $em->persist($grocerylistItem);
                 $em->flush();
+                unset($grocerylistItem);
+                unset($form);
+                $grocerylistItem = new GrocerylistItem();
+                $form = $this->get('form.factory')->createNamedBuilder( 
+                    $form_name, 
+                    GrocerylistItemType::class, 
+                    $grocerylistItem
+                    )->getForm();
             }
 
             $views[$grocerylist->getId()] = $form->createView();
@@ -88,16 +98,13 @@ class GrocerylistController extends Controller
                     return $repo->showListsOfCurrentUser($userId);
                     }
                 ])
-            ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+            ->add('name', TextType::class, [
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker d-none',
-                    'name' => 'food-id'
-                    ]
-                ]
+                    'placeholder' => 'Add item',
+                    'class' => 'd-none'
+                ]]
             )
             ->add('submit', SubmitType::class)
             ->getForm();
@@ -168,6 +175,7 @@ class GrocerylistController extends Controller
             $em->persist($grocerylist);
             $em->flush();
 
+            $this->addFlash('success', 'New Grocerylist added!');
             return $this->redirectToRoute('grocerylist');
         }
 
@@ -224,7 +232,8 @@ class GrocerylistController extends Controller
     /**
      * Deletes a grocerylist entity.
      *
-     * @Route("/grocerylist_delete/{id}", name="grocerylist_delete")
+     * @Route("/delete/{id}", name="grocerylist_delete")
+     * @Method({"POST"})
      */
     public function deleteAction(Request $request, Grocerylist $grocerylist)
     {
@@ -239,6 +248,8 @@ class GrocerylistController extends Controller
         $em->remove($grocerylist);
         $em->flush();
         $this->addFlash('success', 'Grocerylist deleted!');
+
+        //return new JsonResponse(array('message' => 'Success!'), 200);
         return $this->redirectToRoute('grocerylist');
     }
 
@@ -261,7 +272,8 @@ class GrocerylistController extends Controller
     /**
      * Deletes a grocerylistItem entity.
      *
-     * @Route("/item_delete/{id}", name="grocerylistItem_delete")
+     * @Route("/delete_item/{id}", name="grocerylistItem_delete")
+     * @Method({"POST"})
      */
     public function deleteItemAction(Request $request, GrocerylistItem $grocerylistItem)
     {

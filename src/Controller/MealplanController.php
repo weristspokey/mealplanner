@@ -38,85 +38,109 @@ class MealplanController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
         $user = $this->getUser();
-        $days = array(
-            'today' => date("D d.m.y", time()),
-            'tomorrow' => date("D d.m.y", time() + 86400),
-            'twoDaysFromNow' => date("D d.m.y", time() + (2*86400)),
-            'threeDaysFromNow' => date("D d.m.y", time() + (3*86400)),
-            'fourDaysFromNow' => date("D d.m.y", time() + (4*86400)),
-            'fiveDaysFromNow' => date("D d.m.y", time() + (5*86400)),
-            'sixDaysFromNow' => date("D d.m.y", time() + (6*86400)),
-         );
+        // $days = array(
+        //     'today' => date("D d.m.y", time()),
+        //     'tomorrow' => date("D d.m.y", time() + 86400),
+        //     'twoDaysFromNow' => date("D d.m.y", time() + (2*86400)),
+        //     'threeDaysFromNow' => date("D d.m.y", time() + (3*86400)),
+        //     'fourDaysFromNow' => date("D d.m.y", time() + (4*86400)),
+        //     'fiveDaysFromNow' => date("D d.m.y", time() + (5*86400)),
+        //     'sixDaysFromNow' => date("D d.m.y", time() + (6*86400)),
+        //  );
 
         $food = $this->getDoctrine()->getRepository('App:Food')->findAll();
 
-        $recipes = $this->getDoctrine()->getRepository('App:Recipe')->findAll();
-        $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
-            ->findBy(
-                ['userId' => $userId],
-                ['date' => 'ASC']
-        );    
+        $recipes = $this->getDoctrine()->getRepository('App:Recipe')->findBy(
+                ['userId' => $userId]);
+        $mealplanItems = $this->getDoctrine()->getRepository('App:MealplanItem')->findAll();
+        // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
+        //     ->findBy(
+        //         ['userId' => $userId],
+        //         ['date' => 'ASC']
+        // );    
 
-        $mealplanItem = new MealplanItem();
-        $views = [];
-        foreach ($mealplans as $mealplan) 
-        {
-            $form_name = "form_".$mealplan->getId();
+        // $mealplanItem = new MealplanItem();
+        // $views = [];
+        
+        // foreach ($mealplans as $mealplan) 
+        // {
+        //     $form_name = "form_".$mealplan->getId();
+        //     dump($mealplan->getDate()->format('Y-m-d'));
+        //     $form = $this->get('form.factory')->createNamedBuilder( 
+        //       $form_name, 
+        //       MealplanItemType::class, 
+        //       $mealplanItem
+        //    )->getForm();
 
-            $form = $this->get('form.factory')->createNamedBuilder( 
-              $form_name, 
-              MealplanItemType::class, 
-              $mealplanItem
-           )->getForm();
+        //     $form->handleRequest($request);
 
-            $form->handleRequest($request);
+        //     if ($form->isSubmitted() && $form->isValid()) 
+        //     {
+        //         $mealplanItem->setMealplanId($mealplan);
+        //         $em->persist($mealplanItem);
+        //         $em->flush();
+        //     }
 
-            if ($form->isSubmitted() && $form->isValid()) 
+        //     $views[$mealplan->getId()] = $form->createView();
+        // }
+
+
+
+        // // Add new mealplan
+        // $newMealplan = new Mealplan();
+        // $addMealplanForm = $this->createForm(MealplanType::class, $newMealplan);
+        // $addMealplanForm->handleRequest($request);
+
+        // if ($addMealplanForm->isSubmitted() && $addMealplanForm->isValid()) 
+        //     {
+        //         $newMealplan->setUserId($user);
+        //         //$newDate = $newMealplan->getDate()->format('Y-m-d');
+        //         //$newMealplan->setDate($newDate);
+        //         $em = $this->getDoctrine()->getManager();
+        //         $em->persist($newMealplan);
+        //         $em->flush();
+
+        //         // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
+        //         //     ->findBy(
+        //         //             ['userId' => $userId],
+        //         //             ['date' => 'ASC']
+        //         //     );    
+        //         $this->addFlash('success', 'New Mealplan added!');
+
+        //         return $this->redirectToRoute('mealplan');
+        //     }
+
+        // Add new item
+        $newMealplanItem = new MealplanItem();
+        $addMealplanItemForm = $this->createForm(MealplanItemType::class, $newMealplanItem);
+        $addMealplanItemForm->handleRequest($request);
+
+        if ($addMealplanItemForm->isSubmitted() && $addMealplanItemForm->isValid()) 
             {
-                $mealplanItem->setMealplanId($mealplan);
-                $em->persist($mealplanItem);
-                $em->flush();
-            }
-
-            $views[$mealplan->getId()] = $form->createView();
-        }
-
-
-        // Add new mealplan
-        $newMealplan = new Mealplan();
-        $addMealplanForm = $this->createForm(MealplanType::class, $newMealplan);
-        $addMealplanForm->handleRequest($request);
-
-        if ($addMealplanForm->isSubmitted() && $addMealplanForm->isValid()) 
-            {
-                $newMealplan->setUserId($user);
+                dump($newMealplanItem->getName());
+                $newMealplanItem->setUserId($user);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist($newMealplan);
+                $em->persist($newMealplanItem);
                 $em->flush();
-
-                // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
-                //     ->findBy(
-                //             ['userId' => $userId],
-                //             ['date' => 'ASC']
-                //     );    
-                $this->addFlash('success', 'New Mealplan added!');
 
                 return $this->redirectToRoute('mealplan');
             }
 
         return $this->render('mealplan.html.twig', [
-            'today' => $days['today'],
-            'tomorrow' => $days['tomorrow'],
-            'twoDaysFromNow' => $days['twoDaysFromNow'],
-            'threeDaysFromNow' => $days['threeDaysFromNow'],
-            'fourDaysFromNow' => $days['fourDaysFromNow'],
-            'fiveDaysFromNow' => $days['fiveDaysFromNow'],
-            'sixDaysFromNow' => $days['sixDaysFromNow'],
+            // 'today' => $days['today'],
+            // 'tomorrow' => $days['tomorrow'],
+            // 'twoDaysFromNow' => $days['twoDaysFromNow'],
+            // 'threeDaysFromNow' => $days['threeDaysFromNow'],
+            // 'fourDaysFromNow' => $days['fourDaysFromNow'],
+            // 'fiveDaysFromNow' => $days['fiveDaysFromNow'],
+            // 'sixDaysFromNow' => $days['sixDaysFromNow'],
             'food' => $food,
             'recipes' => $recipes,
-            'add_mealplan_form' => $addMealplanForm->createView(),
-            'mealplans' => $mealplans,
-            'forms' => $views,
+            //'add_mealplan_form' => $addMealplanForm->createView(),
+            //'mealplans' => $mealplans,
+            'newMealplanItemForm' => $addMealplanItemForm->createView(),
+            'mealplanItems' => $mealplanItems
+            //'forms' => $views,
         ]);
     }
 
@@ -149,11 +173,11 @@ class MealplanController extends Controller
      * Deletes a mealplanItem entity.
      *
      * @Route("/item_delete/{id}", name="mealplanItem_delete")
+     * @Method({"POST"})
      */
     public function deleteItemAction(Request $request, MealplanItem $mealplanItem)
     {
         $em = $this->getDoctrine()->getManager();
-
         $em->remove($mealplanItem);
         $em->flush();
 

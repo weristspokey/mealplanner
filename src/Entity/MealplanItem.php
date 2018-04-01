@@ -5,13 +5,14 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Food;
 use App\Entity\Mealplan;
+use App\Entity\User;
 use App\Entity\Recipe;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 /**
  * MealplanItem
- *@ORM\Entity
+ * @ORM\Entity
  * @ORM\Table(name="mealplan_item")
  */
 class MealplanItem
@@ -26,16 +27,22 @@ class MealplanItem
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Mealplan", inversedBy="mealplanItems")
-     * @ORM\JoinColumn(name="mealplan_id", referencedColumnName="id")
+     * @ORM\Column(name="mealplanId", type="date")
      */
     private $mealplanId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Food", inversedBy="mealplanItems")
-     * @ORM\JoinColumn(name="food_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="mealplanItems")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $foodId;
+    private $userId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Recipe", inversedBy="mealplanItems")
@@ -85,29 +92,53 @@ class MealplanItem
     }
 
     /**
-     * Set foodId
+     * Set userId
      *
-     * @param integer $foodId
+     * @param integer $userId
      *
-     * @return MealplanItem
+     * @return Mealplan
      */
-    public function setFoodId($foodId)
+    public function setUserId($userId)
     {
-        $this->foodId = $foodId;
+        $this->userId = $userId;
 
         return $this;
     }
 
     /**
-     * Get foodId
+     * Get userId
      *
      * @return int
      */
-    public function getFoodId()
+    public function getUserId()
     {
-        return $this->foodId;
+        return $this->userId;
     }
 
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Grocerylist
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
     /**
      * Set recipeId
      *

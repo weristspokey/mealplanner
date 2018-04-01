@@ -47,17 +47,18 @@ class RecipeItemType extends AbstractType
                 'choices'  => array(
                     'ml' => 'ml',
                     'mg' => 'mg',
-                    'l'  => 'l'
+                    'l'  => 'l',
+                    'Stück' => 'Stück'
                 )]
             )
-            ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+            ->add('name', TextType::class, [
                 'label' => false,
-                'required' => true
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Name'
+                ]
                 ]
             );
-            // ->add('Submit', SubmitType::class);
 
     }
     

@@ -2,10 +2,18 @@
 {% block body %}
     <section class="content-section">
         <div class="container">
-            <h1 class="text-center">Add Grocerylist</h1>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">Add Grocerylist</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" style="margin: 0 auto">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+                </div>
+            </div>
         </div>
     </section>
 {% endblock %}

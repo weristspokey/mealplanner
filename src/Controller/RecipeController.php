@@ -12,21 +12,19 @@ use App\Entity\RecipeItemCollection;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Form\RecipeType;
-use App\Form\RecipeItemType;
 use App\Form\RecipeItemCollectionType;
 use App\Form\TagSelectpickerType;
 use App\Entity\Tag;
+use App\Repository\RecipeRepository;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Recipe controller.
- *
  * @Route("recipe")
  */
 class RecipeController extends Controller
 {
-
     /**
      * Lists all recipe entities.
      *
@@ -36,26 +34,18 @@ class RecipeController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $userId = $this->getUser()->getId();
 
-        $recipes = $em->getRepository('App:Recipe')->findBy(
-            array('userId' => $userId)
-            );
-
-        $recipePaginator = $this->get('knp_paginator');
-        $pagination = $recipePaginator->paginate(
-            $recipes,
-            $request->query->getInt('page', 1),
-            8
-            );
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
+        $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAllRecipesOfCurrentUser($userId);
 
         return $this->render('recipe/index.html.twig', [
-            'recipes' => $pagination
+            'recipes' => $recipes,
+            'tags' => $tags
         ]);
     }
 
-/**
+    /**
      * Creates a new recipe entity.
      *
      * @Route("/new", name="recipe_new")
@@ -63,42 +53,26 @@ class RecipeController extends Controller
      */
     public function newAction(Request $request, FileUploader $fileUploader)
     {
-        $recipe = new Recipe();
-        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
 
-        // $recipeItem = new RecipeItem();
-        // $food = $em->getRepository('App:Food')->find(3);
-        // $recipeItem->setFoodId($food);
-        // $recipeItem->setValue(2);
-        // $recipeItem->setUnit('ml');
-        // $recipeItem->setRecipeId($recipe);
+        $recipe = new Recipe();
+        
         $newRecipeForm = $this->createForm(RecipeType::class, $recipe);
         $newRecipeForm->handleRequest($request);
 
         if ($newRecipeForm->isSubmitted() && $newRecipeForm->isValid()) {
             $recipeImage = $recipe->getImage();
             $recipeImageName = $fileUploader->upload($recipeImage);
-            // $recipeImage = $recipe->getImage();
-            // $recipeImageName = md5(uniqid()).'.'.$recipeImage->guessExtension();
-            // $recipeImage->move(
-            //     $this->getParameter('image_directory'),
-            //     $recipeImageName
-            // );
-
-            // $recipe->addRecipeItem($recipeItem);
             $recipe->setImage($recipeImageName);
             $tags = $recipe->getTags();
-
             $recipe->setUserId($user);
-            $em = $this->getDoctrine()->getManager();
             
             $em->persist($recipe);
-            // $em->persist($recipeItem);
             $em->flush();
             $this->addFlash('success', 'New Recipe added!');
+            
             return $this->redirectToRoute('recipe_index');
-
         }
 
         return $this->render('recipe/new.html.twig', array(
@@ -117,23 +91,12 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
+
         $tags = $recipe->getTags();
         $recipeItems = $recipe->getRecipeItems();
         $recipeItem = new RecipeItem();
 
-        $newRecipeItemForm = $this->createForm(RecipeItemType::class, $recipeItem);
-        $newRecipeItemForm->handleRequest($request);
         $deleteForm = $this->createDeleteForm($recipe);
-
-        if ($newRecipeItemForm->isSubmitted() && $newRecipeItemForm->isValid()) {
-
-            $recipeItem->setRecipeId($recipe);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($recipeItem);
-            $em->flush();
-
-            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
-        }
 
         /* NEW FORM */
         $recipeItemCollection = new RecipeItemCollection();
@@ -146,7 +109,7 @@ class RecipeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$data = $form->getData();
+
             $item->setRecipeId($recipe);
             $em = $this->getDoctrine()->getManager();
             $em->persist($item);
@@ -162,7 +125,6 @@ class RecipeController extends Controller
             'recipeItems' => $recipeItems,
             'tags' => $tags,
             'delete_form' => $deleteForm->createView(),
-            'newform' => $newRecipeItemForm->createView(),
             'form' => $form->createView(),
             'data' => $recipeItemCollection,
         ]);
@@ -210,12 +172,26 @@ class RecipeController extends Controller
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
+        $em = $this->getDoctrine()->getManager();
+        $recipeId = $recipe->getId();
+        $recipeItems = $em->getRepository('App:RecipeItem')->findBy(
+            array('recipeId' => $recipeId)
+            );
+        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+            array('recipeId' => $recipeId)
+            );
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);
+            foreach ($recipeItems as $item) {
+                $em->remove($item);
+            }
+            foreach ($mealplanItems as $item) {
+                $em->remove($item);
+            }
             $em->flush();
             $this->addFlash('success', 'Recipe deleted!');
         }
@@ -243,15 +219,17 @@ class RecipeController extends Controller
      * Deletes a recipeItem entity.
      *
      * @Route("/item_delete/{id}", name="recipeItem_delete")
+     * @Method({"POST"})
      */
-    public function deleteItemAction(Request $request, Recipe $recipe, RecipeItem $recipeItem)
+    public function deleteItemAction(Request $request, RecipeItem $recipeItem)
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($recipeItem);
         $em->flush();
 
-        return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+        return $this->redirectToRoute('recipe_index');
     }
-}
 
+
+}
 ?>

@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Food;
 use App\Entity\KitchenList;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,10 +30,11 @@ class KitchenListItem
     private $kitchenListId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Food", inversedBy="kitchenListItems")
-     * @ORM\JoinColumn(name="food_id", referencedColumnName="id")
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $foodId;
+    private $name;
 
     /**
      * Get id
@@ -70,27 +70,27 @@ class KitchenListItem
         return $this->kitchenListId;
     }
 
-    /**
-     * Set foodId
+   /**
+     * Set name
      *
-     * @param integer $foodId
+     * @param string $name
      *
-     * @return KitchenListItem
+     * @return Grocerylist
      */
-    public function setFoodId($foodId)
+    public function setName($name)
     {
-        $this->foodId = $foodId;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get foodId
+     * Get name
      *
-     * @return int
+     * @return string
      */
-    public function getFoodId()
+    public function getName()
     {
-        return $this->foodId;
+        return $this->name;
     }
 }

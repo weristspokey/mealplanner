@@ -24,6 +24,14 @@ $(document).ready(function(){
     $(this).closest('.slide').hide();
   });
 
+  $('.addMealplanItemButton').click(function() {
+    var target = this.closest('.fc-day-header').getAttribute('data-date');
+    $("#MealplanItem_mealplanId").val(target); 
+    //document.getElementById('MealplanItem_mealplanId').val(target);
+    //$("#"+target).show();
+    //$("#"+target).show();
+    //alert(target);
+  });
 });
 
 /*
