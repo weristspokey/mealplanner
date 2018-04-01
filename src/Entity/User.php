@@ -10,7 +10,7 @@ use App\Entity\Recipe;
 use App\Entity\Tag;
 use App\Entity\Grocerylist;
 use App\Entity\KitchenList;
-use App\Entity\Mealplan;
+use App\Entity\MealplanItem;
 /**
  * User
  *
@@ -25,7 +25,7 @@ class User implements UserInterface, \Serializable
         $this->tags = new ArrayCollection();
         $this->grocerylists = new ArrayCollection();
         $this->kitchenLists = new ArrayCollection();
-        $this->mealplans = new ArrayCollection();
+        $this->mealplanItems = new ArrayCollection();
     }
 
     /**
@@ -81,9 +81,9 @@ class User implements UserInterface, \Serializable
     private $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mealplan", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="MealplanItem", mappedBy="id")
      */
-    private $mealplans;
+    private $mealplanItems;
 
     /**
      * Get id
@@ -369,21 +369,21 @@ class User implements UserInterface, \Serializable
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMealplans()
+    public function getMealplanItems()
     {
-        return $this->mealplans;
+        return $this->mealplanItems;
     }
 
     /**
      * Add mealplan
      *
-     * @param \App\Entity\Mealplan $mealplan
+     * @param \App\Entity\MealplanItem $mealplanItem
      *
      * @return User
      */
-    public function addMealplan(\App\Entity\Mealplan $mealplan)
+    public function addMealplanItem(\App\Entity\MealplanItem $mealplanItem)
     {
-        $this->mealplans[] = $mealplan;
+        $this->mealplanItems[] = $mealplanItems;
 
         return $this;
     }
@@ -391,11 +391,11 @@ class User implements UserInterface, \Serializable
     /**
      * Remove mealplan
      *
-     * @param \App\Entity\Mealplan $mealplan
+     * @param \App\Entity\MealplanItem $mealplanItem
      */
-    public function removeMealplan(\App\Entity\Mealplan $mealplan)
+    public function removeMealplanItem(\App\Entity\MealplanItem $mealplanItem)
     {
-        $this->mealplans->removeElement($mealplan);
+        $this->mealplanItems->removeElement($mealplanItem);
     }
 
 }

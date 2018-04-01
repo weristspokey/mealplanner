@@ -30,11 +30,12 @@ class RecipeItem
      */
     private $recipeId;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="Food", inversedBy="recipeItems")
-     * @ORM\JoinColumn(name="food_id", referencedColumnName="id")
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $foodId;
+    private $name;
 
     /**
      * @var int
@@ -85,29 +86,29 @@ class RecipeItem
     }
 
     /**
-     * Set foodId
+     * Set name
      *
-     * @param Food $foodId
+     * @param string $name
      *
-     * @return RecipeItem
+     * @return Grocerylist
      */
-    public function setFoodId(Food $foodId)
+    public function setName($name)
     {
-        $this->foodId = $foodId;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get foodId
+     * Get name
      *
-     * @return Food
+     * @return string
      */
-    public function getFoodId()
+    public function getName()
     {
-        return $this->foodId;
+        return $this->name;
     }
-
+    
     /**
      * Set value
      *

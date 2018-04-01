@@ -13,7 +13,10 @@
                         </p>
                     </div>
                     <div class="thumbnail-box text-center">
-                        <h1 class="title">{{ recipe.name }}</h1>
+                        {% for tag in tags %}
+                            <button class="btn btn-tag pull-left" style="background-color:{{ tag.color }}; margin-right: 5px">{{tag.name}}</button>
+                        {% endfor %}<br>
+                        <h1 class="title pull-left" style="margin-top:10px">{{ recipe.name }}</h1>
                     </div>
                 </div>
             </div>
@@ -24,22 +27,34 @@
                 </div>
                 <div class="col-md-4 text-center">
                     <h3>Ingredients</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item text-center">
-                            <a id="addRecipeItemBtn">
-                                <span class="fa fa-edit" aria-hidden="true">Add RecipeItem</span>
-                            </a>
+                    <ul class="nav nav-pills serving-nav">
+                        <p style="margin-top: 5px; margin-right: 5px">Servings:</p>
+                        <li class="nav-item">
+                            <a class="nav-link active" data-value="1" href="#">1</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-value="2" href="#">2</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-value="4" href="#">4</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-value="6" href="#">6</a>
+                        </li>
+                    </ul>
+                    <ul class="list-group">
                         {% for item in recipeItems %}
                         <li class="list-group-item">
-                            {{item.value}} {{item.unit}} {{item.foodId.name}} 
-                            <a href="{{ path('recipeItem_delete', {'id': item.id }) }}">
+                            <span class="item-value">{{item.value}}</span> {{item.unit}} {{item.name}} 
+                            <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
+                            <form class="delete-form" action="{{ path('recipeItem_delete', {'id': item.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         {% endfor %}
                      </ul>
-                    <div class="row recipeItemsRow" style="display: none; margin-top:10px">
+                    <div class="row" style="margin-top:10px">
                         <div class="col-md-12 mx-auto">
                             {% form_theme form
                             'jquery.collection.html.twig'

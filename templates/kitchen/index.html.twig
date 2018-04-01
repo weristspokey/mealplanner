@@ -5,37 +5,44 @@
             {% include ('flash-messages.html.twig') %}
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-center">Kitchen</h1>
+                    <h1 class="text-center">Kitchen
+                        <a href="#" data-toggle="modal" data-target="#AddKitchenListModal">
+                        <span title="Add" class="fa fa-plus pull-right" aria-hidden="true"></span>
+                        </a>
+                    </h1>
                 </div>
             </div>
             <div class="row">
             {% for kitchenList in kitchenLists %}
                 <div class="col-md-3" style="margin-bottom: 20px">
-                    <ul class="list-group">
+                    <ul class="list-group kitchenList">
                         <li class="list-group-item text-center">
                             {{ kitchenList.name }} 
-                            <a href="{{ path('kitchenList_delete', {'id': kitchenList.id }) }}">
+                            <a class="delete-kitchenList-button" href="#">
                                 <span title="Delete KitchenList" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>  
+                            <form class="delete-form" action="{{ path('kitchenList_delete', {'id': kitchenList.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         <li class="list-group-item text-center">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{ form(forms[kitchenList.id]) }}
+                                    {{ form(forms[kitchenList.id], {'attr': {'class': 'add-item-form'}}) }}
 
                                 </div>
                             </div>
                         </li>
                         {% for item in kitchenList.kitchenListItems %}
                         <li class="list-group-item text-center">
-                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}"
-                            data-food-id="{{item.foodId.id}}">
+                            <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            {{ item.foodId.name}}                      
-                            <a href="{{ path('kitchenListItem_delete', {'id': item.id }) }}">
+                            {{ item.name}}                      
+                            <a href="#" class="delete-kitchenList-item-button">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
+                            <form class="delete-form" action="{{ path('kitchenListItem_delete', {'id': item.id }) }}" method="POST"> 
+                            </form>
                         </li>
                         {% endfor %}
                     </ul>
@@ -59,8 +66,6 @@
                             {{ form_start(moveItemForm) }}
                             <input type="number" class="form-control d-none" name="itemId" id="itemId">
                             {{ form_widget(moveItemForm) }}
-                            
-                            
                             {{ form_end(moveItemForm) }}
                         </div>
                     </div>

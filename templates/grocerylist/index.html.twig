@@ -5,13 +5,17 @@
             {% include ('flash-messages.html.twig') %}
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-center">Grocerylists</h1>
+                    <h1 class="text-center">Grocerylists
+                        <a href="#" data-toggle="modal" data-target="#AddGrocerylistModal">
+                        <span title="Add" class="fa fa-plus pull-right" aria-hidden="true"></span>
+                        </a>
+                    </h1>
                 </div>
             </div>
             <div class="row">
             {% for grocerylist in grocerylists %}
                 <div class="col-md-3" style="margin-bottom: 20px">
-                    <ul class="list-group">
+                    <ul class="list-group grocerylist">
                         <li class="list-group-item text-center">
                             {{ grocerylist.name }}
                             <a class="delete-grocerylist-button" data-item-id="{{grocerylist.id}}" href="#">
@@ -23,18 +27,20 @@
                         <li class="list-group-item text-center">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {{ form(forms[grocerylist.id]) }} 
+                                    {{ form(forms[grocerylist.id], {'attr': {'class': 'add-item-form'}}) }} 
+                                    <!-- <form class="add-item-form" method="POST"> 
+                                         <input name="item" type="text" placeholder="Add Item">
+                                    </form> -->
                                 </div>
                             </div>
                         </li>{# href="{{ path('grocerylistItem_move', {'id': item.id })}}"#}
                         {% for item in grocerylist.grocerylistItems %}
                         <li class="list-group-item text-center">
-                            <a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}"
-                            data-food-id="{{item.foodId.id}}">
+                            <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            {{ item.foodId.name}}
-                            <a href="#" class="delete-button">
+                            {{ item.name}}
+                            <a href="#" class="delete-grocerylist-item-button">
                                 <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
                             <form class="delete-form" action="{{ path('grocerylistItem_delete', {'id': item.id }) }}" method="POST"> 

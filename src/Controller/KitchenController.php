@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\KitchenList;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Repository\GrocerylistRepository;
 use App\Entity\Grocerylist;
 use App\Entity\KitchenListItem;
@@ -57,6 +58,14 @@ class KitchenController extends Controller
                 $kitchenListItem->setKitchenListId($kitchenList);
                 $em->persist($kitchenListItem);
                 $em->flush();
+                unset($kitchenListItem);
+                unset($form);
+                $kitchenListItem = new kitchenListItem();
+                $form = $this->get('form.factory')->createNamedBuilder( 
+                    $form_name, 
+                    kitchenListItemType::class, 
+                    $kitchenListItem
+                    )->getForm();
             }
 
             $views[$kitchenList->getId()] = $form->createView();
@@ -65,15 +74,13 @@ class KitchenController extends Controller
         /* Move KitchenListItem to Grocerylist */
         $grocerylistItem = new GrocerylistItem();
         $moveItemForm = $this->createFormBuilder($grocerylistItem)
-            ->add('foodId', EntityType::class, [
-                'class'         => Food::class,
-                'choice_label'  => 'name',
+            ->add('name', TextType::class, [
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                    'class' => 'selectpicker d-none',
-                    'name' => 'food-id'
-                    ],
+                    'placeholder' => 'Add item',
+                    'class' => 'd-none'
+                ]
                 ]
             )
             ->add('grocerylistId', EntityType::class, [
@@ -193,7 +200,8 @@ class KitchenController extends Controller
     /**
      * Deletes a kitchenList entity.
      *
-     * @Route("/{id}", name="kitchenList_delete")
+     * @Route("/delete/{id}", name="kitchenList_delete")
+     * @Method({"POST"})
      */
     public function deleteAction(Request $request, KitchenList $kitchenList)
     {
@@ -232,6 +240,7 @@ class KitchenController extends Controller
      * Deletes a kitchenListItem entity.
      *
      * @Route("/item_delete/{id}", name="kitchenListItem_delete")
+     * @Method({"POST"})
      */
     public function deleteItemAction(Request $request, KitchenListItem $kitchenListItem)
     {

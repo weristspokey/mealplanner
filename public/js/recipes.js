@@ -13,11 +13,11 @@ $(document).ready(function(){
 
     disableRecipeSelect();
 
-    $(".btn-group.food-select").find('.btn').click(function() {
+    $(".food").click(function() {
         enableFoodSelect();
         disableRecipeSelect();
     });
-    $(".btn-group.recipe-select").find('.btn').click(function() {
+    $(".recipe").click(function() {
         enableRecipeSelect();
         disableFoodSelect();
     });
@@ -42,54 +42,48 @@ $(document).ready(function(){
             return $text;
         }
     });
+
+    var element;
+    $('.delete-recipe-item-button').on('click', function(event) {
+        event.preventDefault();
+        element = $(this).closest('li');
+        element.find('.delete-form').submit();
+    })
+    $('.delete-form').ajaxForm({
+        success: function() {
+            element.remove();
+        }
+    });
+
+    $('.serving-nav .nav-item .nav-link').click(function(event) {
+        event.preventDefault();
+        $('.nav-link').removeClass('active');
+        $(this).addClass('active');
+        var multiplikator = this.getAttribute('data-value');
+        $('.item-value').each(function(){
+            var value = parseInt($(this).html());
+            $(this).html(value * multiplikator);
+        });
+
+    });
 });
 
-    // $("#app_user_plainPassword_first").keyup(function() 
-    // {
-    //     var $content = $("#app_user_plainPassword_first").val();
-    //     if ($content == "")
-    //     {
-    //         var $text = document.getElementById("sicherheitshinweise").innerHTML="keine Eingabe";
-    //         return $text;
-    //     }
-    //     if (window.XMLHttpRequest)
-    //     {
-    //     // AJAX nutzen mit IE7+, Chrome, Firefox, Safari, Opera
-    //         var xmlhttp = new XMLHttpRequest();
-    //     }
-    //     xmlhttp.onreadystatechange=function()
-    //     {
-    //         if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    //         {
-    //             document.getElementById("sicherheitshinweise").innerHTML=xmlhttp.responseText;
-    //         }
-    //     }
-    //     xmlhttp.open("GET","/"+$content,true);
-    //     xmlhttp.send();
-    // });
-
-    // $(".js-attend-toggle").click(function(){
-    //     $.ajax({url: "grocerylist", async: false, success: function(result){
-    //         $("div").html(result);
-    //     }});
-    // });
-
 function disableFoodSelect() {
-    $(".btn-group.food-select").addClass('disabled');
-    $(".btn-group.food-select").find('.btn').addClass('disabled');
-    $(".selectpicker.food-select").attr('disabled', 'true');
+    $(".food").removeClass('active');
+    $(".food-select").prop('disabled', true);
 }
 function disableRecipeSelect() {
+    $(".recipe").removeClass('active');
     $(".btn-group.recipe-select").addClass('disabled');
     $(".btn-group.recipe-select").find('.btn').addClass('disabled');
     $(".selectpicker.recipe-select").attr('disabled', 'true');
 }
 function enableFoodSelect() {
-    $(".btn-group.food-select").removeClass('disabled');
-    $(".btn-group.food-select").find('.btn').removeClass('disabled');
-    $(".selectpicker.food-select").removeAttr('disabled');
+    $(".food").addClass('active');
+    $('.food-select').prop('disabled', false);
 }
 function enableRecipeSelect() {
+    $(".recipe").addClass('active');
     $(".btn-group.recipe-select").removeClass('disabled');
     $(".btn-group.recipe-select").find('.btn').removeClass('disabled');
     $(".selectpicker.recipe-select").removeAttr('disabled');

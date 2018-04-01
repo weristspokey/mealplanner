@@ -12,7 +12,6 @@ use App\Entity\RecipeItemCollection;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Form\RecipeType;
-use App\Form\RecipeItemType;
 use App\Form\RecipeItemCollectionType;
 use App\Form\TagSelectpickerType;
 use App\Entity\Tag;
@@ -220,6 +219,7 @@ class RecipeController extends Controller
      * Deletes a recipeItem entity.
      *
      * @Route("/item_delete/{id}", name="recipeItem_delete")
+     * @Method({"POST"})
      */
     public function deleteItemAction(Request $request, RecipeItem $recipeItem)
     {
