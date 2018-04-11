@@ -5,17 +5,15 @@
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-lg-10 col-12 m-auto">
                     <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail img-recipe">
-                    <div class="caption-recipe text-center">
-                        <p>Tags: 
-                        {% for tag in tags %}
-                            <button class="btn btn-tag" style="background-color:{{ tag.color }}">{{tag.name}}</button>
-                        {% endfor %}
-                        </p>
-                    </div>
                     <div class="thumbnail-box text-center">
-                        {% for tag in tags %}
-                            <button class="btn btn-tag pull-left" style="background-color:{{ tag.color }}; margin-right: 5px">{{tag.name}}</button>
+                        {% for recipeTag in recipe.tags %}
+                            {% for tag in tags %}
+                                {% if recipeTag == tag.id %}
+                                    <button class="btn btn-tag pull-left" style="background-color:{{ tag.color }}; margin-right: 5px">{{tag.name}}</button>
+                                {% endif %}
+                            {% endfor %}
                         {% endfor %}<br>
+                        
                         <h1 class="title pull-left" style="margin-top:10px">{{ recipe.name }}</h1>
                     </div>
                 </div>

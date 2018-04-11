@@ -54,20 +54,27 @@ class RecipeController extends Controller
     public function newAction(Request $request, FileUploader $fileUploader)
     {
         $em = $this->getDoctrine()->getManager();
+        $userId = $this->getUser()->getId();
         $user = $this->getUser();
 
         $recipe = new Recipe();
-        
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
+
+
         $newRecipeForm = $this->createForm(RecipeType::class, $recipe);
         $newRecipeForm->handleRequest($request);
+
 
         if ($newRecipeForm->isSubmitted() && $newRecipeForm->isValid()) {
             $recipeImage = $recipe->getImage();
             $recipeImageName = $fileUploader->upload($recipeImage);
             $recipe->setImage($recipeImageName);
-            $tags = $recipe->getTags();
-            $recipe->setUserId($user);
+
+            $recipeTags = explode("," , $recipe->getTags());
+            $recipe->setTags($recipeTags);
             
+            
+            $recipe->setUserId($user);
             $em->persist($recipe);
             $em->flush();
             $this->addFlash('success', 'New Recipe added!');
@@ -78,6 +85,7 @@ class RecipeController extends Controller
         return $this->render('recipe/new.html.twig', array(
             'recipe' => $recipe,
             'new_recipe_form' => $newRecipeForm->createView(),
+            'tags' => $tags
         ));
     }
 
@@ -91,8 +99,8 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
-
-        $tags = $recipe->getTags();
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
+        $recipeTags = $recipe->getTags();
         $recipeItems = $recipe->getRecipeItems();
         $recipeItem = new RecipeItem();
 
@@ -117,16 +125,15 @@ class RecipeController extends Controller
 
             return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
         }
-
-
-
+       
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
             'recipeItems' => $recipeItems,
+            'recipeTags' => $recipeTags,
             'tags' => $tags,
             'delete_form' => $deleteForm->createView(),
             'form' => $form->createView(),
-            'data' => $recipeItemCollection,
+            'data' => $recipeItemCollection
         ]);
     }
 
@@ -137,16 +144,21 @@ class RecipeController extends Controller
      */
     public function editAction(Request $request, Recipe $recipe, FileUploader $fileUploader)
     {
+        $em = $this->getDoctrine()->getManager();
+        $userId = $this->getUser()->getId();
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
         $deleteForm = $this->createDeleteForm($recipe);
-        $editForm = $this->createForm(RecipeType::class, $recipe);
-
         $image = $recipe->getImage();
         $recipe->setImage($image);
+        $recipeTags = implode("," , $recipe->getTags());
+        $recipe->setTags($recipeTags);
+        $editForm = $this->createForm(RecipeType::class, $recipe);
         $editForm->handleRequest($request);
-
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             //$this->getDoctrine()->getManager()->flush();
+            $recipeTags = explode("," , $recipe->getTags());
+            $recipe->setTags($recipeTags);
             $recipeImage = $recipe->getImage();
             $recipeImageName = $fileUploader->upload($recipeImage);
             $em = $this->getDoctrine()->getManager();
@@ -161,6 +173,7 @@ class RecipeController extends Controller
             'recipe' => $recipe,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'tags' => $tags
         ));
     }
 

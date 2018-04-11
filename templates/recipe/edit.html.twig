@@ -9,7 +9,18 @@
             </div>
             <div class="row">
                 <div class="col-md-6 m-auto">
-                    {{form(edit_form)}}
+                    {{ form_start(edit_form) }}
+                    {{ form_row(edit_form.name) }}
+                    {{ form_row(edit_form.description) }}
+                    <select class="selectpicker col-md-12" multiple name="tags-select" id="tags-select">
+                        {% for tag in tags %}
+                            <option data-id="{{tag.id}}">{{tag.name}}</option>
+                        {% endfor %}
+                    </select>
+                    {{ form_row(edit_form.tags) }}
+                    {{ form_row(edit_form.image) }}
+                    {{ form_row(edit_form.Submit) }}
+                    {{ form_end(edit_form) }}
                 </div>
             </div>
         </div>

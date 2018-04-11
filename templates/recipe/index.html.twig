@@ -54,8 +54,12 @@
                             <div class="thumbnail-hoverbox">
                                 <h3 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
                                 <p style="font-size:14px">Tags:
-                                {% for tag in recipe.tags %}
-                                    <span class="{{tag.name}}">{{tag.name}}</span>
+                                {% for recipeTag in recipe.tags %}
+                                    {% for tag in tags %}
+                                        {% if recipeTag == tag.id %}
+                                            <span class="{{tag.name}}">{{tag.name}} </span>
+                                        {% endif %}
+                                    {% endfor %}
                                 {% endfor %}
                                 </p>
                             </div>
