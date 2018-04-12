@@ -1,20 +1,31 @@
 $(document).ready(function(){
-     // Selection in Add Meal Form
-    disableRecipeSelect();
-
-    $(".food").click(function() {
-        enableFoodSelect();
-        disableRecipeSelect();
+    $('#remove_food').click(function(){
+        $('#food_selectpicker').selectpicker('deselectAll');
     });
-    $(".recipe").click(function() {
-        enableRecipeSelect();
-        disableFoodSelect();
+    $('#remove_recipes').click(function(){
+        $('#recipes_selectpicker').selectpicker('deselectAll');
+    });
+    $('.yes').click(function(){
+        var html;
+        var meals = [];
+        $.each($(".selectpicker option:selected"), function() {
+            meals.push($(this).val());
+        });
+       meals.forEach(function(meal) {
+            //html += '<li class="list-group-item">' + meal + '</li>';
+            $('.list-group').append('<li class="list-group-item">' + meal + 
+                '<a><span title="Delete from grocerylist" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span></a></li>' );
+       });
+       //$('.list-group').append(html);
+       $('#food_selectpicker').selectpicker('deselectAll');
+       $('#recipes_selectpicker').selectpicker('deselectAll');
     });
 
-    $('#recipes-gallery').jplist({             
-        itemsBox: '.thumbnail-gallery', 
-        itemPath: '.item', 
-        panelPath: '.jplist-panel'    
+    $('.glyphicon-remove').click(function(){
+        alert("HI");
+        var item = $(this).parent('.list-group-item');
+        item.remove();
+
     });
 
     var calendar = $('#calendar').fullCalendar({
@@ -119,24 +130,3 @@ $(document).ready(function(){
         }
     });
 });
-
-function disableFoodSelect() {
-    $(".food").removeClass('active');
-    $(".food-select").prop('disabled', true);
-}
-function disableRecipeSelect() {
-    $(".recipe").removeClass('active');
-    $(".btn-group.recipe-select").addClass('disabled');
-    $(".btn-group.recipe-select").find('.btn').addClass('disabled');
-    $(".selectpicker.recipe-select").attr('disabled', 'true');
-}
-function enableFoodSelect() {
-    $(".food").addClass('active');
-    $('.food-select').prop('disabled', false);
-}
-function enableRecipeSelect() {
-    $(".recipe").addClass('active');
-    $(".btn-group.recipe-select").removeClass('disabled');
-    $(".btn-group.recipe-select").find('.btn').removeClass('disabled');
-    $(".selectpicker.recipe-select").removeAttr('disabled');
-}
