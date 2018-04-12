@@ -2,8 +2,68 @@
 footer a {
   margin-left: 5px;
   margin-right: 5px;
-  margin-top: 10px;
 }
+footer p {
+  margin-bottom: 10px;
+}
+footer #twitter-btn:hover {
+  color: #1da1f2;
+}
+footer #github-btn:hover {
+  color: #333;
+}
+footer #mail-btn:hover {
+  color: #9D759D;
+}
+.section-test {
+  background: url("../wood.jpg") no-repeat center center scroll;
+  background-size: cover;
+}
+.about-card {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #f2f2f2; padding: 30px;
+  min-height: 346px;
+}
+.about-card i {
+  color: #9D759D;
+}
+.about-card:hover {
+  background-color: #f2f2f2;
+}
+#time-image {
+  background: url("../calendar-neu.jpg") no-repeat center center;
+  background-size:cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 2px solid #f2f2f2;
+}
+#effort-image {
+  background: url("../fridge-neu.jpg") no-repeat center center;
+  background-size:cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 2px solid #f2f2f2;
+}
+
+#food-image{
+  background: url("../food-neu.jpg") no-repeat center center;
+  background-size:cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 2px solid #f2f2f2;
+}
+
+
+
+
 .content-section {
   padding-top: 120px;
   /*min-height: 700px;*/
@@ -337,6 +397,9 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
 }
 #mainNav .dropdown .dropdown-content a {
     text-transform: none;
+}
+#mainNav a.btn:hover {
+  color: white;
 }
 .jplist-panel .jplist-drop-down .btn-tag {
   border: none;
