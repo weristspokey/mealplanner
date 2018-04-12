@@ -1,4 +1,11 @@
 $(document).ready(function(){
+        $('.moveItemBtn').click(function() {
+        //e.preventDefault();
+        var itemId = this.getAttribute('data-item-id');
+        var itemName = this.getAttribute('data-item-name');
+        $('input[name=itemId]').val(itemId);
+        $('#form_name').val(itemName);
+    });
     $("#addRecipeItemBtn").click(function() {
         $(".recipeItemsRow").toggle();
     });

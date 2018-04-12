@@ -43,6 +43,9 @@
                     <ul class="list-group">
                         {% for item in recipeItems %}
                         <li class="list-group-item">
+                            <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
+                                <span title="Add to Grocerylist" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
+                            </a>
                             <span class="item-value">{{item.value}}</span> {{item.unit}} {{item.name}} 
                             <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
@@ -71,4 +74,26 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="MoveItemModal" tabindex="-1" role="dialog" aria-labelledby="MoveItemModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Item to Grocerylist</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {{ form_start(moveItemForm) }}
+                            <input type="number" class="form-control d-none" name="itemId" id="itemId">
+                            {{ form_widget(moveItemForm) }}
+                            {{ form_end(moveItemForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
