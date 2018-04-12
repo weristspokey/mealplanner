@@ -86,7 +86,7 @@
     </section>
 
     <!-- Download Section -->
-    <section class="text-center section-test" style="padding-top: 150px; padding-bottom: 150px; color: white">
+    <section class="text-center" id="section-statistics" style="padding-top: 150px; padding-bottom: 150px; color: white">
         <div class="container">
             <div class="col-lg-8 mx-auto">
                 <h2>Statistics</h2>
@@ -94,26 +94,26 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="fh5co-counter to-animate">
-                        <h1 class="fh5co-counter-number js-counter" data-from="0" data-to="89" data-speed="5000" data-refresh-interval="50">{{mealplanItems|length }}</h1>
-                        <span class="fh5co-counter-label">Mealplan Items</span>
+                        <h1 class="counter" data-from="0" data-to="{{mealplanItems|length }}" data-speed="5000" data-refresh-interval="50"></h1>
+                        <h4>Mealplan Items</h4>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="fh5co-counter to-animate">
-                        <h1 class="fh5co-counter-number js-counter" data-from="0" data-to="2343409" data-speed="5000" data-refresh-interval="50">{{recipes|length }}</h1>
-                        <span class="fh5co-counter-label">Recipes</span>
+                        <h1 class="counter" data-from="0" data-to="{{recipes|length }}" data-speed="5000" data-refresh-interval="50"></h1>
+                        <h4 class="fh5co-counter-label">Recipes</h4>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="fh5co-counter to-animate">
-                        <h1 class="fh5co-counter-number js-counter" data-from="0" data-to="1302" data-speed="5000" data-refresh-interval="50">{{kitchenLists|length }}</h1>
-                        <span class="fh5co-counter-label">Kitchenlists</span>
+                        <h1 class="counter" data-from="0" data-to="{{kitchenLists|length }}" data-speed="5000" data-refresh-interval="50"></h1>
+                        <h4 class="fh5co-counter-label">Kitchenlists</h4>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="fh5co-counter to-animate">
-                        <h1 class="fh5co-counter-number js-counter" data-from="0" data-to="52" data-speed="5000" data-refresh-interval="50">{{grocerylists|length }}</h1>
-                        <span class="fh5co-counter-label">Grocerylists</span>
+                        <h1 class="counter" data-from="0" data-to="{{grocerylists|length }}" data-speed="5000" data-refresh-interval="50"></h1>
+                        <h4 class="fh5co-counter-label">Grocerylists</h4>
                     </div>
                 </div>
             </div>

@@ -15,10 +15,14 @@ footer #github-btn:hover {
 footer #mail-btn:hover {
   color: #9D759D;
 }
-.section-test {
+#section-statistics {
   background: url("../wood.jpg") no-repeat center center scroll;
   background-size: cover;
 }
+#section-statistics h1{
+  font-size: 5rem;
+}
+
 .about-card {
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
