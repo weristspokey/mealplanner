@@ -17,24 +17,6 @@ $(document).ready(function(){
         $(this).alert('close');
     });
 
-
-    disableRecipeSelect();
-
-    $(".food").click(function() {
-        enableFoodSelect();
-        disableRecipeSelect();
-    });
-    $(".recipe").click(function() {
-        enableRecipeSelect();
-        disableFoodSelect();
-    });
-
-    $('#recipes-gallery').jplist({             
-        itemsBox: '.thumbnail-gallery', 
-        itemPath: '.item', 
-        panelPath: '.jplist-panel'    
-    });
-
     $("#app_user_plainPassword_first").keyup(function() 
      {
         var $content = $("#app_user_plainPassword_first").val();
@@ -96,23 +78,3 @@ $(document).ready(function(){
     });
 });
 
-function disableFoodSelect() {
-    $(".food").removeClass('active');
-    $(".food-select").prop('disabled', true);
-}
-function disableRecipeSelect() {
-    $(".recipe").removeClass('active');
-    $(".btn-group.recipe-select").addClass('disabled');
-    $(".btn-group.recipe-select").find('.btn').addClass('disabled');
-    $(".selectpicker.recipe-select").attr('disabled', 'true');
-}
-function enableFoodSelect() {
-    $(".food").addClass('active');
-    $('.food-select').prop('disabled', false);
-}
-function enableRecipeSelect() {
-    $(".recipe").addClass('active');
-    $(".btn-group.recipe-select").removeClass('disabled');
-    $(".btn-group.recipe-select").find('.btn').removeClass('disabled');
-    $(".selectpicker.recipe-select").removeAttr('disabled');
-}
