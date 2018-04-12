@@ -19,6 +19,13 @@ use App\Repository\RecipeRepository;
 use App\Service\FileUploader;
 use Symfony\Component\HttpFoundation\File\File;
 
+use App\Repository\GrocerylistRepository;
+use App\Entity\Grocerylist;
+use App\Entity\GrocerylistItem;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 /**
  * Recipe controller.
  * @Route("recipe")
@@ -125,6 +132,45 @@ class RecipeController extends Controller
 
             return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
         }
+
+         /* Move RecipeItem to Grocerylist */
+        $grocerylistItem = new GrocerylistItem();
+        $moveItemForm = $this->createFormBuilder($grocerylistItem)
+            ->add('name', TextType::class, [
+                'label' => false,
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Add item',
+                    'class' => 'd-none'
+                ]
+                ]
+            )
+            ->add('grocerylistId', EntityType::class, [
+                'label' => false,
+                'choice_label'  => 'name',
+                'class' => Grocerylist::class,
+                'attr' => [
+                    'class' => 'selectpicker'
+                    ],
+                'query_builder' => function (GrocerylistRepository $repo) {
+                    $userId = $this->getUser()->getId();
+                    return $repo->showListsOfCurrentUser($userId);
+                    }
+                ]
+            )
+            ->add('submit', SubmitType::class)
+            ->getForm();
+
+            $moveItemForm->handleRequest($request);
+
+        if ($moveItemForm->isSubmitted() && $moveItemForm->isValid()) 
+            {
+                $em->persist($grocerylistItem);
+                $em->flush();
+                
+                return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+
+            }
        
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
@@ -133,7 +179,8 @@ class RecipeController extends Controller
             'tags' => $tags,
             'delete_form' => $deleteForm->createView(),
             'form' => $form->createView(),
-            'data' => $recipeItemCollection
+            'data' => $recipeItemCollection,
+            'moveItemForm' => $moveItemForm->createView(),
         ]);
     }
 

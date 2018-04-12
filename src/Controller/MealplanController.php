@@ -117,7 +117,6 @@ class MealplanController extends Controller
 
         if ($addMealplanItemForm->isSubmitted() && $addMealplanItemForm->isValid()) 
             {
-                dump($newMealplanItem->getName());
                 $newMealplanItem->setUserId($user);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($newMealplanItem);

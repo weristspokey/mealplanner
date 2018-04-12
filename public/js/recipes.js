@@ -1,4 +1,11 @@
 $(document).ready(function(){
+        $('.moveItemBtn').click(function() {
+        //e.preventDefault();
+        var itemId = this.getAttribute('data-item-id');
+        var itemName = this.getAttribute('data-item-name');
+        $('input[name=itemId]').val(itemId);
+        $('#form_name').val(itemName);
+    });
     $("#addRecipeItemBtn").click(function() {
         $(".recipeItemsRow").toggle();
     });
@@ -8,24 +15,6 @@ $(document).ready(function(){
     });
     $(".alert").delay(4000).slideUp(2000, function(){
         $(this).alert('close');
-    });
-
-
-    disableRecipeSelect();
-
-    $(".food").click(function() {
-        enableFoodSelect();
-        disableRecipeSelect();
-    });
-    $(".recipe").click(function() {
-        enableRecipeSelect();
-        disableFoodSelect();
-    });
-
-    $('#recipes-gallery').jplist({             
-        itemsBox: '.thumbnail-gallery', 
-        itemPath: '.item', 
-        panelPath: '.jplist-panel'    
     });
 
     $("#app_user_plainPassword_first").keyup(function() 
@@ -89,23 +78,3 @@ $(document).ready(function(){
     });
 });
 
-function disableFoodSelect() {
-    $(".food").removeClass('active');
-    $(".food-select").prop('disabled', true);
-}
-function disableRecipeSelect() {
-    $(".recipe").removeClass('active');
-    $(".btn-group.recipe-select").addClass('disabled');
-    $(".btn-group.recipe-select").find('.btn').addClass('disabled');
-    $(".selectpicker.recipe-select").attr('disabled', 'true');
-}
-function enableFoodSelect() {
-    $(".food").addClass('active');
-    $('.food-select').prop('disabled', false);
-}
-function enableRecipeSelect() {
-    $(".recipe").addClass('active');
-    $(".btn-group.recipe-select").removeClass('disabled');
-    $(".btn-group.recipe-select").find('.btn').removeClass('disabled');
-    $(".selectpicker.recipe-select").removeAttr('disabled');
-}
