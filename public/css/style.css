@@ -449,6 +449,10 @@ form.add-item-form .form-group {
   .fc-day-header span {
     font-size: 0.6rem;
   }
+  .fc-day .list-group  li {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.5em;
+  }
 }
 @media (max-width: 650px) {
   .fc-day-header span {
