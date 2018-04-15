@@ -273,6 +273,12 @@ form input[value="Delete"] {
   padding-right: 3px;
 
 }
+#editRecipe {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #f2f2f2;
+}
 input#tag_color {
   height: 40px;
 }
@@ -394,7 +400,6 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd}
-
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
@@ -404,6 +409,11 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
 }
 #mainNav a.btn:hover {
   color: white;
+}
+@media (max-width: 991px) {
+  #mainNav .dropdown .dropdown-content {
+    display: none;
+    }
 }
 .jplist-panel .jplist-drop-down .btn-tag {
   border: none;
@@ -425,3 +435,29 @@ form.add-item-form .col-sm-12 {
 form.add-item-form .form-group {
   margin: 0;
 }
+
+  @media (min-width: 451px) {
+  .fc-day h5 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .fc-day h5 {
+    font-size: 0.4rem;
+  }
+  .fc-day-header span {
+    font-size: 0.6rem;
+  }
+}
+@media (max-width: 650px) {
+  .fc-day-header span {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 850px) {
+  .fc-day-header a span {
+    width: 100%;
+  }
+}
+
