@@ -19,6 +19,9 @@
                     </select>
                     {{ form_row(edit_form.tags) }}
                     {{ form_row(edit_form.image) }}
+                    {% if recipe.image %}
+                        <img id="editRecipe" src="{{ asset('uploads/images/' ~ recipe.image) }}" />
+                    {% endif %}
                     {{ form_row(edit_form.Submit) }}
                     {{ form_end(edit_form) }}
                 </div>

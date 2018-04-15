@@ -201,15 +201,21 @@ class RecipeController extends Controller
         $recipe->setTags($recipeTags);
         $editForm = $this->createForm(RecipeType::class, $recipe);
         $editForm->handleRequest($request);
-
+        //$recipeImage = $recipe->getImage();
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             //$this->getDoctrine()->getManager()->flush();
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
-            $recipeImage = $recipe->getImage();
-            $recipeImageName = $fileUploader->upload($recipeImage);
-            $em = $this->getDoctrine()->getManager();
+            //$recipeImage = $recipe->getImage();
+            //$recipeImageName = $fileUploader->upload($recipeImage);
+            if($recipe->getImage() !== null){
+                $recipeImage = $recipe->getImage();
+                $recipeImageName = $fileUploader->upload($recipeImage);
+                $recipe->setImage($recipeImageName);
+            }
             $recipe->setImage($recipeImageName);
+            $em = $this->getDoctrine()->getManager();
+            //$recipe->setImage($recipeImage);
             $em->persist($recipe);
             $em->flush();
 
