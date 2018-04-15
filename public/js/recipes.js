@@ -83,16 +83,6 @@ $(document).ready(function(){
         $('#app_recipe_tags').val(tags);
     });
 
-    
-
-
-    var waypoint = new Waypoint({
-        element: document.getElementById('goals'),
-        handler: function(direction) {
-            console.log("hier");
-             $('.counter').countTo();
-        }
-    });
     var recipeTags = $('#app_recipe_tags').val().split(',');
     for(var i=0; i < recipeTags.length; i++) {
         recipeTags[i] = parseInt(recipeTags[i], 10);
@@ -105,7 +95,12 @@ $(document).ready(function(){
         $('#tags-select').selectpicker('refresh');
     });
 
-
+    var waypoint = new Waypoint({
+        element: document.getElementById('goals'),
+        handler: function(direction) {
+             $('.counter').countTo();
+        }
+    });
 });
 
 function disableFoodSelect() {
