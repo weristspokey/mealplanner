@@ -35,21 +35,6 @@ $(document).ready(function(){
         panelPath: '.jplist-panel'    
     });
 
-    $("#app_user_plainPassword_first").keyup(function() 
-     {
-        var $content = $("#app_user_plainPassword_first").val();
-        if ($content.length < 6)
-        {
-            var $text = document.getElementById("sicherheitshinweise").innerHTML="ZU WENIG";
-            return $text;
-        }
-        if ($content.length > 5)
-        {
-            var $text = document.getElementById("sicherheitshinweise").innerHTML="";
-            return $text;
-        }
-    });
-
     var element;
     $('.delete-recipe-item-button').on('click', function(event) {
         event.preventDefault();
@@ -93,13 +78,6 @@ $(document).ready(function(){
             $(this).attr('selected', true);
         }
         $('#tags-select').selectpicker('refresh');
-    });
-
-    var waypoint = new Waypoint({
-        element: document.getElementById('goals'),
-        handler: function(direction) {
-             $('.counter').countTo();
-        }
     });
 });
 

@@ -180,3 +180,7 @@
        </div>
 
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('js/index.js') }}"></script>
+{% endblock %}
