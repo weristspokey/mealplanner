@@ -45,7 +45,12 @@
                             {% endfor %}
                         </ul>
                     </div>
-                </div>                
+                </div>     
+                {% if recipes is empty %}
+                <div style="margin: 0 auto; padding-top: 150px">
+                    <h2 class="text-center" style="color: #E5E5E5">No Recipes added.</h2>
+                </div>
+                {% endif %}           
                 <div class="row thumbnail-gallery">
                 {% for recipe in recipes %}
                     <div class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
