@@ -12,12 +12,7 @@ html {
   height: 100%;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700;
   margin: 0 0 35px;
@@ -191,11 +186,13 @@ a:focus, a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-.content-section {
+.content-section, .about-section, .goals-section, .statistics-section {
   padding-top: 150px;
   padding-bottom: 150px;
 }
-
+.statistics-section {
+  color: white;
+}
 .download-section {
   color: black;
   background-color: white;
@@ -203,6 +200,14 @@ a:focus, a:hover {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+@media (max-width: 992px) {
+  .about-section, .goals-section, .statistics-section, .download-section, .content-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
 }
 @media (min-width: 992px) {
   .content-section {
