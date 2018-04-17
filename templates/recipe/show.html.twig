@@ -18,10 +18,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-8 text-center" style="border-right: 1px solid #ddd">
+            <div class="row justify-content-md-center">
+                <div class="col-lg-6 text-center" style="border-right: 1px solid #ddd">
                     <h3>Description</h3>
-                    <p class="text-justify">{{recipe.description}}</p>
+                    <p class="text-justify">{{recipe.description}}Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
                 </div>
                 <div class="col-md-4 text-center">
                     <h3>Ingredients</h3>
@@ -46,7 +46,7 @@
                             <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Grocerylist" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            <span class="item-value">{{item.value}}</span> {{item.unit}} {{item.name}} 
+                            <span class="item-value">{{item.value}}</span> {% if item.unit != "Stück" %}{{item.unit}} {% endif %} {{item.name}} 
                             <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
@@ -67,10 +67,14 @@
                 </div>
             </div>
             <div class="row">
-                <a class="btn btn-default btn-sm" href="{{ path('recipe_edit', { 'id': recipe.id }) }}" role="button">Edit</a>
-                {{ form_start(delete_form) }}
-                    <input type="submit" value="Delete">
-                {{ form_end(delete_form) }}
+                <div class="col-md-6">
+                    <a class="btn btn-default btn-sm pull-right" href="{{ path('recipe_edit', { 'id': recipe.id }) }}" role="button">Edit</a>
+                </div>
+                <div class="col-md-6">
+                    {{ form_start(delete_form) }}
+                        <input class="pull-left" style="background-color: #dc3545; vborder: none" type="submit" value="Delete">
+                    {{ form_end(delete_form) }}
+                </div>
             </div>
         </div>
     </section>
