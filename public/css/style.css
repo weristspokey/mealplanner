@@ -352,11 +352,11 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
   margin-top: 8px;
 }
 
-.list-group .list-group-item > a {
+.list-group .list-group-item > a span.fa {
   opacity: 0.2;
 }
 
-.list-group .list-group-item > a:hover {
+.list-group .list-group-item > a span.fa:hover {
   opacity: 1;
 }
 /*Fix for bootstrap-select with bootstrap4 */
