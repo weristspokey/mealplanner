@@ -390,7 +390,7 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
 
 
 .content-section .container {
-  min-height: 710px;
+  min-height: 580px;
 }
 .container {
     max-width: 1340px;
@@ -490,3 +490,20 @@ form.add-item-form .form-group {
   }
 }
 
+.empty-message {
+  margin: 0 auto;
+  padding-top: 150px;
+}
+@media (max-width: 500px) {
+.empty-message {
+  margin: 0 auto;
+  padding-top: 50px;
+}
+.content-section .container {
+  min-height: 400px;
+}
+}
+.empty-message h2{
+  color: #E5E5E5;
+  text-align: center;
+}

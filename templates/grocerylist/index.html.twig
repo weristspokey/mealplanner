@@ -14,8 +14,8 @@
             </div>
             <div class="row">
             {% if grocerylists is empty %}
-                <div style="margin: 0 auto; padding-top: 150px">
-                    <h2 style="color: #E5E5E5">No Grocerylists added.</h2>
+                <div class="empty-message">
+                    <h2>No Grocerylists added.</h2>
                 </div>
             {% endif %}
             {% for grocerylist in grocerylists %}
