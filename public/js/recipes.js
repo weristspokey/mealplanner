@@ -1,4 +1,14 @@
 $(document).ready(function(){
+     $('.modal').on('shown.bs.modal', function() {
+        $(this).find('input:first').focus();
+    });
+        $('.moveItemBtn').click(function() {
+        //e.preventDefault();
+        var itemId = this.getAttribute('data-item-id');
+        var itemName = this.getAttribute('data-item-name');
+        $('input[name=itemId]').val(itemId);
+        $('#form_name').val(itemName);
+    });
     $("#addRecipeItemBtn").click(function() {
         $(".recipeItemsRow").toggle();
     });
@@ -28,21 +38,6 @@ $(document).ready(function(){
         panelPath: '.jplist-panel'    
     });
 
-    $("#app_user_plainPassword_first").keyup(function() 
-     {
-        var $content = $("#app_user_plainPassword_first").val();
-        if ($content.length < 6)
-        {
-            var $text = document.getElementById("sicherheitshinweise").innerHTML="ZU WENIG";
-            return $text;
-        }
-        if ($content.length > 5)
-        {
-            var $text = document.getElementById("sicherheitshinweise").innerHTML="";
-            return $text;
-        }
-    });
-
     var element;
     $('.delete-recipe-item-button').on('click', function(event) {
         event.preventDefault();
@@ -65,6 +60,27 @@ $(document).ready(function(){
             $(this).html(value * multiplikator);
         });
 
+    });
+
+    $('#app_recipe_Submit').click(function() {
+        var tags = [];
+        $('#tags-select').find('option:selected').each(function() {
+            tags.push($(this).data("id"));
+            //console.log($(this).data("id"));
+        });
+        $('#app_recipe_tags').val(tags);
+    });
+
+    var recipeTags = $('#app_recipe_tags').val().split(',');
+    for(var i=0; i < recipeTags.length; i++) {
+        recipeTags[i] = parseInt(recipeTags[i], 10);
+    }
+    
+    $('#tags-select').find('option').each(function() {
+        if(recipeTags.includes($(this).data("id"))){
+            $(this).attr('selected', true);
+        }
+        $('#tags-select').selectpicker('refresh');
     });
 });
 

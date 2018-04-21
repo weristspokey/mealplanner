@@ -1,9 +1,82 @@
-
 footer a {
   margin-left: 5px;
   margin-right: 5px;
-  margin-top: 10px;
 }
+footer p {
+  margin-bottom: 10px;
+}
+footer #twitter-btn:hover {
+  color: #1da1f2;
+}
+footer #github-btn:hover {
+  color: #333;
+}
+footer #mail-btn:hover {
+  color: #9D759D;
+}
+#section-statistics {
+  background: url("../wood.jpg") no-repeat center center scroll;
+  background-size: cover;
+}
+#section-statistics h1{
+  font-size: 5rem;
+}
+
+.about-card {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #f2f2f2; padding: 30px;
+  min-height: 346px;
+}
+.about-card i {
+  color: #9D759D;
+}
+.about-card:hover {
+  background-color: #f2f2f2;
+}
+@media (max-width: 767px) {
+  .about-card {
+    min-height: 0;
+    margin-bottom: 20px;
+  }
+  #download a {
+    width: 175px;
+    margin-bottom: 20px;
+  }
+}
+#time-image {
+  background: url("../calendar-neu.jpg") no-repeat center center;
+  background-size:cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 2px solid #f2f2f2;
+}
+#effort-image {
+  background: url("../fridge-neu.jpg") no-repeat center center;
+  background-size:cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 2px solid #f2f2f2;
+}
+
+#food-image{
+  background: url("../food-neu.jpg") no-repeat center center;
+  background-size:cover;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto;
+  border: 2px solid #f2f2f2;
+}
+
+
+
+
 .content-section {
   padding-top: 120px;
   /*min-height: 700px;*/
@@ -107,6 +180,19 @@ form button[data-id="tagFilter"] {
 .jplist-panel input[type="text"] {
   width: 100%;
 }
+@media (max-width: 600px) {
+  .jplist-panel {
+    display: flex;
+  }
+  .jplist-panel .text-filter-box{
+    width: 50%;
+  }
+  .jplist-panel .jplist-drop-down{
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 40%;
+  }
+}
 .thumbnail-box {
   background: rgba(255,255,255,0.8);
   color: #9D759D;
@@ -140,6 +226,7 @@ form input[value="Delete"] {
   height: 100px;
   top: 50%;
   left: 50%;
+  padding: 10px;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
     overflow: hidden;
@@ -209,12 +296,21 @@ form input[value="Delete"] {
   padding-right: 3px;
 
 }
+#editRecipe {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #f2f2f2;
+}
 input#tag_color {
   height: 40px;
 }
 form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .col-md-3,
 form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .col-md-6 {
   padding: 0;
+}
+form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection {
+  margin-left: 15px;
 }
 /* Grocerylist View */
 .grocerylist li:first-child, .grocerylist li:nth-child(2)  {
@@ -260,11 +356,11 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
   margin-top: 8px;
 }
 
-.list-group .list-group-item > a {
+.list-group .list-group-item > a span.fa {
   opacity: 0.2;
 }
 
-.list-group .list-group-item > a:hover {
+.list-group .list-group-item > a span.fa:hover {
   opacity: 1;
 }
 /*Fix for bootstrap-select with bootstrap4 */
@@ -298,7 +394,7 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
 
 
 .content-section .container {
-  min-height: 710px;
+  min-height: 580px;
 }
 .container {
     max-width: 1340px;
@@ -308,7 +404,10 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
   border-bottom: 2px solid aliceblue;
   margin-top: 10px;
 }
-
+/*.fc-icon {
+  line-height: 1.3em;
+  top: -1em;
+}*/
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
@@ -330,13 +429,20 @@ form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .c
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {background-color: #ddd}
-
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
     display: block;
 }
 #mainNav .dropdown .dropdown-content a {
     text-transform: none;
+}
+#mainNav a.btn:hover {
+  color: white;
+}
+@media (max-width: 991px) {
+  #mainNav .dropdown .dropdown-content {
+    display: none;
+    }
 }
 .jplist-panel .jplist-drop-down .btn-tag {
   border: none;
@@ -357,4 +463,55 @@ form.add-item-form .col-sm-12 {
 }
 form.add-item-form .form-group {
   margin: 0;
+}
+
+  @media (min-width: 451px) {
+  .fc-day h5 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .fc-day h5 {
+    font-size: 0.4rem;
+  }
+  .fc-day-header span {
+    font-size: 0.6rem;
+  }
+  .fc-day .list-group  li {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.5em;
+  }
+}
+@media (max-width: 650px) {
+  .fc-day-header span {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 850px) {
+  .fc-day-header a span {
+    width: 100%;
+  }
+}
+
+.empty-message {
+  margin: 0 auto;
+  padding-top: 150px;
+}
+@media (max-width: 500px) {
+.empty-message {
+  margin: 0 auto;
+  padding-top: 50px;
+}
+.content-section .container {
+  min-height: 400px;
+}
+}
+.empty-message h2{
+  color: #E5E5E5;
+  text-align: center;
+}
+.bootstrap-select {
+  padding-right: 0px;
+  padding-left: 0px;
 }

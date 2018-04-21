@@ -45,7 +45,12 @@
                             {% endfor %}
                         </ul>
                     </div>
-                </div>                
+                </div>     
+                {% if recipes is empty %}
+                <div class="empty-message">
+                    <h2>No Recipes added.</h2>
+                </div>
+                {% endif %}           
                 <div class="row thumbnail-gallery">
                 {% for recipe in recipes %}
                     <div class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
@@ -54,8 +59,12 @@
                             <div class="thumbnail-hoverbox">
                                 <h3 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
                                 <p style="font-size:14px">Tags:
-                                {% for tag in recipe.tags %}
-                                    <span class="{{tag.name}}">{{tag.name}}</span>
+                                {% for recipeTag in recipe.tags %}
+                                    {% for tag in tags %}
+                                        {% if recipeTag == tag.id %}
+                                            <span class="{{tag.name}}">{{tag.name}} </span>
+                                        {% endif %}
+                                    {% endfor %}
                                 {% endfor %}
                                 </p>
                             </div>

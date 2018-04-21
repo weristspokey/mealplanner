@@ -4,7 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>mealplanner</title>
+        <meta name="description" content="Waste less food, time and effort by planning your meals for the whole week by adding foods or recipes, tracking grocerylists or the food in your kitchen and creating your own recipebook with all your favourite recipes.">
+        <meta name="keywords" content="mealplanner, organisation, meal, recipes, recipebook, app, webapp, tool, plan, grocerys, grocerylist">
+        <title>mealplanner | Easy meal organisation</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
         <link rel="stylesheet" href="{{ asset('bxslider/jquery.bxslider.css') }}">
@@ -14,12 +16,14 @@
         <link rel="stylesheet" href="{{ asset('jplist/jplist.core.min.css') }}">
         <link rel="stylesheet" href="{{ asset('jplist/jplist.textbox-filter.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/grayscale.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('fullcalendar/fullcalendar.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Italiana">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
         <link rel='stylesheet' type='text/css' href='https://fonts.googleapis.com/css?family=Cabin:700'>
+        <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet"> 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet"> 
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -84,8 +88,8 @@
         {% block footer %}
         <footer>
             <div class="container text-center">
-                <p>Copyright &copy; mealplanner 2017 by sherlockspok</p>
-                <a id="twitter-btn" href="https://twitter.com/sherlockspok">
+                <p>Copyright &copy; mealplanner 2018 by sherlockspok</p>
+                <a id="twitter-btn" href="https://twitter.com/weristspokey">
                    <i class="fa fa-twitter fa-2x"></i>
                 </a>
                 <a id="github-btn" href="https://github.com/weristspokey">
@@ -126,6 +130,8 @@
         <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
         <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
         <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.countTo.js') }}"></script>
         <script src="{{ asset('js/recipes.js') }}"></script>
 
         {% endblock %}

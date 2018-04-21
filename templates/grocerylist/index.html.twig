@@ -13,6 +13,11 @@
                 </div>
             </div>
             <div class="row">
+            {% if grocerylists is empty %}
+                <div class="empty-message">
+                    <h2>No Grocerylists added.</h2>
+                </div>
+            {% endif %}
             {% for grocerylist in grocerylists %}
                 <div class="col-md-3" style="margin-bottom: 20px">
                     <ul class="list-group grocerylist">

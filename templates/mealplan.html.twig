@@ -12,7 +12,8 @@
                     data-item-name="{{item.name}}"
                 {% endif %}
                 {% if item.recipeId %}
-                    data-item-recipe="{{item.recipeId.name}}" 
+                    data-item-recipe="{{item.recipeId.name}}"
+                    data-item-recipe-id = "{{item.recipeId.id}}"
                 {% endif %}
                 data-category="{{item.category}}">
                 {{item.mealplanId| date("Y-m-d")}}
@@ -20,7 +21,7 @@
                     {{item.name}} {{item.category}}
                 {% endif %}
                 {% if item.recipeId %}
-                    {{item.recipeId.name}} {{item.category}}
+                      {{item.recipeId.id}} {{item.recipeId.name}} {{item.category}}
                 {% endif %}
             {% endfor %}</li>
             </ul>

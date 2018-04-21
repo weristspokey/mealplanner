@@ -71,23 +71,18 @@ class RecipeType extends AbstractType
             //         'data-live-search' => 'true'
             //     ]
             // ))
-            ->add('tags', EntityType::class, array(
-                'class' => Tag::class,
+            ->add('tags', TextType::class, array(
                 'label' => false,
-                'required' => true,
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Tags',
-                    'class' => 'selectpicker col-md-6',
-                    'data-live-search' => true,
+                    'class' => 'col-md-6 d-none',
                     'multiple' => true
-                ],
-                'query_builder' => function (TagRepository $repo) use ($user){
-                    return $repo->showListsOfCurrentUser($user);
-                    }
+                ]
             ))
             ->add('image', FileType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
                  'data_class' => null,
                 'attr' => [
                 'placeholder' => 'an image for your recipe']]

@@ -46,8 +46,10 @@ class RecipeItemType extends AbstractType
                 'required' => true,
                 'choices'  => array(
                     'ml' => 'ml',
+                    'l' => 'l',
                     'mg' => 'mg',
-                    'l'  => 'l',
+                    'g' => 'g',
+                    'kg' => 'kg',
                     'Stück' => 'Stück'
                 )]
             )

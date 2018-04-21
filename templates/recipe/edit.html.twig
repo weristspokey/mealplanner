@@ -9,7 +9,23 @@
             </div>
             <div class="row">
                 <div class="col-md-6 m-auto">
-                    {{form(edit_form)}}
+                    {{ form_start(edit_form) }}
+                    {{ form_row(edit_form.name) }}
+                    {{ form_row(edit_form.description) }}
+                    <select class="selectpicker col-md-12" multiple name="tags-select" id="tags-select">
+                        {% for tag in tags %}
+                            <option data-id="{{tag.id}}">{{tag.name}}</option>
+                        {% endfor %}
+                    </select>
+                    {{ form_row(edit_form.tags) }}
+                    <span style="color: red">If you edit one part of your recipe, you have to upload your image again or select a new one from you library. Its a bug. I'm working on it ;)</span>
+                    {{ form_row(edit_form.image) }}
+                    Previous image
+                    {% if recipe.image %}
+                        <img id="editRecipe" src="{{ asset('uploads/images/' ~ recipe.image) }}" />
+                    {% endif %}
+                    {{ form_row(edit_form.Submit) }}
+                    {{ form_end(edit_form) }}
                 </div>
             </div>
         </div>

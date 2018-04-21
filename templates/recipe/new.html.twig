@@ -7,6 +7,16 @@
             <div class="row">
                 <div class="col-md-6" style="margin: 0 auto">
                     {{ form_start(new_recipe_form) }}
+                    {{ form_row(new_recipe_form.name) }}
+                    {{ form_row(new_recipe_form.description) }}
+                    <select class="selectpicker col-md-12" multiple name="tags-select" id="tags-select">
+                        {% for tag in tags %}
+                            <option data-id="{{tag.id}}">{{tag.name}}</option>
+                        {% endfor %}
+                    </select>
+                    {{ form_row(new_recipe_form.tags) }}
+                    {{ form_row(new_recipe_form.image) }}
+                    {{ form_row(new_recipe_form.Submit) }}
                     {{ form_end(new_recipe_form) }}
                 </div>
             </div>

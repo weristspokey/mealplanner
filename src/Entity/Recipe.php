@@ -50,7 +50,7 @@ class Recipe
     /**
      * @var array
      *
-     * @ORM\Column(name="tags", type="array", nullable=true)
+     * @ORM\Column(name="tags", type="simple_array", nullable=true)
      */
     private $tags;
 

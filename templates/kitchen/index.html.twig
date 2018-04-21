@@ -13,6 +13,11 @@
                 </div>
             </div>
             <div class="row">
+            {% if kitchenLists is empty %}
+                <div class="empty-message">
+                    <h2>No KitchenLists added.</h2>
+                </div>
+            {% endif %}
             {% for kitchenList in kitchenLists %}
                 <div class="col-md-3" style="margin-bottom: 20px">
                     <ul class="list-group kitchenList">
@@ -28,7 +33,6 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     {{ form(forms[kitchenList.id], {'attr': {'class': 'add-item-form'}}) }}
-
                                 </div>
                             </div>
                         </li>
