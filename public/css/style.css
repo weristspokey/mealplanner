@@ -226,6 +226,7 @@ form input[value="Delete"] {
   height: 100px;
   top: 50%;
   left: 50%;
+  padding: 10px;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
     overflow: hidden;
@@ -307,6 +308,9 @@ input#tag_color {
 form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .col-md-3,
 form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection .col-md-6 {
   padding: 0;
+}
+form #RecipeItemCollectionType #RecipeItemCollectionType_recipeItemCollection {
+  margin-left: 15px;
 }
 /* Grocerylist View */
 .grocerylist li:first-child, .grocerylist li:nth-child(2)  {

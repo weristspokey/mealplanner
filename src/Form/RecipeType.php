@@ -73,7 +73,7 @@ class RecipeType extends AbstractType
             // ))
             ->add('tags', TextType::class, array(
                 'label' => false,
-                'required' => true,
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Tags',
                     'class' => 'col-md-6 d-none',
@@ -82,7 +82,7 @@ class RecipeType extends AbstractType
             ))
             ->add('image', FileType::class, [
                 'label' => false,
-                'required' => false,
+                'required' => true,
                  'data_class' => null,
                 'attr' => [
                 'placeholder' => 'an image for your recipe']]

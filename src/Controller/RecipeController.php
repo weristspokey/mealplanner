@@ -195,19 +195,19 @@ class RecipeController extends Controller
         $userId = $this->getUser()->getId();
         $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
         $deleteForm = $this->createDeleteForm($recipe);
-        $image = $recipe->getImage();
-        $recipe->setImage($image);
+
         $recipeTags = implode("," , $recipe->getTags());
         $recipe->setTags($recipeTags);
+
         $editForm = $this->createForm(RecipeType::class, $recipe);
         $editForm->handleRequest($request);
-        //$recipeImage = $recipe->getImage();
+
+
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             //$this->getDoctrine()->getManager()->flush();
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
-            //$recipeImage = $recipe->getImage();
-            //$recipeImageName = $fileUploader->upload($recipeImage);
+            
             if($recipe->getImage() !== null){
                 $recipeImage = $recipe->getImage();
                 $recipeImageName = $fileUploader->upload($recipeImage);
@@ -215,7 +215,7 @@ class RecipeController extends Controller
             }
             $recipe->setImage($recipeImageName);
             $em = $this->getDoctrine()->getManager();
-            //$recipe->setImage($recipeImage);
+            
             $em->persist($recipe);
             $em->flush();
 
@@ -248,7 +248,7 @@ class RecipeController extends Controller
             );
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
-
+        $recipeImage = $recipe->getImage();
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);

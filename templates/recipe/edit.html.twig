@@ -18,7 +18,9 @@
                         {% endfor %}
                     </select>
                     {{ form_row(edit_form.tags) }}
+                    <span style="color: red">If you edit one part of your recipe, you have to upload your image again or select a new one from you library. Its a bug. I'm working on it ;)</span>
                     {{ form_row(edit_form.image) }}
+                    Previous image
                     {% if recipe.image %}
                         <img id="editRecipe" src="{{ asset('uploads/images/' ~ recipe.image) }}" />
                     {% endif %}
