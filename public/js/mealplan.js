@@ -60,9 +60,8 @@ $(document).ready(function(){
         var snacksSection = $(this).find('.snacks-section'); 
         var calendarRow = $(this);
         var targetId = calendarRow.attr('id');
-        var itemInList;
+
         $('#mealplanItemList li').each(function() {
-            itemInList = $(this);
             if (this.getAttribute('data-item-mealplan')== targetId) {
                 if (this.getAttribute('data-category') == "Breakfast") {
                     if(this.hasAttribute('data-item-name')) {
@@ -75,7 +74,7 @@ $(document).ready(function(){
                         var content = "<a href='/recipe/"+ itemId +"'>" + item + " </a>";
                     }
                     var id = this.getAttribute('data-item-id');
-                    var html = "<li class='list-group-item text-center'>" + content + "<a class='delete-item-button' href='#'>" + 
+                    var html = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + content + "<a class='delete-item-button' href='#'>" + 
                         "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
                         "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                         "</form></li>";
@@ -92,7 +91,7 @@ $(document).ready(function(){
                         var content = "<a href='/recipe/"+ itemId +"'>" + item + " </a>";
                     }
                     var id = this.getAttribute('data-item-id');
-                    var html = "<li class='list-group-item text-center'>" + content + "<a class='delete-item-button' href='#'>" + 
+                    var html = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + content + "<a class='delete-item-button' href='#'>" + 
                         "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>"+
                         "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                         "</form></li>";
@@ -109,7 +108,7 @@ $(document).ready(function(){
                         var content = "<a href='/recipe/"+ itemId +"'>" + item + " </a>";
                     }
                     var id = this.getAttribute('data-item-id');
-                    var html = "<li class='list-group-item text-center'>" + content + "<a class='delete-item-button' href='#'>" + 
+                    var html = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + content + "<a class='delete-item-button' href='#'>" + 
                         "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
                         "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                         "</form></li>";
@@ -126,20 +125,27 @@ $(document).ready(function(){
                         var content = "<a href='/recipe/"+ itemId +"'>" + item + " </a>";
                     }
                     var id = this.getAttribute('data-item-id');
-                    var html = "<li class='list-group-item text-center'>" + content + "<a class='delete-item-button' href='#'>" + 
+                    var html = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + content + "<a class='delete-item-button' href='#'>" + 
                         "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
                         "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                         "</form></li>";
                     snacksSection.append(html);
                 };
             };
-            return itemInList;
         });
 
         var element;
+        var elementId;
+        var itemInList;
         $('.delete-item-button').on('click', function(event) {
             event.preventDefault();
             element = $(this).closest('li');
+            elementId = this.closest('li').getAttribute('data-item-id');
+            $('#mealplanItemList li').each(function() {
+                if(this.getAttribute('data-item-id') == elementId) {
+                    itemInList = this;
+                }
+            });
             element.find('.delete-form').submit();
         });
         $('.delete-form').ajaxForm({
@@ -158,9 +164,8 @@ $(document).ready(function(){
             var snacksSection = $(this).find('.snacks-section'); 
             var calendarRow = $(this);
             var targetId = calendarRow.attr('id');
-            var itemInList;
+
             $('#mealplanItemList li').each(function() {
-                itemInList = $(this);
                 if (this.getAttribute('data-item-mealplan')== targetId) {
                     if (this.getAttribute('data-category') == "Breakfast") {
                         if(this.hasAttribute('data-item-name')) {
@@ -170,7 +175,7 @@ $(document).ready(function(){
                             var item = this.getAttribute('data-item-recipe');
                         }
                         var id = this.getAttribute('data-item-id');
-                        var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                        var content = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + item + " <a class='delete-item-button' href='#'>" + 
                             "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
                             "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                             "</form></li>";
@@ -184,7 +189,7 @@ $(document).ready(function(){
                             var item = this.getAttribute('data-item-recipe');
                         }
                         var id = this.getAttribute('data-item-id');
-                        var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                        var content = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + item + " <a class='delete-item-button' href='#'>" + 
                             "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>"+
                             "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                             "</form></li>";
@@ -198,7 +203,7 @@ $(document).ready(function(){
                             var item = this.getAttribute('data-item-recipe');
                         }
                         var id = this.getAttribute('data-item-id');
-                        var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                        var content = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + item + " <a class='delete-item-button' href='#'>" + 
                             "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
                             "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                             "</form></li>";
@@ -212,33 +217,39 @@ $(document).ready(function(){
                             var item = this.getAttribute('data-item-recipe');
                         }
                         var id = this.getAttribute('data-item-id');
-                        var content = "<li class='list-group-item text-center'>" + item + " <a class='delete-item-button' href='#'>" + 
+                        var content = "<li class='list-group-item text-center' data-item-id='" + id + "'>" + item + " <a class='delete-item-button' href='#'>" + 
                             "<span title='Delete from Mealplan' class='fa fa-remove pull-right' aria-hidden='true'></span></a>" +
                             "<form class='delete-form' action='/mealplan/item_delete/"+ id +"' method='POST'>" +
                             "</form></li>";
                         snacksSection.append(content);
                     };
                 };
-                return itemInList;
+                
             });
-
-
             $('.addMealplanItemButton').click(function() {
                 var target = this.closest('.fc-day-header').getAttribute('data-date');
                 $("#MealplanItem_mealplanId").val(target); 
             });
-            var element;
-            $('.delete-item-button').on('click', function(event) {
-                event.preventDefault();
-                element = $(this).closest('li');
-                element.find('.delete-form').submit();
-            });
-            $('.delete-form').ajaxForm({
-                success: function() {
-                    element.remove();
-                    itemInList.remove();
-                }
-            });
+                    var element;
+                    var elementId;
+                    var itemInList;
+                    $('.delete-item-button').on('click', function(event) {
+                        event.preventDefault();
+                        element = $(this).closest('li');
+                        elementId = this.closest('li').getAttribute('data-item-id');
+                        $('#mealplanItemList li').each(function() {
+                            if(this.getAttribute('data-item-id') == elementId) {
+                                itemInList = this;
+                            }
+                        });
+                        element.find('.delete-form').submit();
+                    });
+                    $('.delete-form').ajaxForm({
+                        success: function() {
+                            element.remove();
+                            itemInList.remove();
+                        }
+                    });
         });
     });
 });
