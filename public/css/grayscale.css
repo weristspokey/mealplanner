@@ -226,7 +226,7 @@ a:focus, a:hover {
   border-radius: 0;
 }
 
-.btn-default {
+.btn-default, .btn-secondary {
   color: #9d5281;
   border: 1px solid #9d5281;
   background-color: transparent;
