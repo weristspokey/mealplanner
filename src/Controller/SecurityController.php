@@ -16,7 +16,7 @@ class SecurityController extends Controller
     {
         //return $this->render('index.html.twig', [
         //]);
-        return $this->redirectToRoute('mealplan');
+        return new Response("You are logged in now.");
     }
 
     /**
