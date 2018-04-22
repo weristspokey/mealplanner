@@ -52,7 +52,8 @@ class MealplanController extends Controller
 
         $recipes = $this->getDoctrine()->getRepository('App:Recipe')->findBy(
                 ['userId' => $userId]);
-        $mealplanItems = $this->getDoctrine()->getRepository('App:MealplanItem')->findAll();
+        $mealplanItems = $this->getDoctrine()->getRepository('App:MealplanItem')->findBy(
+                ['userId' => $userId]);
         // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
         //     ->findBy(
         //         ['userId' => $userId],
