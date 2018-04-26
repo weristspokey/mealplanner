@@ -5,6 +5,7 @@ use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class SecurityController extends Controller
@@ -16,6 +17,7 @@ class SecurityController extends Controller
     {
         //return $this->render('index.html.twig', [
         //]);
+
         return new Response("You are logged in now.");
     }
 
