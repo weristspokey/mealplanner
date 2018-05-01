@@ -5,18 +5,24 @@ use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-
+use App\Form\LoginType;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
      */
-   public function loginAction()
+   public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        //return $this->render('index.html.twig', [
-        //]);
-        return new Response("You are logged in now.");
+    $error = $authenticationUtils->getLastAuthenticationError();
+
+    $lastUsername = $authenticationUtils->getLastUsername();
+
+    return $this->render('login.html.twig', array(
+        'last_username' => $lastUsername,
+        'error'         => $error,
+    ));
     }
 
     /**

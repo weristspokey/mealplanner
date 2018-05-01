@@ -73,10 +73,10 @@
                         {% else %}
                         <ul class="navbar-nav ml-auto">
                         <li class="nav-item" style="margin-right:5px">
-                            <button type="submit" id="register_btn" class="btn btn-default" data-toggle="modal" data-target="#registerModal">Create account</button>
+                            <button id="register_btn" class="btn btn-default" data-toggle="modal" data-target="#registerModal">Create account</button>
                         </li>
                         <li class="nav-item">
-                            <button type="submit" id="login_btn" class="btn btn-default" data-toggle="modal" data-target="#loginModal">Login</button>
+                            <a href="{{ path('login') }}" class="btn btn-default">Login</a>
                         </li>
                     </ul>
                         {% endif %}
