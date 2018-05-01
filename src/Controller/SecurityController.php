@@ -19,7 +19,7 @@ class SecurityController extends Controller
         //return $this->render('index.html.twig', [
         //]);
         //throw new \RuntimeException("Is never been called");
-        return new Response("Please try to login again.");
+        return new Response("An Error occured. Maybe your username or password is wrong. Please try to login again.");
     }
 
     /**
