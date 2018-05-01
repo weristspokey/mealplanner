@@ -232,7 +232,7 @@ a:focus, a:hover {
   background-color: transparent;
 }
 
-.btn-default:focus, .btn-default:hover {
+.btn-default:focus, .btn-default:hover, .btn-secondary:focus, .btn-secondary:hover {
   color: white;
   border: 1px solid #9D759D;
   outline: none;

@@ -73,7 +73,7 @@
                         {% else %}
                         <ul class="navbar-nav ml-auto">
                         <li class="nav-item" style="margin-right:5px">
-                            <button id="register_btn" class="btn btn-default" data-toggle="modal" data-target="#registerModal">Create account</button>
+                            <a href="{{ path('register') }}" class="btn btn-default">Create Account</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ path('login') }}" class="btn btn-default">Login</a>
