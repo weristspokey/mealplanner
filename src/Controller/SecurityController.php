@@ -12,13 +12,14 @@ class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
+     * @throws \RuntimeException
      */
    public function loginAction()
     {
         //return $this->render('index.html.twig', [
         //]);
-
-        return new Response("You are logged in now.");
+        //throw new \RuntimeException("Is never been called");
+        return new Response("Please try to login again.");
     }
 
     /**

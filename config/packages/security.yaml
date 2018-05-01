@@ -56,3 +56,4 @@ security:
         - { path: /kitchen, role: ROLE_USER}
         - { path: /recipes, role: ROLE_USER}
         - { path: /grocerylist, role: ROLE_USER}
+        - { path: /profile, role: ROLE_USER}
