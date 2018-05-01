@@ -59,65 +59,20 @@ class IndexController extends Controller
         return $this->redirectToRoute('index');
     }
 
-     /**
-     * @param Request $request
-     * @Route("/registration-form-submission", name="registration-form-submission")
-     * @Method("POST")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \LogicException
-     * @throws \InvalidArgumentException
+    /**
+     * @Route("/admin", name="admin")
      */
-    public function registrationFormSubmissionAction(Request $request)
+   public function adminAction(Request $request)
     {
-        $user = new User();
-        $registerForm = $this->createRegistrationForm($user);
-
-        $registerForm->HandleRequest($request);
-
-        if(! $registerForm->isSubmitted() || ! $registerForm->isValid()) 
-        {
-            return $this->render('index.html.twig', [
-            'register_form' => $registerForm->createView()
-        ]);
-        }
-        
-        $password = $this
-            ->get('security.password_encoder')
-            ->encodePassword(
-                $user,
-                $user->getPlainPassword()
-            );
-
-        $user->setPassword($password);
         $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        $token = new UsernamePasswordToken(
-            $user,
-            $password,
-            'main',
-            $user->getRoles()
-        );
-
-        $this->get('security.token_storage')->setToken($token);
-        $this->get('session')->set('_security_main', serialize($token));
-
-
-        $this->addFlash('success', 'You are registered');
-        return $this->redirectToRoute('index');
+        $users = $em->getRepository('App:User')->findAll();
+        return $this->render('admin.html.twig', array(
+            'users' => $users
+        ));
     }
 
-    /**
-     * @param $user
-     * @return \Symfony\Component\Form\Form
-     */
-    private function createRegistrationForm($user)
+    public function deleteUserAction(Request $request)
     {
-        return $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('registration-form-submission')
-        ]);
-
 
     }
 }
