@@ -80,6 +80,9 @@ class IndexController extends Controller
         $recipes = $em->getRepository('App:Recipe')->findBy(
             array('userId' => $id)
             );
+        foreach ($recipes as $recipe) {
+                $em->remove($recipe);
+            }
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
             array('userId' => $id)
             );
