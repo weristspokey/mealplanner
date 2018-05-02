@@ -71,9 +71,50 @@ class IndexController extends Controller
         ));
     }
 
-    public function deleteUserAction(Request $request)
-    {
+    /**
+     * @Route("/admin/deleteUser/{id}", name="delete_user")
+     */
+    public function deleteUserAction(Request $request, User $id)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $recipes = $em->getRepository('App:Recipe')->findBy(
+            array('userId' => $id)
+            );
+        $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($kitchenLists as $list) {
+                $em->remove($list);
+            }
+        // $kitchenListItems = $em->getRepository('App:KitchenListItem')->findBy(
+        //     array('userId' => $id)
+        //     );
+        // foreach ($kitchenListItems as $item) {
+        //         $em->remove($item);
+        //     }
+        $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($grocerylists as $list) {
+                $em->remove($list);
+            }
+        // $grocerylistItems = $em->getRepository('App:GrocerylistItem')->findBy(
+        //     array('userId' => $id)
+        //     );
+        // foreach ($grocerylistItems as $item) {
+        //         $em->remove($item);
+        //     }
+        // $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+        //     array('userId' => $id)
+        //     );
+        // foreach ($mealplanItems as $item) {
+        //         $em->remove($item);
+        //     }
 
+        $em->remove($id);
+        $em->flush();
+        $this->addFlash('success', 'User deleted!');
+        return $this->redirectToRoute('admin');
     }
 }
 ?>
