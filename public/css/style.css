@@ -120,6 +120,12 @@ footer #mail-btn:hover {
 .fc-day h5 {
   margin-bottom: 5px;
 }
+form[name="MealplanItem"] .form-group {
+  margin-bottom: 5px;
+}
+form[name="MealplanItem"] .nav-pills {
+  margin-top: 20px;
+}
 /* Recipe View */
 .btn-tag {
   border: none;
