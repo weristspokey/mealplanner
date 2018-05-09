@@ -9,12 +9,56 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <p>You have {{grocerylists|length }} grocerylists, {{kitchenLists|length }} kitchenlists, {{recipes|length }} recipes, {{tags|length }} tags and {{mealplanItems|length }} added mealplan items!</p>
+                    <h2 class="text-center">You have</h2>
                 </div>
             </div>
+            <div class="row justify-content-md-center">
+                <div class="col-md-2">
+                    <h2 class="text-center">{{grocerylists|length }}</h2>
+                    <p class="text-center">Grocerylists</p>
+                </div>
+                <div class="col-md-2">
+                    <h2 class="text-center">{{kitchenLists|length }}</h2>
+                    <p class="text-center">Kitchenlists</p>
+                </div>
+                <div class="col-md-2">
+                    <h2 class="text-center">{{recipes|length }}</h2>
+                    <p class="text-center">Recipes</p>
+                </div>
+                <div class="col-md-2">
+                    <h2 class="text-center">{{tags|length }}</h2>
+                    <p class="text-center">Tags</p>
+                </div>
+                <div class="col-md-2">
+                    <h2 class="text-center">{{mealplanItems|length }}</h2>
+                    <p class="text-center">Mealplan Items</p>
+                </div>
+            </div>
+            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete account</a>
+            <a href="#" class="btn btn-default d-none" >Change password</a>
+        </div>
 
-        Change pw
-                    Delete account
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Do you really want to delete your account? All your Grocerylists, Kitchenlists, Tags and Recipes will be deleted too.<br>
+                There is no way back.
+              </div>
+              <div class="modal-footer m-auto">
+                <a href="{{ path('profile_delete') }}" class="btn btn-danger" >Yes</a>
+                <a href="#" class="btn btn-default" data-dismiss="modal">No</a>
+              </div>
+            </div>
+          </div>
         </div>
     </section>
 {% endblock %}

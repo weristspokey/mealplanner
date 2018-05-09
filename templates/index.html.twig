@@ -23,7 +23,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 mx-auto">
-                    <h2>About mealplanner</h2>
+                    <h1>About mealplanner</h1>
                 </div>
             </div>
             <div class="row">
@@ -65,7 +65,7 @@
         <div class="container" style="position: relative; top: 0; left: 0;">
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                <h2>Goals</h2>
+                <h1>Goals</h1>
                 </div>
             </div>
             <div class="row">
@@ -89,7 +89,7 @@
     <section class="text-center statistics-section" id="section-statistics">
         <div class="container">
             <div class="col-lg-8 mx-auto">
-                <h2>Statistics</h2>
+                <h1>Statistics</h1>
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
@@ -124,7 +124,7 @@
     <section id="download" class="download-section text-center">
         <div class="container">
             <div class="col-lg-8 mx-auto">
-                <h2>Download Mealplanner</h2>
+                <h1>Download Mealplanner</h1>
                 <p>Coming soon ...</p>
                 <a href="" class="btn btn-default btn-lg">
                     <i class="fa fa-apple fa-fw"></i>
@@ -138,46 +138,7 @@
         </div>
     </section>
 
- <!-- Create Account Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">        
-                    <h4 class="modal-title" id="registerModalLabel">Create account</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                {{form(register_form)}}
-                <div id="sicherheitshinweise" class="d-none"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
-           <div class="modal-dialog modal-sm" role="document">
-               <div class="modal-content">
-                   <div class="modal-header"> 
-                       <h4 class="modal-title" id="loginModalLabel">Login</h4>
-                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                   </div>
-                   <div class="modal-body">
-                       <form class="form-signin" action="{{ path('login') }}" method="POST">
-                           <div class="form-group">
-                               <input type="text" class="form-control" id="_username" name="_username" placeholder="Username" required>
-                           </div>
-                           <div class="form-group">
-                               <input type="password" class="form-control" id="_password"
-                               name="_password" placeholder="Password" required>
-                           </div>
-                   </div>
-                   <div class="modal-footer">
-                       <button type="submit" class="btn btn-default m-auto">Login</button>
-                       </form>
-                   </div>
-               </div>
-           </div>
-       </div>
+
 
 {% endblock %}
 {% block javascripts %}

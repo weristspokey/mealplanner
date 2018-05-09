@@ -106,6 +106,11 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
+        $recipeOwner = $recipe->getUserId()->getId();
+        if($userId != $recipeOwner) {
+            return new Response("Wrong User.");
+        }
+        else {
         $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
         $recipeTags = $recipe->getTags();
         $recipeItems = $recipe->getRecipeItems();
@@ -182,6 +187,7 @@ class RecipeController extends Controller
             'data' => $recipeItemCollection,
             'moveItemForm' => $moveItemForm->createView(),
         ]);
+        }
     }
 
     /**

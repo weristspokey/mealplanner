@@ -87,18 +87,22 @@ $(document).ready(function(){
 function disableFoodSelect() {
     $(".food").removeClass('active');
     $(".food-select").prop('disabled', true);
+    $(".food-select").hide();
 }
 function disableRecipeSelect() {
     $(".recipe").removeClass('active');
     $(".btn-group.recipe-select").addClass('disabled');
     $(".btn-group.recipe-select").find('.btn').addClass('disabled');
     $(".selectpicker.recipe-select").attr('disabled', 'true');
+    $(".recipe-select").hide();
 }
 function enableFoodSelect() {
+    $(".food-select").show();
     $(".food").addClass('active');
     $('.food-select').prop('disabled', false);
 }
 function enableRecipeSelect() {
+    $(".recipe-select").show();
     $(".recipe").addClass('active');
     $(".btn-group.recipe-select").removeClass('disabled');
     $(".btn-group.recipe-select").find('.btn').removeClass('disabled');

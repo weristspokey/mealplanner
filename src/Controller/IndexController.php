@@ -29,12 +29,12 @@ class IndexController extends Controller
         $mealplanItems = $em->getRepository('App:MealplanItem')->findAll();
         $recipes = $em->getRepository('App:Recipe')->findAll();
 
-        $registerForm = $this->createRegistrationForm($user);
+        //$registerForm = $this->createRegistrationForm($user);
         
         // replace this example code with whatever you need
         return $this->render('index.html.twig', [
             //'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            'register_form' => $registerForm->createView(),
+            //'register_form' => $registerForm->createView(),
             'grocerylists' => $grocerylists,
             'kitchenLists' => $kitchenLists,
             'mealplanItems' => $mealplanItems,
@@ -59,66 +59,65 @@ class IndexController extends Controller
         return $this->redirectToRoute('index');
     }
 
-     /**
-     * @param Request $request
-     * @Route("/registration-form-submission", name="registration-form-submission")
-     * @Method("POST")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \LogicException
-     * @throws \InvalidArgumentException
+    /**
+     * @Route("/admin", name="admin")
      */
-    public function registrationFormSubmissionAction(Request $request)
+   public function adminAction(Request $request)
     {
-        $user = new User();
-        $registerForm = $this->createRegistrationForm($user);
-
-        $registerForm->HandleRequest($request);
-
-        if(! $registerForm->isSubmitted() || ! $registerForm->isValid()) 
-        {
-            return $this->render('index.html.twig', [
-            'register_form' => $registerForm->createView()
-        ]);
-        }
-        
-        $password = $this
-            ->get('security.password_encoder')
-            ->encodePassword(
-                $user,
-                $user->getPlainPassword()
-            );
-
-        $user->setPassword($password);
         $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        $token = new UsernamePasswordToken(
-            $user,
-            $password,
-            'main',
-            $user->getRoles()
-        );
-
-        $this->get('security.token_storage')->setToken($token);
-        $this->get('session')->set('_security_main', serialize($token));
-
-
-        $this->addFlash('success', 'You are registered');
-        return $this->redirectToRoute('index');
+        $users = $em->getRepository('App:User')->findAll();
+        return $this->render('admin.html.twig', array(
+            'users' => $users
+        ));
     }
 
     /**
-     * @param $user
-     * @return \Symfony\Component\Form\Form
+     * @Route("/admin/deleteUser/{id}", name="delete_user")
      */
-    private function createRegistrationForm($user)
-    {
-        return $this->createForm(UserType::class, $user, [
-            'action' => $this->generateUrl('registration-form-submission')
-        ]);
+    public function deleteUserAction(Request $request, User $id)
+    {   
+        $em = $this->getDoctrine()->getManager();
+        $recipes = $em->getRepository('App:Recipe')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($recipes as $recipe) {
+                $em->remove($recipe);
+            }
+        $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($kitchenLists as $list) {
+                $em->remove($list);
+            }
+        // $kitchenListItems = $em->getRepository('App:KitchenListItem')->findBy(
+        //     array('userId' => $id)
+        //     );
+        // foreach ($kitchenListItems as $item) {
+        //         $em->remove($item);
+        //     }
+        $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($grocerylists as $list) {
+                $em->remove($list);
+            }
+        // $grocerylistItems = $em->getRepository('App:GrocerylistItem')->findBy(
+        //     array('userId' => $id)
+        //     );
+        // foreach ($grocerylistItems as $item) {
+        //         $em->remove($item);
+        //     }
+        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($mealplanItems as $item) {
+                $em->remove($item);
+            }
 
-
+        $em->remove($id);
+        $em->flush();
+        $this->addFlash('success', 'User deleted!');
+        return $this->redirectToRoute('admin');
     }
 }
 ?>

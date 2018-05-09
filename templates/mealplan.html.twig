@@ -45,14 +45,17 @@
                     {{ form_start(newMealplanItemForm) }}
                     {{ form_row(newMealplanItemForm.category) }}
                     {{ form_row(newMealplanItemForm.mealplanId) }}
-                    <ul class="nav nav-pills">
+                    <div class="col-md-6 m-auto">
+                        <ul class="nav nav-pills">
                         <li class="nav-item">
                             <a class="nav-link food active" href="#">Food</a>
                         </li>
+                        <p style="margin-top:7px; margin-left: 5px; margin-right: 5px">or</p>
                         <li class="nav-item">
                             <a class="nav-link recipe" href="#">Recipe</a>
                         </li>
                     </ul>
+                    </div>
                     {{ form_row(newMealplanItemForm.name) }}
                     {{ form_row(newMealplanItemForm.recipeId) }}
                     {{ form_end(newMealplanItemForm) }}
