@@ -107,12 +107,12 @@ class IndexController extends Controller
         // foreach ($grocerylistItems as $item) {
         //         $em->remove($item);
         //     }
-        // $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
-        //     array('userId' => $id)
-        //     );
-        // foreach ($mealplanItems as $item) {
-        //         $em->remove($item);
-        //     }
+        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+            array('userId' => $id)
+            );
+        foreach ($mealplanItems as $item) {
+                $em->remove($item);
+            }
 
         $em->remove($id);
         $em->flush();
