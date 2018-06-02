@@ -40,14 +40,14 @@ class RecipeItem
     /**
      * @var int
      *
-     * @ORM\Column(name="value", type="integer")
+     * @ORM\Column(name="value", type="integer", nullable=true)
      */
     private $value;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="unit", type="string")
+     * @ORM\Column(name="unit", type="string", nullable=true)
      */
     private $unit;
 

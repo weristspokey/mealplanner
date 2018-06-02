@@ -20,10 +20,10 @@ class SecurityController extends Controller
 
     $lastUsername = $authenticationUtils->getLastUsername();
 
-    return $this->render('login.html.twig', array(
+    return $this->render('login.html.twig', [
         'last_username' => $lastUsername,
-        'error'         => $error,
-    ));
+        'error'         => $error
+    ]);
     }
 
     /**
@@ -43,29 +43,21 @@ class SecurityController extends Controller
         $user = new User();
         $registerForm = $this->createForm(UserType::class, $user);
 
-        // 2) handle the submit (will only happen on POST)
         $registerForm->handleRequest($request);
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {
-
-            // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-
-            // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
             $this->addFlash('success', 'You are registered');
             return $this->redirectToRoute('index');
         }
 
-        return $this->render(
-            'register.html.twig',
-            array('form' => $registerForm->createView())
-        );
+        return $this->render('register.html.twig', [
+            'form' => $registerForm->createView()
+            ]);
     }
 }
 ?>

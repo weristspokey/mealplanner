@@ -29,12 +29,7 @@ class IndexController extends Controller
         $mealplanItems = $em->getRepository('App:MealplanItem')->findAll();
         $recipes = $em->getRepository('App:Recipe')->findAll();
 
-        //$registerForm = $this->createRegistrationForm($user);
-        
-        // replace this example code with whatever you need
         return $this->render('index.html.twig', [
-            //'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-            //'register_form' => $registerForm->createView(),
             'grocerylists' => $grocerylists,
             'kitchenLists' => $kitchenLists,
             'mealplanItems' => $mealplanItems,

@@ -54,8 +54,12 @@ class UserController extends Controller
             array('userId' => $userId)
             );
         foreach ($recipes as $recipe) {
-                $em->remove($recipe);
+            $items = $recipe->getRecipeItems();
+            foreach ($items as $item) {
+                $em->remove($item);
             }
+            $em->remove($recipe);
+        }
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
             array('userId' => $userId)
             );
