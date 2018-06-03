@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\KitchenList;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use App\Repository\GrocerylistRepository;
+use App\Repository\KitchenListRepository;
 use App\Entity\Grocerylist;
 use App\Entity\KitchenListItem;
 use App\Entity\GrocerylistItem;
@@ -36,7 +37,7 @@ class KitchenController extends Controller
         $userId = $this->getUser()->getId();
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
             array('userId' => $userId)
-            );
+            ); 
 
         /* Add KitchenListItem */
         $kitchenListItem = new KitchenListItem();
@@ -92,7 +93,7 @@ class KitchenController extends Controller
                     ],
                 'query_builder' => function (GrocerylistRepository $repo) {
                     $userId = $this->getUser()->getId();
-                    return $repo->showListsOfCurrentUser($userId);
+                    return $repo->findAllGrocerylistsOfUser($userId);
                     }
                 ]
             )

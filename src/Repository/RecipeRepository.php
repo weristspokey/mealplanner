@@ -34,14 +34,11 @@ class RecipeRepository extends ServiceEntityRepository
             ->orderBy('r.name', 'ASC');
         return $qb;
     }
-    public function findAllRecipesOfCurrentUser($userId)
+    public function findAllRecipesOfUser($userId)
     {
-        return $this->getEntityManager()
-            ->createQuery(
-                'SELECT recipe
-                FROM App:Recipe recipe
-                WHERE recipe.userId = :value'
-            )->setParameter('value', $userId)
-            ->getResult();
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.userId = :value')->setParameter('value', $userId)
+            ->orderBy('r.name', 'ASC');
+        return $qb;
     }
 }

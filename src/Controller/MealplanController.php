@@ -6,7 +6,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
-use App\Entity\Food;
 use App\Entity\User;
 use App\Entity\Recipe;
 use App\Entity\Grocerylist;
@@ -47,8 +46,6 @@ class MealplanController extends Controller
         //     'fiveDaysFromNow' => date("D d.m.y", time() + (5*86400)),
         //     'sixDaysFromNow' => date("D d.m.y", time() + (6*86400)),
         //  );
-
-        $food = $this->getDoctrine()->getRepository('App:Food')->findAll();
 
         $recipes = $this->getDoctrine()->getRepository('App:Recipe')->findBy(
                 ['userId' => $userId]);
@@ -134,7 +131,6 @@ class MealplanController extends Controller
             // 'fourDaysFromNow' => $days['fourDaysFromNow'],
             // 'fiveDaysFromNow' => $days['fiveDaysFromNow'],
             // 'sixDaysFromNow' => $days['sixDaysFromNow'],
-            'food' => $food,
             'recipes' => $recipes,
             //'add_mealplan_form' => $addMealplanForm->createView(),
             //'mealplans' => $mealplans,

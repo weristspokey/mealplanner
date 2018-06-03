@@ -28,4 +28,12 @@ class TagRepository extends \Doctrine\ORM\EntityRepository
             )->setParameter('value', $userId)
             ->getResult();
     }
+
+    public function findAllTagsOfUser($userId) 
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->where('t.userId = :value')->setParameter('value', $userId)
+            ->orderBy('t.name', 'ASC');
+        return $qb;
+    }
 }

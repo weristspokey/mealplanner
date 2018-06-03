@@ -44,7 +44,7 @@ class RecipeController extends Controller
         $userId = $this->getUser()->getId();
 
         $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
-        $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAllRecipesOfCurrentUser($userId);
+        $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAllRecipesOfUser($userId)->getQuery()->getResult();
 
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes,
@@ -159,7 +159,7 @@ class RecipeController extends Controller
                     ],
                 'query_builder' => function (GrocerylistRepository $repo) {
                     $userId = $this->getUser()->getId();
-                    return $repo->showListsOfCurrentUser($userId);
+                    return $repo->findAllGrocerylistsOfUser($userId);
                     }
                 ]
             )

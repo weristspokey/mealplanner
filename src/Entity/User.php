@@ -66,27 +66,27 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="Recipe", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Recipe", mappedBy="userId")
      */
     private $recipes;
 
     /**
-     * @ORM\OneToMany(targetEntity="Grocerylist", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Grocerylist", mappedBy="userId")
      */
     private $grocerylists;
 
     /**
-     * @ORM\OneToMany(targetEntity="KitchenList", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="KitchenList", mappedBy="userId")
      */
     private $kitchenLists;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tag", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="userId")
      */
     private $tags;
 
     /**
-     * @ORM\OneToMany(targetEntity="MealplanItem", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="MealplanItem", mappedBy="userId")
      */
     private $mealplanItems;
 

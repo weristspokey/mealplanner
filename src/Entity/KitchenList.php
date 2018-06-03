@@ -26,7 +26,6 @@ class KitchenList
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="kitchenLists")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 

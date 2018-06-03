@@ -26,7 +26,6 @@ class Mealplan
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="grocerylists")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 

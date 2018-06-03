@@ -39,7 +39,6 @@ class Tag
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tags")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;
 

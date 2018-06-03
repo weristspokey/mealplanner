@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Repository;
-
 use App\Entity\KitchenList;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -25,7 +24,7 @@ class KitchenListRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function showListsOfCurrentUser($userId) 
+    public function findAllKitchenListsOfUser($userId) 
     {
         $qb = $this->createQueryBuilder('k')
             ->where('k.userId = :value')->setParameter('value', $userId)
