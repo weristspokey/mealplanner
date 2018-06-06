@@ -18,7 +18,7 @@ use App\Form\UserType;
 use App\Repository\RecipeRepository;
 use App\Repository\GrocerylistRepository;
 use App\Repository\KitchenListRepository;
-use App\Repository\TagsRepository;
+use App\Repository\TagRepository;
 use App\Repository\MealplanItemRepository;
 
 class UserController extends Controller
@@ -32,12 +32,11 @@ class UserController extends Controller
         $userId = $this->getUser()->getId();
 
         $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
-             array('userId' => $userId)
+             ['user' => $userId]
              );
         $recipes = $this->getDoctrine()
             ->getRepository(Recipe::class)
             ->findAllRecipesOfUser($userId)->getQuery()->getResult();
-
         $grocerylists = $this->getDoctrine()
             ->getRepository(Grocerylist::class)
             ->findAllGrocerylistsOfUser($userId)->getQuery()->getResult();
@@ -55,7 +54,8 @@ class UserController extends Controller
             'kitchenLists' => $kitchenLists,
             'mealplanItems' => $mealplanItems,
             'tags' => $tags,
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            'userId' => $userId
         ]);
     }
 
@@ -66,35 +66,50 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $userId = $this->getUser()->getId();
+        $userId = $user->getId();
 
-        $recipes = $em->getRepository('App:Recipe')->findBy(
-            array('userId' => $userId)
-            );
+        $recipes = $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAllRecipesOfUser($userId)->getQuery()->getResult();
+
         foreach ($recipes as $recipe) {
-            $recipeId = $recipe->getId();
-            $recipeItems = $em->getRepository('App:RecipeItem')->findBy(
-            array('recipeId' => $recipeId)
-            );
-            foreach ($recipeItems as $item) {
+            foreach ($recipe->getRecipeItems() as $item) {
                 $em->remove($item);
             }
-            $em->remove($recipe);
-        }
-        $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
-            array('userId' => $userId)
-            );
-        foreach ($kitchenLists as $list) {
-                $em->remove($list);
+                $em->remove($recipe);
             }
-        $grocerylists = $em->getRepository('App:Grocerylist')->findBy(
-            array('userId' => $userId)
-            );
-        foreach ($grocerylists as $list) {
-                $em->remove($list);
+
+        $kitchenLists = $this->getDoctrine()
+            ->getRepository(KitchenList::class)
+            ->findAllKitchenListsOfUser($userId)->getQuery()->getResult();
+
+        foreach ($kitchenLists as $kitchenList) {
+                foreach ($kitchenList->getKitchenListItems() as $item) {
+                $em->remove($item);
             }
+                $em->remove($kitchenList);
+            }
+
+        $grocerylists = $this->getDoctrine()
+            ->getRepository(Grocerylist::class)
+            ->findAllGrocerylistsOfUser($userId)->getQuery()->getResult();
+
+        foreach ($grocerylists as $grocerylist) {
+            foreach ($grocerylist->getGrocerylistItems() as $item) {
+                $em->remove($item);
+            }
+                $em->remove($grocerylist);
+            }
+
+        $tags = $this->getDoctrine()
+            ->getRepository(Tag::class)
+            ->findAllTagsOfUser($userId)->getQuery()->getResult();
+        foreach ($tags as $tag) {
+                $em->remove($tag);
+            }
+
         $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
-            array('userId' => $userId)
+            ['user' => $userId]
             );
         foreach ($mealplanItems as $item) {
                 $em->remove($item);

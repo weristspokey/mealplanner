@@ -36,7 +36,7 @@ class KitchenController extends Controller
         $user = $this->getUser();
         $userId = $this->getUser()->getId();
         $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
-            array('userId' => $userId)
+            array('user' => $userId)
             ); 
 
         /* Add KitchenListItem */
@@ -125,7 +125,7 @@ class KitchenController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $kitchenList->setUserId($user);
+            $kitchenList->setUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($kitchenList);
             $em->flush();
@@ -158,7 +158,7 @@ class KitchenController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $kitchenList->setUserId($user);
+            $kitchenList->setUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($kitchenList);
             $em->flush();

@@ -13,7 +13,7 @@ class TagRepository extends \Doctrine\ORM\EntityRepository
     public function showListsOfCurrentUser($userId) 
     {
         $qb = $this->createQueryBuilder('t')
-            ->where('t.userId = :value')->setParameter('value', $userId)
+            ->where('t.user = :value')->setParameter('value', $userId)
             ->orderBy('t.name', 'ASC');
         return $qb;
     }
@@ -24,7 +24,7 @@ class TagRepository extends \Doctrine\ORM\EntityRepository
             ->createQuery(
                 'SELECT tag
                 FROM App:Tag tag
-                WHERE tag.userId = :value'
+                WHERE tag.user = :value'
             )->setParameter('value', $userId)
             ->getResult();
     }
@@ -32,7 +32,7 @@ class TagRepository extends \Doctrine\ORM\EntityRepository
     public function findAllTagsOfUser($userId) 
     {
         $qb = $this->createQueryBuilder('t')
-            ->where('t.userId = :value')->setParameter('value', $userId)
+            ->where('t.user = :value')->setParameter('value', $userId)
             ->orderBy('t.name', 'ASC');
         return $qb;
     }

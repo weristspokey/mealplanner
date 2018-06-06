@@ -30,14 +30,14 @@ class RecipeRepository extends ServiceEntityRepository
     public function showRecipesOfCurrentUser($userId) 
     {
         $qb = $this->createQueryBuilder('r')
-            ->where('r.userId = :value')->setParameter('value', $userId)
+            ->where('r.user = :value')->setParameter('value', $userId)
             ->orderBy('r.name', 'ASC');
         return $qb;
     }
     public function findAllRecipesOfUser($userId)
     {
         $qb = $this->createQueryBuilder('r')
-            ->where('r.userId = :value')->setParameter('value', $userId)
+            ->where('r.user = :value')->setParameter('value', $userId)
             ->orderBy('r.name', 'ASC');
         return $qb;
     }

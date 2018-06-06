@@ -28,7 +28,7 @@ class Grocerylist
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="grocerylists")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -58,27 +58,27 @@ class Grocerylist
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param integer $userId
+     * @param integer $user
      *
      * @return Grocerylist
      */
-    public function setUserId($userId)
+    public function setUser($user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return int
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**

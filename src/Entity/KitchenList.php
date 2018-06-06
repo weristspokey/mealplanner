@@ -27,7 +27,7 @@ class KitchenList
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="kitchenLists")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -57,27 +57,27 @@ class KitchenList
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param integer $userId
+     * @param integer $user
      *
      * @return KitchenList
      */
-    public function setUserId($userId)
+    public function setUser($user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return int
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**

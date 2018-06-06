@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Food;
-use App\Entity\Mealplan;
 use App\Entity\User;
 use App\Entity\Recipe;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -34,7 +32,7 @@ class MealplanItem
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="mealplanItems")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -91,27 +89,27 @@ class MealplanItem
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param integer $userId
+     * @param integer $user
      *
      * @return Mealplan
      */
-    public function setUserId($userId)
+    public function setUser($user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return int
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**

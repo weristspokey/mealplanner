@@ -29,7 +29,7 @@ class Recipe
      /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="recipes")
      */
-    private $userId;
+    private $user;
 
     /**
      * @var string
@@ -87,27 +87,27 @@ class Recipe
     }
 
     /**
-     * Set userId
+     * Set user
      *
-     * @param User $userId
+     * @param User $user
      *
      * @return Recipe
      */
-    public function setUserId(User $userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**

@@ -15,7 +15,7 @@ class MealplanItemRepository extends ServiceEntityRepository
     public function findAllMealplanItemsOfUser($userId) 
     {
         $qb = $this->createQueryBuilder('m')
-            ->where('m.userId = :value')->setParameter('value', $userId);
+            ->where('m.user = :value')->setParameter('value', $userId);
         return $qb;
     }
 }

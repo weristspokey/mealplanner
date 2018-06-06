@@ -44,7 +44,7 @@ class TagController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
         $tags = $em->getRepository('App:Tag')->findBy(
-            array('userId' => $userId)
+            array('user' => $userId)
             );
 
         $tag = new Tag();
@@ -56,7 +56,7 @@ class TagController extends Controller
             $em = $this->getDoctrine()->getManager();
             $tagName = str_replace(' ', '', $tag->getName());
             $tag->setName($tagName);
-            $tag->setUserId($user);
+            $tag->setUser($user);
             $em->persist($tag);
             $em->flush();
             $this->addFlash('success', 'New Tag added!');

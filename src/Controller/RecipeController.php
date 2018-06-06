@@ -81,7 +81,7 @@ class RecipeController extends Controller
             $recipe->setTags($recipeTags);
             
             
-            $recipe->setUserId($user);
+            $recipe->setUser($user);
             $em->persist($recipe);
             $em->flush();
             $this->addFlash('success', 'New Recipe added!');
@@ -106,7 +106,7 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
-        $recipeOwner = $recipe->getUserId()->getId();
+        $recipeOwner = $recipe->getUser()->getId();
         if($userId != $recipeOwner) {
             return new Response("Wrong User.");
         }

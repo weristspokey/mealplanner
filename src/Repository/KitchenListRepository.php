@@ -27,7 +27,7 @@ class KitchenListRepository extends ServiceEntityRepository
     public function findAllKitchenListsOfUser($userId) 
     {
         $qb = $this->createQueryBuilder('k')
-            ->where('k.userId = :value')->setParameter('value', $userId)
+            ->where('k.user = :value')->setParameter('value', $userId)
             ->orderBy('k.name', 'ASC');
         return $qb;
     }

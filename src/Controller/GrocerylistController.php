@@ -127,7 +127,7 @@ class GrocerylistController extends Controller
         $addGrocerylistForm->handleRequest($request);
 
         if ($addGrocerylistForm->isSubmitted() && $addGrocerylistForm->isValid()) {
-            $grocerylist->setUserId($user);
+            $grocerylist->setUser($user);
             $em->persist($grocerylist);
             $em->flush();
             $this->addFlash('success', 'New Grocerylist added!');
@@ -159,7 +159,7 @@ class GrocerylistController extends Controller
         $addGrocerylistForm->handleRequest($request);
 
         if ($addGrocerylistForm->isSubmitted() && $addGrocerylistForm->isValid()) {
-            $grocerylist->setUserId($user);
+            $grocerylist->setUser($user);
             $em->persist($grocerylist);
             $em->flush();
 

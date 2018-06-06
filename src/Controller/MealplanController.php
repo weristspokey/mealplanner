@@ -48,65 +48,9 @@ class MealplanController extends Controller
         //  );
 
         $recipes = $this->getDoctrine()->getRepository('App:Recipe')->findBy(
-                ['userId' => $userId]);
+                ['user' => $userId]);
         $mealplanItems = $this->getDoctrine()->getRepository('App:MealplanItem')->findBy(
-                ['userId' => $userId]);
-        // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
-        //     ->findBy(
-        //         ['userId' => $userId],
-        //         ['date' => 'ASC']
-        // );    
-
-        // $mealplanItem = new MealplanItem();
-        // $views = [];
-        
-        // foreach ($mealplans as $mealplan) 
-        // {
-        //     $form_name = "form_".$mealplan->getId();
-        //     dump($mealplan->getDate()->format('Y-m-d'));
-        //     $form = $this->get('form.factory')->createNamedBuilder( 
-        //       $form_name, 
-        //       MealplanItemType::class, 
-        //       $mealplanItem
-        //    )->getForm();
-
-        //     $form->handleRequest($request);
-
-        //     if ($form->isSubmitted() && $form->isValid()) 
-        //     {
-        //         $mealplanItem->setMealplanId($mealplan);
-        //         $em->persist($mealplanItem);
-        //         $em->flush();
-        //     }
-
-        //     $views[$mealplan->getId()] = $form->createView();
-        // }
-
-
-
-        // // Add new mealplan
-        // $newMealplan = new Mealplan();
-        // $addMealplanForm = $this->createForm(MealplanType::class, $newMealplan);
-        // $addMealplanForm->handleRequest($request);
-
-        // if ($addMealplanForm->isSubmitted() && $addMealplanForm->isValid()) 
-        //     {
-        //         $newMealplan->setUserId($user);
-        //         //$newDate = $newMealplan->getDate()->format('Y-m-d');
-        //         //$newMealplan->setDate($newDate);
-        //         $em = $this->getDoctrine()->getManager();
-        //         $em->persist($newMealplan);
-        //         $em->flush();
-
-        //         // $mealplans = $this->getDoctrine()->getRepository('App:Mealplan')
-        //         //     ->findBy(
-        //         //             ['userId' => $userId],
-        //         //             ['date' => 'ASC']
-        //         //     );    
-        //         $this->addFlash('success', 'New Mealplan added!');
-
-        //         return $this->redirectToRoute('mealplan');
-        //     }
+                ['user' => $userId]);
 
         // Add new item
         $newMealplanItem = new MealplanItem();
@@ -115,7 +59,7 @@ class MealplanController extends Controller
 
         if ($addMealplanItemForm->isSubmitted() && $addMealplanItemForm->isValid()) 
             {
-                $newMealplanItem->setUserId($user);
+                $newMealplanItem->setUser($user);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($newMealplanItem);
                 $em->flush();
@@ -138,31 +82,6 @@ class MealplanController extends Controller
             'mealplanItems' => $mealplanItems
             //'forms' => $views,
         ]);
-    }
-
-
-    /**
-     * @Route("/create")
-     */
-    public function createAction()
-    {
-    $mealplan = new Mealplan();
-    $userId = $this->getUser();
-    $mealplan->setUserId($userId);
-    $date = new \DateTime();
-    $date->modify('+2 day');
-    $mealplan->setDate($date);
-
-    $em = $this->getDoctrine()->getManager();
-
-    // tells Doctrine you want to (eventually) save the Product (no queries yet)
-    $em->persist($mealplan);
-
-    // actually executes the queries (i.e. the INSERT query)
-    $em->flush();
-
-    //return new Response('Saved new product with id '.$newFood->getId());
-    return $this->redirectToRoute('mealplan');
     }
 
     /**
