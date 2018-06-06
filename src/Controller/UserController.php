@@ -13,14 +13,6 @@ use App\Entity\RecipeItem;
 use App\Entity\Tag;
 use App\Entity\MealplanItem;
 
-use App\Form\UserType;
-
-use App\Repository\RecipeRepository;
-use App\Repository\GrocerylistRepository;
-use App\Repository\KitchenListRepository;
-use App\Repository\TagRepository;
-use App\Repository\MealplanItemRepository;
-
 class UserController extends Controller
 {
     /**
@@ -31,7 +23,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
 
-        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+        $mealplanItems = $em->getRepository(MealplanItem::class)->findBy(
              ['user' => $userId]
              );
         $recipes = $this->getDoctrine()
@@ -108,7 +100,7 @@ class UserController extends Controller
                 $em->remove($tag);
             }
 
-        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
+        $mealplanItems = $em->getRepository(MealplanItem::class)->findBy(
             ['user' => $userId]
             );
         foreach ($mealplanItems as $item) {

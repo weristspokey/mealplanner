@@ -17,14 +17,6 @@ use App\Entity\Tag;
 
 use App\Form\UserType;
 
-use App\Repository\UserRepository;
-use App\Repository\GrocerylistRepository;
-use App\Repository\KitchenListRepository;
-use App\Repository\MealplanItemRepository;
-use App\Repository\RecipeRepository;
-use App\Repository\TagRepository;
-
-
 class SecurityController extends Controller
 {
     /**
@@ -95,7 +87,7 @@ class SecurityController extends Controller
     public function deleteUserAction(Request $request, User $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $recipes = $this->getDoctrine()
             ->getRepository(Recipe::class)
             ->findAllRecipesOfUser($id)->getQuery()->getResult();
@@ -127,7 +119,7 @@ class SecurityController extends Controller
             }
 
         $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
-            array('user' => $id)
+            ['user' => $id]
             );
         foreach ($mealplanItems as $item) {
                 $em->remove($item);

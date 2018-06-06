@@ -2,27 +2,23 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 use App\Entity\Grocerylist;
 use App\Entity\GrocerylistItem;
 use App\Entity\KitchenList;
 use App\Entity\KitchenListItem;
 
-use App\Form\KitchenListItemType;
+use App\Repository\KitchenListRepository;
+
 use App\Form\GrocerylistType;
 use App\Form\GrocerylistItemType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-use App\Repository\KitchenListRepository;
-use App\Repository\GrocerylistRepository;
-
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Grocerylist controller.
@@ -108,7 +104,7 @@ class GrocerylistController extends Controller
         if ($moveItemForm->isSubmitted() && $moveItemForm->isValid()) 
             {
                 $gItemId = (int)$_POST['itemId'];
-                $gItem = $em->getRepository('App:GrocerylistItem')->findBy(
+                $gItem = $em->getRepository(GrocerylistItem::class)->findBy(
                     ['id' => $gItemId]
                 );
                 $em->persist($kitchenListItem);
@@ -183,7 +179,7 @@ class GrocerylistController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $grocerylistId = $grocerylist->getId();
-        $grocerylistItems = $em->getRepository('App:GrocerylistItem')->findBy(
+        $grocerylistItems = $em->getRepository(GrocerylistItem::class)->findBy(
             ['grocerylistId' => $grocerylistId]
             );
         foreach ($grocerylistItems as $item) {

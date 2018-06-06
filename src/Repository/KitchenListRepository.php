@@ -12,18 +12,6 @@ class KitchenListRepository extends ServiceEntityRepository
         parent::__construct($registry, KitchenList::class);
     }
 
-    /*
-    public function findBySomething($value)
-    {
-        return $this->createQueryBuilder('k')
-            ->where('k.something = :value')->setParameter('value', $value)
-            ->orderBy('k.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
     public function findAllKitchenListsOfUser($userId) 
     {
         $qb = $this->createQueryBuilder('k')

@@ -61,16 +61,6 @@ class RecipeType extends AbstractType
                 'placeholder' => 'Description',
                 'rows' => '9']]
             )
-            // ->add('tags', TaglistType::class, array(
-            //     'label' => false,
-            //     'required' => true,
-            //     'attr' => [
-            //         'data-role' => 'tagsinput',
-            //         'placeholder' => 'Tags',
-            //         'class' => 'selectpicker',
-            //         'data-live-search' => 'true'
-            //     ]
-            // ))
             ->add('tags', TextType::class, array(
                 'label' => false,
                 'required' => false,
@@ -88,16 +78,6 @@ class RecipeType extends AbstractType
                 'placeholder' => 'an image for your recipe']]
             )
             ->add('Submit', SubmitType::class);
-        // $builder->get('tags')
-        //     ->addModelTransformer(new CallbackTransformer(
-        //         function ($tagsAsArray) {
-        //             return implode(',', $tagsAsArray);
-        //         },
-        //         function ($tagsAsString) {
-        //             return explode(',', $tagsAsString);
-        //         }
-        //     ));
-
     }
     
     /**

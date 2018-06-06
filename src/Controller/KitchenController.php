@@ -6,17 +6,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+
 use App\Entity\KitchenList;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use App\Repository\GrocerylistRepository;
-use App\Repository\KitchenListRepository;
-use App\Entity\Grocerylist;
 use App\Entity\KitchenListItem;
+use App\Entity\Grocerylist;
 use App\Entity\GrocerylistItem;
+
+use App\Repository\GrocerylistRepository;
+
 use App\Form\KitchenListType;
 use App\Form\KitchenListItemType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Entity\Food;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 /**
@@ -34,10 +35,11 @@ class KitchenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $userId = $this->getUser()->getId();
-        $kitchenLists = $em->getRepository('App:KitchenList')->findBy(
-            array('user' => $userId)
-            ); 
+        $userId = $user->getId();
+
+        $kitchenLists = $this->getDoctrine()
+            ->getRepository(KitchenList::class)
+            ->findAllKitchenListsOfUser($userId)->getQuery()->getResult();
 
         /* Add KitchenListItem */
         $kitchenListItem = new KitchenListItem();
@@ -64,7 +66,7 @@ class KitchenController extends Controller
                 $kitchenListItem = new kitchenListItem();
                 $form = $this->get('form.factory')->createNamedBuilder( 
                     $form_name, 
-                    kitchenListItemType::class, 
+                    KitchenListItemType::class, 
                     $kitchenListItem
                     )->getForm();
             }
@@ -105,23 +107,21 @@ class KitchenController extends Controller
         if ($moveItemForm->isSubmitted() && $moveItemForm->isValid()) 
             {
                 $kItemId = (int)$_POST['itemId'];
-                $kItem = $em->getRepository('App:KitchenListItem')->findBy(
-                    array('id' => $kItemId)
+                $kItem = $em->getRepository(KitchenListItem::class)->findBy(
+                    ['id' => $kItemId]
                 );
 
-    
                 $em->persist($grocerylistItem);
-
                 $em->remove($kItem[0]);
                 $em->flush();
                 
                 return $this->redirectToRoute('kitchen');
-
             }
 
+        /* New KitchenList */
         $kitchenList = new KitchenList();
 
-        $form = $this->createForm('App\Form\KitchenListType', $kitchenList);
+        $form = $this->createForm(KitchenListType::class, $kitchenList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -154,7 +154,7 @@ class KitchenController extends Controller
         $user = $this->getUser();
         
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm('App\Form\KitchenListType', $kitchenList);
+        $form = $this->createForm(KitchenListType::class, $kitchenList);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -167,10 +167,10 @@ class KitchenController extends Controller
             return $this->redirectToRoute('kitchen');
         }
 
-        return $this->render('kitchen/new.html.twig', array(
+        return $this->render('kitchen/new.html.twig', [
             'kitchenList' => $kitchenList,
             'form' => $form->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -182,20 +182,20 @@ class KitchenController extends Controller
     public function editAction(Request $request, KitchenList $kitchenList)
     {
         $deleteForm = $this->createDeleteForm($kitchenList);
-        $editForm = $this->createForm('App\Form\KitchenListType', $kitchenList);
+        $editForm = $this->createForm(KitchenListType::class, $kitchenList);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('kitchen', array('id' => $kitchenList->getId()));
+            return $this->redirectToRoute('kitchen', ['id' => $kitchenList->getId()]);
         }
 
-        return $this->render('kitchen/edit.html.twig', array(
+        return $this->render('kitchen/edit.html.twig', [
             'kitchenList' => $kitchenList,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        ));
+        ]);
     }
 
     /**
@@ -208,8 +208,8 @@ class KitchenController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $kitchenListId = $kitchenList->getId();
-        $kitchenListItems = $em->getRepository('App:KitchenListItem')->findBy(
-            array('kitchenListId' => $kitchenListId)
+        $kitchenListItems = $em->getRepository(KitchenListItem::class)->findBy(
+            ['kitchenListId' => $kitchenListId]
             );
 
             foreach ($kitchenListItems as $item) {
@@ -217,24 +217,9 @@ class KitchenController extends Controller
             }
             $em->remove($kitchenList);
             $em->flush();
+
         $this->addFlash('success', 'KitchenList deleted!');
         return $this->redirectToRoute('kitchen');
-    }
-
-    /**
-     * Creates a form to delete a kitchenList entity.
-     *
-     * @param KitchenList $kitchenList The kitchenList entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(KitchenList $kitchenList)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('kitchenList_delete', array('id' => $kitchenList->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 
      /**

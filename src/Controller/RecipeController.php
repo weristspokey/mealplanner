@@ -1,30 +1,31 @@
 <?php
-
 namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\File\File;
+
 use App\Entity\Recipe;
 use App\Entity\RecipeItem;
 use App\Entity\RecipeItemCollection;
 use App\Entity\User;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use App\Form\RecipeType;
-use App\Form\RecipeItemCollectionType;
-use App\Form\TagSelectpickerType;
 use App\Entity\Tag;
-use App\Repository\RecipeRepository;
-use App\Service\FileUploader;
-use Symfony\Component\HttpFoundation\File\File;
-
-use App\Repository\GrocerylistRepository;
 use App\Entity\Grocerylist;
 use App\Entity\GrocerylistItem;
+use App\Entity\MealplanItem;
+
+use App\Repository\GrocerylistRepository;
+
+use App\Form\RecipeType;
+use App\Form\RecipeItemCollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use App\Service\FileUploader;
 
 /**
  * Recipe controller.
@@ -43,7 +44,7 @@ class RecipeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
 
-        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfUser($userId)->getQuery()->getResult();
         $recipes = $this->getDoctrine()->getRepository(Recipe::class)->findAllRecipesOfUser($userId)->getQuery()->getResult();
 
         return $this->render('recipe/index.html.twig', [
@@ -65,12 +66,10 @@ class RecipeController extends Controller
         $user = $this->getUser();
 
         $recipe = new Recipe();
-        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
-
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfUser($userId)->getQuery()->getResult();
 
         $newRecipeForm = $this->createForm(RecipeType::class, $recipe);
         $newRecipeForm->handleRequest($request);
-
 
         if ($newRecipeForm->isSubmitted() && $newRecipeForm->isValid()) {
             $recipeImage = $recipe->getImage();
@@ -80,20 +79,19 @@ class RecipeController extends Controller
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
             
-            
             $recipe->setUser($user);
             $em->persist($recipe);
             $em->flush();
             $this->addFlash('success', 'New Recipe added!');
             
-            return $this->redirectToRoute('recipe_index');
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
         }
 
-        return $this->render('recipe/new.html.twig', array(
+        return $this->render('recipe/new.html.twig', [
             'recipe' => $recipe,
             'new_recipe_form' => $newRecipeForm->createView(),
             'tags' => $tags
-        ));
+        ]);
     }
 
     /**
@@ -111,7 +109,7 @@ class RecipeController extends Controller
             return new Response("Wrong User.");
         }
         else {
-        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfUser($userId)->getQuery()->getResult();
         $recipeTags = $recipe->getTags();
         $recipeItems = $recipe->getRecipeItems();
         $recipeItem = new RecipeItem();
@@ -135,7 +133,7 @@ class RecipeController extends Controller
             $em->persist($item);
             $em->flush();
 
-            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
         }
 
          /* Move RecipeItem to Grocerylist */
@@ -173,7 +171,7 @@ class RecipeController extends Controller
                 $em->persist($grocerylistItem);
                 $em->flush();
                 
-                return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+                return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
 
             }
        
@@ -199,7 +197,7 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
-        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfCurrentUser($userId);
+        $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfUser($userId)->getQuery()->getResult();
         $deleteForm = $this->createDeleteForm($recipe);
 
         $recipeTags = implode("," , $recipe->getTags());
@@ -210,7 +208,6 @@ class RecipeController extends Controller
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            //$this->getDoctrine()->getManager()->flush();
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
             
@@ -220,20 +217,19 @@ class RecipeController extends Controller
                 $recipe->setImage($recipeImageName);
             }
             $recipe->setImage($recipeImageName);
-            $em = $this->getDoctrine()->getManager();
             
             $em->persist($recipe);
             $em->flush();
 
-            return $this->redirectToRoute('recipe_show', array('id' => $recipe->getId()));
+            return $this->redirectToRoute('recipe_show', ['id' => $recipe->getId()]);
         }
 
-        return $this->render('recipe/edit.html.twig', array(
+        return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
             'tags' => $tags
-        ));
+        ]);
     }
 
     /**
@@ -246,17 +242,17 @@ class RecipeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $recipeId = $recipe->getId();
-        $recipeItems = $em->getRepository('App:RecipeItem')->findBy(
-            array('recipeId' => $recipeId)
+        $recipeItems = $em->getRepository(RecipeItem::class)->findBy(
+            ['recipeId' => $recipeId]
             );
-        $mealplanItems = $em->getRepository('App:MealplanItem')->findBy(
-            array('recipeId' => $recipeId)
+        $mealplanItems = $em->getRepository(MealplanItem::class)->findBy(
+            ['recipeId' => $recipeId]
             );
+
         $form = $this->createDeleteForm($recipe);
         $form->handleRequest($request);
         $recipeImage = $recipe->getImage();
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->remove($recipe);
             foreach ($recipeItems as $item) {
                 $em->remove($item);
