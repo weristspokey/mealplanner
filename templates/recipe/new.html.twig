@@ -24,3 +24,7 @@
         </div>
     </section>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('js/recipes.js') }}"></script>
+{% endblock %}

@@ -1,31 +1,13 @@
 $(document).ready(function(){
-    $('#remove_food').click(function(){
-        $('#food_selectpicker').selectpicker('deselectAll');
-    });
-    $('#remove_recipes').click(function(){
-        $('#recipes_selectpicker').selectpicker('deselectAll');
-    });
-    $('.yes').click(function(){
-        var html;
-        var meals = [];
-        $.each($(".selectpicker option:selected"), function() {
-            meals.push($(this).val());
-        });
-       meals.forEach(function(meal) {
-            //html += '<li class="list-group-item">' + meal + '</li>';
-            $('.list-group').append('<li class="list-group-item">' + meal + 
-                '<a><span title="Delete from grocerylist" class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></span></a></li>' );
-       });
-       //$('.list-group').append(html);
-       $('#food_selectpicker').selectpicker('deselectAll');
-       $('#recipes_selectpicker').selectpicker('deselectAll');
-    });
+    disableRecipeSelect();
 
-    $('.glyphicon-remove').click(function(){
-        alert("HI");
-        var item = $(this).parent('.list-group-item');
-        item.remove();
-
+    $(".food").click(function() {
+        enableFoodSelect();
+        disableRecipeSelect();
+    });
+    $(".recipe").click(function() {
+        enableRecipeSelect();
+        disableFoodSelect();
     });
 
     var calendar = $('#calendar').fullCalendar({
@@ -42,10 +24,6 @@ $(document).ready(function(){
             left:'title',
             center:''
         },
-        //events: '',
-        // selectable:true,
-        // selectHelper:true,
-    
     });
 
     $('.addMealplanItemButton').click(function() {
@@ -317,4 +295,29 @@ function searchMealplanItems(breakfastSection, lunchSection, dinnerSection, snac
             };
         };
     });
+}
+
+function disableFoodSelect() {
+    $(".food").removeClass('active');
+    $(".food-select").prop('disabled', true);
+    $(".food-select").hide();
+}
+function disableRecipeSelect() {
+    $(".recipe").removeClass('active');
+    $(".btn-group.recipe-select").addClass('disabled');
+    $(".btn-group.recipe-select").find('.btn').addClass('disabled');
+    $(".selectpicker.recipe-select").attr('disabled', 'true');
+    $(".recipe-select").hide();
+}
+function enableFoodSelect() {
+    $(".food-select").show();
+    $(".food").addClass('active');
+    $('.food-select').prop('disabled', false);
+}
+function enableRecipeSelect() {
+    $(".recipe-select").show();
+    $(".recipe").addClass('active');
+    $(".btn-group.recipe-select").removeClass('disabled');
+    $(".btn-group.recipe-select").find('.btn').removeClass('disabled');
+    $(".selectpicker.recipe-select").removeAttr('disabled');
 }

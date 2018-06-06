@@ -127,3 +127,12 @@
         </div> 
     </section>
 {% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('jplist/jplist.core.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.sort-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
+        <script src="{{ asset('js/recipes.js') }}"></script>
+{% endblock %}
