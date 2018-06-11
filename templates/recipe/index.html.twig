@@ -57,8 +57,8 @@
                         <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
                         <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}">
                             <div class="thumbnail-hoverbox">
-                                <h3 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
-                                <p style="font-size:14px">Tags:
+                                <h5 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
+                                <p style="font-size:13px">Tags:
                                 {% for recipeTag in recipe.tags %}
                                     {% for tag in tags %}
                                         {% if recipeTag == tag.id %}

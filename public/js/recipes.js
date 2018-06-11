@@ -42,10 +42,10 @@ $(document).ready(function(){
         event.preventDefault();
         $('.nav-link').removeClass('active');
         $(this).addClass('active');
-        var multiplikator = this.getAttribute('data-value');
+        var multiplicator = this.getAttribute('data-value');
         $('.item-value').each(function(){
-            var value = parseInt($(this).html());
-            $(this).html(value * multiplikator);
+            var value = this.getAttribute('data-value');
+            $(this).html(value * multiplicator);
         });
 
     });

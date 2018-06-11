@@ -46,7 +46,7 @@
                             <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Grocerylist" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            <span class="item-value">{{item.value}}</span> {% if item.unit != "Stück" %}{{item.unit}} {% endif %} {{item.name}} 
+                            <span class="item-value" data-value="{{item.value}}" >{{item.value}}</span> {% if item.unit != "Stück" %}{{item.unit}} {% endif %} {{item.name}} 
                             <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
