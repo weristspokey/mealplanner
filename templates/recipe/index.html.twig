@@ -35,7 +35,8 @@
                         data-control-name="category-filter" 
                         data-control-action="filter">
                         <ul>
-                            <li><span data-path="default">Filter by Tag</span></li>
+                            <li><span data-path="default" id="tagFilter">Filter by Tag</span></li>
+                            <li><span data-path="default">Show All</span></li>
                             {% for tag in tags %}
                             <li>
                                 <span data-path=".{{tag.name}}">
@@ -78,7 +79,7 @@
                             data-control-type="boot-pagination" 
                             data-control-name="paging" 
                             data-control-action="paging"
-                            data-range="4"
+                            data-range="8"
                             data-mode="google-like">
                         </ul>
                         <!-- pagination info label -->
@@ -113,7 +114,7 @@
                                     <a role="menuitem" tabindex="-1" href="#" data-number="5">5 per page</a>
                                 </li> 
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#" data-number="8"  data-default="true">8 per page</a>
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="16"  data-default="true">16 per page</a>
                                 </li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation">

@@ -43,6 +43,7 @@ $(document).ready(function(){
         });
 
     });
+        $('#tagFilter').css('display', 'none');
 
         $('#recipes-gallery').jplist({             
         itemsBox: '.thumbnail-gallery', 

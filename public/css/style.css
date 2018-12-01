@@ -169,7 +169,8 @@ form button[data-id="tagFilter"] {
 }
 
 #recipes-gallery .jplist-drop-down ul {
-  width: 100%;
+  width: 116%;
+  margin-left: -15px;
 }
 .jplist-drop-down {
   background: white;
@@ -250,6 +251,9 @@ form input[value="Delete"] {
     margin-top: 5px; 
     margin-left: 5px;
     color: #9d5281;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
 }
 #recipes-gallery img {
   width: 100%;
