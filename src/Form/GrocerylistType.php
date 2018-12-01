@@ -37,7 +37,10 @@ class GrocerylistType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                'placeholder' => 'Name of the Grocerylist']]
+                    'placeholder' => 'Name of the Grocerylist',
+                    'autofocus'=> true
+                    ]
+                ]
             )
             ->add('Submit', SubmitType::class);
     }

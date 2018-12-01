@@ -52,7 +52,11 @@ class RecipeType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                'placeholder' => 'Name of the Recipe']]
+                    'placeholder' => 'Name of the Recipe',
+                    'autofocus' => true
+                    ]
+                ]
+
             )
             ->add('description', TextareaType::class, [
                 'label' => false,
@@ -72,8 +76,10 @@ class RecipeType extends AbstractType
             ))
             ->add('image', FileType::class, [
                 'label' => false,
-                'required' => true,
+                'required' => false,
                  'data_class' => null,
+                 'empty_data' => null,
+                  'help' => 'The ZIP/Postal code for your credit card\'s billing address.',
                 'attr' => [
                 'placeholder' => 'an image for your recipe']]
             )

@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    $('.modal').on('shown.bs.modal', function() {
+        $(this).find('input:first').focus();
+    });
     $('.moveItemBtn').click(function() {
         var itemId = this.getAttribute('data-item-id');
         var itemName = this.getAttribute('data-item-name');

@@ -38,8 +38,10 @@ class RecipeItemType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                'placeholder' => 'Value',
-                ]]
+                    'placeholder' => 'Value',
+                    'autofocus' => true
+                    ]
+                ]
             )
             ->add('unit', ChoiceType::class, [
                 'label' => false,
