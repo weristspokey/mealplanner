@@ -75,7 +75,7 @@ class RecipeController extends Controller
             $recipeImage = $recipe->getImage();
             $recipeImageName = $fileUploader->upload($recipeImage);
             $recipe->setImage($recipeImageName);
-
+            $recipe->setName(ucfirst($recipe->getName()));
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
             

@@ -126,6 +126,7 @@ class KitchenController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $kitchenList->setUser($user);
+            $kitchenList->setName(ucfirst($kitchenList->getName()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($kitchenList);
             $em->flush();
@@ -159,6 +160,7 @@ class KitchenController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $kitchenList->setUser($user);
+            $kitchenList->setName(ucfirst($kitchenList->getName()));
             $em = $this->getDoctrine()->getManager();
             $em->persist($kitchenList);
             $em->flush();
