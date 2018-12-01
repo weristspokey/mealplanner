@@ -72,6 +72,7 @@ class RecipeController extends Controller
         $newRecipeForm->handleRequest($request);
 
         if ($newRecipeForm->isSubmitted() && $newRecipeForm->isValid()) {
+            $recipe->setDescription(nl2br($recipe->getDescription()));
             $recipeImage = $recipe->getImage();
             $recipeImageName = $fileUploader->upload($recipeImage);
             $recipe->setImage($recipeImageName);
