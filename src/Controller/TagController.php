@@ -37,7 +37,7 @@ class TagController extends Controller
 
         if ($newTagForm->isSubmitted() && $newTagForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $tagName = str_replace(' ', '', $tag->getName());
+            $tagName = strtoupper(str_replace(' ', '', $tag->getName()));
             $tag->setName($tagName);
             $tag->setUser($user);
             $em->persist($tag);
