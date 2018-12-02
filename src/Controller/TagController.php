@@ -5,6 +5,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Tag;
 
@@ -60,7 +61,11 @@ class TagController extends Controller
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, Tag $tag)
-    {
+    {   $userId = $this->getUser()->getId();
+        $tagOwner = $tag->getUser()->getId();
+        if($userId != $tagOwner) {
+            return new Response("Wrong User.");
+        }
         $deleteForm = $this->createDeleteForm($tag);
         $editForm = $this->createForm(TagType::class, $tag);
         $editForm->handleRequest($request);
