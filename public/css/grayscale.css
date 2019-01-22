@@ -159,6 +159,12 @@ a:focus, a:hover {
     font-size: 22px;
   }
 }
+@media (max-width: 767px) {
+  .masthead .intro-body .brand-heading {
+    font-size: 50px;
+  }
+}
+
 
 .btn-circle {
   font-size: 26px;
