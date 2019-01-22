@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Entity\Tag;
-
+use App\Entity\Recipe;
 use App\Form\TagType;
 /**
  * Tag controller.
@@ -91,12 +91,28 @@ class TagController extends Controller
      */
     public function deleteAction(Request $request, Tag $tag)
     {
+        $userId = $this->getUser()->getId();
         $em = $this->getDoctrine()->getManager();
+        $recipes = $this->getDoctrine()
+            ->getRepository(Recipe::class)
+            ->findAllRecipesOfUser($userId)->getQuery()->getResult();
+
         $form = $this->createDeleteForm($tag);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //Delete Tag in recipes
+            foreach ($recipes as $recipe) {
+                $recipeTags = $recipe->getTags();
+                foreach ($recipeTags as $item => $value) {
+                    if (intval($value) == $tag->getId()) {
+                        unset($recipeTags[$item]);
+                    }
+                }
+                $recipe->setTags($recipeTags);
+            }
             $em->remove($tag);
+
             $em->flush();
             $this->addFlash('success', 'Tag deleted!');
         }
