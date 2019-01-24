@@ -78,10 +78,8 @@ class RecipeType extends AbstractType
                 'label' => false,
                 'required' => false,
                  'data_class' => null,
-                 'empty_data' => null,
-                  'help' => 'The ZIP/Postal code for your credit card\'s billing address.',
-                'attr' => [
-                'placeholder' => 'an image for your recipe']]
+                 'empty_data' => null
+                ]
             )
             ->add('Submit', SubmitType::class);
     }

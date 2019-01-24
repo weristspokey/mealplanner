@@ -227,13 +227,13 @@ a:focus, a:hover {
   border-radius: 0;
 }
 
-.btn-default, .btn-secondary {
+.btn-default, .btn-primary, .btn-secondary {
   color: #9d5281;
   border: 1px solid #9d5281;
   background-color: transparent;
 }
 
-.btn-default:focus, .btn-default:hover, .btn-secondary:focus, .btn-secondary:hover {
+.btn-default:focus, .btn-default:hover, .btn-primary:focus, .btn-primary:hover, .btn-secondary:focus, .btn-secondary:hover {
   color: white;
   border: 1px solid #9D759D;
   outline: none;
