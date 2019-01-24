@@ -522,3 +522,9 @@ form.add-item-form .form-group {
   padding-right: 0px;
   padding-left: 0px;
 }
+.custom-file {
+  float: left;
+}
+.custom-file-input {
+  opacity: 1;
+}
