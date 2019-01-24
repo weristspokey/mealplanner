@@ -24,7 +24,10 @@ class KitchenListType extends AbstractType
                 'label' => false,
                 'required' => true,
                 'attr' => [
-                'placeholder' => 'Name of the KitchenList']]
+                    'placeholder' => 'Name of the KitchenList',
+                    'autofocus'=> true
+                    ]
+                ]
             )
             ->add('Submit', SubmitType::class);
     }

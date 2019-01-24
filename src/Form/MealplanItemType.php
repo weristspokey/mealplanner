@@ -82,7 +82,7 @@ class MealplanItemType extends AbstractType
                 ],
                 'query_builder' => function (RecipeRepository $repo) {
                     $user = $this->tokenStorage->getToken()->getUser();
-                    return $repo->showRecipesOfCurrentUser($user);
+                    return $repo->findAllRecipesOfUser($user);
                     }
                 ]
         )

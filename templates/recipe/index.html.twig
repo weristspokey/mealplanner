@@ -19,12 +19,13 @@
 
                         <input 
                             data-path=".title" 
-                           type="text" 
-                           value="" 
-                           placeholder="Filter by Name" 
-                           data-control-type="textbox" 
-                           data-control-name="title-filter" 
-                           data-control-action="filter"
+                            type="text"
+                            value=""
+                            placeholder="Filter by Name"
+                            data-control-type="textbox"
+                            data-control-name="title-filter"
+                            data-control-action="filter"
+                            autofocus
                         />
                     </div>
 
@@ -35,7 +36,8 @@
                         data-control-name="category-filter" 
                         data-control-action="filter">
                         <ul>
-                            <li><span data-path="default">Filter by Tag</span></li>
+                            <li><span data-path="default" id="tagFilter">Filter by Tag</span></li>
+                            <li><span data-path="default">Show All</span></li>
                             {% for tag in tags %}
                             <li>
                                 <span data-path=".{{tag.name}}">
@@ -57,8 +59,8 @@
                         <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
                         <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}">
                             <div class="thumbnail-hoverbox">
-                                <h3 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
-                                <p style="font-size:14px">Tags:
+                                <h5 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
+                                <p style="font-size:13px">Tags:
                                 {% for recipeTag in recipe.tags %}
                                     {% for tag in tags %}
                                         {% if recipeTag == tag.id %}
@@ -78,7 +80,7 @@
                             data-control-type="boot-pagination" 
                             data-control-name="paging" 
                             data-control-action="paging"
-                            data-range="4"
+                            data-range="8"
                             data-mode="google-like">
                         </ul>
                         <!-- pagination info label -->
@@ -113,7 +115,7 @@
                                     <a role="menuitem" tabindex="-1" href="#" data-number="5">5 per page</a>
                                 </li> 
                                 <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#" data-number="8"  data-default="true">8 per page</a>
+                                    <a role="menuitem" tabindex="-1" href="#" data-number="16"  data-default="true">16 per page</a>
                                 </li>
                                 <li role="presentation" class="divider"></li>
                                 <li role="presentation">
@@ -126,4 +128,13 @@
             </div>
         </div> 
     </section>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('jplist/jplist.core.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.sort-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
+        <script src="{{ asset('js/recipes.js') }}"></script>
 {% endblock %}

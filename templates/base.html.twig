@@ -4,8 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="Waste less food, time and effort by planning your meals for the whole week by adding foods or recipes, tracking grocerylists or the food in your kitchen and creating your own recipebook with all your favourite recipes.">
+        <meta name="description" content="Plan your meals for the whole week by adding foods or recipes, tracking grocerylists and creating your own recipebook with all your favourite recipes.">
         <meta name="keywords" content="mealplanner, organisation, meal, recipes, recipebook, app, webapp, tool, plan, grocerys, grocerylist">
+        <meta name="title" content="mealplanner | Easy meal organisation">
         <title>mealplanner | Easy meal organisation</title>
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
@@ -67,7 +68,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropbtn" href="{{ path('grocerylist') }}">Grocerylists</a>
                                 <div class="dropdown-content">
-                                <a href="{{ path('grocerylist_new') }}">Add Grocerlist</a>
+                                <a href="{{ path('grocerylist_new') }}">Add Grocerylist</a>
                               </div>
                             </li>
                         </ul>
@@ -128,21 +129,9 @@
         <script src="{{ asset('jquery-easing/jquery.easing.min.js') }}"></script>
         <script src="{{ asset('bootstrap-select/js/bootstrap-select.js') }}"></script>
         <script src="{{ asset('js/grayscale.js') }}"></script>
-        <script src="{{ asset('fullcalendar/lib/moment.min.js') }}"></script>
-        <script src="{{ asset('bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js') }}"></script>
-        <script src="{{ asset('bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js.map') }}"></script>
-        <script src="{{ asset('bootstrap-tagsinput/dist/bootstrap-tagsinput-angular.min.js') }}"></script>
         <script src="{{ asset('js/jquery.collection.js') }}"></script>
-        <script src="{{ asset('fullcalendar/fullcalendar.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.core.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.sort-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
         <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
         <script src="{{ asset('js/jquery.countTo.js') }}"></script>
-        <script src="{{ asset('js/recipes.js') }}"></script>
-
         {% endblock %}
     </body>
 </html>

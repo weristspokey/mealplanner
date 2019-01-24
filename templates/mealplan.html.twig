@@ -68,7 +68,7 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
+        <script src="{{ asset('fullcalendar/lib/moment.min.js') }}"></script>
+        <script src="{{ asset('fullcalendar/fullcalendar.js') }}"></script>
         <script src="{{ asset('js/mealplan.js') }}"></script>
-        <script src="{{ asset('bxslider/jquery.bxslider.js') }}"></script>
-        <script src="{{ asset('js/slider.js') }}"></script>
 {% endblock %}

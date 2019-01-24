@@ -36,21 +36,22 @@ class RecipeItemType extends AbstractType
         $builder
             ->add('value', NumberType::class, [
                 'label' => false,
-                'required' => true,
+                'required' => false,
                 'attr' => [
-                'placeholder' => 'Value',
-                ]]
+                    'placeholder' => 'Value',
+                    'autofocus' => true
+                    ]
+                ]
             )
             ->add('unit', ChoiceType::class, [
                 'label' => false,
-                'required' => true,
+                'required' => false,
                 'choices'  => array(
                     'ml' => 'ml',
                     'l' => 'l',
                     'mg' => 'mg',
                     'g' => 'g',
-                    'kg' => 'kg',
-                    'Stück' => 'Stück'
+                    'kg' => 'kg'
                 )]
             )
             ->add('name', TextType::class, [

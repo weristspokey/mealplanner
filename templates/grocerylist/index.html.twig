@@ -24,7 +24,7 @@
                         <li class="list-group-item text-center">
                             {{ grocerylist.name }}
                             <a class="delete-grocerylist-button" data-item-id="{{grocerylist.id}}" href="#">
-                                <span title="Delete grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                <span title="Delete {{ grocerylist.name }}" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
                             <form class="delete-form" action="{{ path('grocerylist_delete', {'id': grocerylist.id }) }}" method="POST"> 
                             </form>
@@ -46,7 +46,7 @@
                             </a>
                             {{ item.name}}
                             <a href="#" class="delete-grocerylist-item-button">
-                                <span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>
+                                <span title="Delete from {{ grocerylist.name }}" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
                             <form class="delete-form" action="{{ path('grocerylistItem_delete', {'id': item.id }) }}" method="POST"> 
                             </form>

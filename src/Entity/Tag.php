@@ -39,9 +39,8 @@ class Tag
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="tags")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
+    private $user;
 
     /**
      * Get id
@@ -102,27 +101,27 @@ class Tag
     }
 
      /**
-     * Set userId
+     * Set user
      *
-     * @param User $userId
+     * @param User $user
      *
      * @return Tag
      */
-    public function setUserId(User $userId)
+    public function setUser(User $user)
     {
-        $this->userId = $userId;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     public function __toString() {

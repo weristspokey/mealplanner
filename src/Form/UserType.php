@@ -23,7 +23,10 @@ class UserType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => false,
                 'attr' => [
-                'placeholder' => 'Username']]
+                    'placeholder' => 'Username',
+                    'autofocus' => true
+                    ]
+                ]
             )
             ->add('email', EmailType::class, [
                 'label' => false,

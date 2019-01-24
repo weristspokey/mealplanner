@@ -6,12 +6,10 @@ body {
   color: black;
   background-color: white;
 }
-
 html {
   width: 100%;
   height: 100%;
 }
-
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700;
@@ -19,13 +17,11 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-
 p {
   font-size: 16px;
   line-height: 1.5;
   margin: 0 0 25px;
 }
-
 @media (min-width: 768px) {
   p {
     font-size: 18px;
@@ -33,7 +29,6 @@ p {
     margin: 0 0 35px;
   }
 }
-
 a {
   -webkit-transition: all 0.2s ease-in-out;
   -moz-transition: all 0.2s ease-in-out;
@@ -164,6 +159,12 @@ a:focus, a:hover {
     font-size: 22px;
   }
 }
+@media (max-width: 767px) {
+  .masthead .intro-body .brand-heading {
+    font-size: 50px;
+  }
+}
+
 
 .btn-circle {
   font-size: 26px;

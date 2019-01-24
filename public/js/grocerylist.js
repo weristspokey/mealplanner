@@ -1,6 +1,8 @@
 $(document).ready(function(){
+    $('.modal').on('shown.bs.modal', function() {
+        $(this).find('input:first').focus();
+    });
     $('.moveItemBtn').click(function() {
-        //e.preventDefault();
         var itemId = this.getAttribute('data-item-id');
         var itemName = this.getAttribute('data-item-name');
         $('input[name=itemId]').val(itemId);
@@ -23,24 +25,5 @@ $(document).ready(function(){
             element.remove();
         }
     });
-
-//     $(".add-item-form").submit(function(event) {
-//         event.preventDefault();
-//         var item = $('input[name=item]').val();
-//         element = '<li class="list-group-item text-center">' +
-//                         '<a data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn">' +
-//                             '<span title="Add to Kitchen" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>' +
-//                         '</a>' + item +
-//                         '<a href="#" class="delete-button">' +
-//                             '<span title="Delete from grocerylist" class="fa fa-remove pull-right" aria-hidden="true"></span>' +
-//                         '</a>' +
-//                         '<form class="delete-form" action="{{ path(\'grocerylistItem_delete\', {\'id\': item.id }) }}" method="POST"></form>' +
-//                     '</li>';
-//         // Get input field values
-
-
-//             $(this).closest('ul').append(element);
-// });
-
 });
 

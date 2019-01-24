@@ -21,7 +21,7 @@
             <div class="row justify-content-md-center">
                 <div class="col-lg-6 text-center" style="border-right: 1px solid #ddd">
                     <h3>Description</h3>
-                    <p class="text-justify">{{recipe.description}}</p>
+                    <p class="text-justify">{{recipe.description | raw}}</p>
                 </div>
                 <div class="col-md-4 text-center">
                     <h3>Ingredients</h3>
@@ -46,7 +46,7 @@
                             <a href="#" data-toggle="modal" data-target="#MoveItemModal" class="moveItemBtn"  data-item-id="{{item.id}}" data-item-name="{{item.name}}">
                                 <span title="Add to Grocerylist" class="fa fa-arrow-left pull-left" aria-hidden="true"></span>
                             </a>
-                            <span class="item-value">{{item.value}}</span> {% if item.unit != "Stück" %}{{item.unit}} {% endif %} {{item.name}} 
+                            <span class="item-value" data-value="{{item.value}}" >{{item.value}}</span> {% if item.unit != "Stück" %}{{item.unit}} {% endif %} {{item.name}} 
                             <a href="#" class="delete-recipe-item-button">
                                 <span title="Delete Item" class="fa fa-remove pull-right" aria-hidden="true"></span>
                             </a>
@@ -100,4 +100,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+        <script src="{{ asset('jplist/jplist.core.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.sort-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
+        <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
+        <script src="{{ asset('js/recipes.js') }}"></script>
 {% endblock %}
