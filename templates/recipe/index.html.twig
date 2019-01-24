@@ -29,7 +29,7 @@
                         />
                     </div>
 
-                    <!-- Filter DropDown Control -->
+                    <!-- Filter tag DropDown Control -->
                     <div 
                         class="jplist-drop-down col-md-2" 
                         data-control-type="filter-drop-down" 
@@ -47,6 +47,20 @@
                             {% endfor %}
                         </ul>
                     </div>
+                    <!-- filter by ingredient -->
+                    <div class="text-filter-box col-md-2">
+
+                        <input 
+                            data-path=".ingredient" 
+                            type="text"
+                            value=""
+                            placeholder="Filter by ingredient"
+                            data-control-type="textbox"
+                            data-control-name="ingredient-filter"
+                            data-control-action="filter"
+                        />
+                    </div>
+                    
                 </div>     
                 {% if recipes is empty %}
                 <div class="empty-message">
@@ -69,6 +83,9 @@
                                     {% endfor %}
                                 {% endfor %}
                                 </p>
+                                {% for item in recipe.recipeItems %}
+                                <span style="font-size: 11px; margin-left: 8px" class="ingredient d-none">{{item.name}}<span>
+                                {% endfor %}
                             </div>
                         </a>
                     </div>
