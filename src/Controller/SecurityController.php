@@ -59,7 +59,18 @@ class SecurityController extends Controller
             $entityManager->persist($user);
             $entityManager->flush();
 
+            $token = new UsernamePasswordToken(
+                $user,
+                $password,
+                'main',
+                $user->getRoles()
+            );
+
+            $this->get('security.token_storage')->setToken($token);
+            $this->get('session')->set('_security_main', serialize($token));
+            
             $this->addFlash('success', 'You are registered');
+            
             return $this->redirectToRoute('index');
         }
 
