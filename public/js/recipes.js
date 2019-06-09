@@ -45,7 +45,7 @@ $(document).ready(function(){
     });
     $('#tagFilter').css('display', 'none');
     jplist.init();
-  }
+
 /*
         $('#recipes-gallery').jplist({
         itemsBox: '.thumbnail-gallery',

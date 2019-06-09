@@ -73,7 +73,6 @@
                         </button>
                     {% endfor %}
                     </div>
-
                 </div>
 
                 <!-- content to filter -->
@@ -94,13 +93,9 @@
                                         {% endfor %}
                                     {% endfor %}
                                 </p>
-                                <p class="ingredients">
+                                <p class="ingredients d-none">
                                     {% for item in recipe.recipeItems %}
-
-
-                                                <span>{{item.name}} </span>
-
-
+                                        <span>{{item.name}} </span>
                                     {% endfor %}
                                 </p>
                             </div>
