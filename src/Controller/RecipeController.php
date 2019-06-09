@@ -205,7 +205,6 @@ class RecipeController extends Controller
         $recipe->setTags($recipeTags);
         $recipe->setDescription(preg_replace('/\<br(\s*)?\/?\>/i', "", $recipe->getDescription()));
         $editForm = $this->createForm(RecipeType::class, $recipe);
-dump($recipe->getDescription());
         $editForm->handleRequest($request);
 
 
