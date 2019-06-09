@@ -203,15 +203,16 @@ class RecipeController extends Controller
 
         $recipeTags = implode("," , $recipe->getTags());
         $recipe->setTags($recipeTags);
-
+        $recipe->setDescription(preg_replace('/\<br(\s*)?\/?\>/i', "", $recipe->getDescription()));
         $editForm = $this->createForm(RecipeType::class, $recipe);
+dump($recipe->getDescription());
         $editForm->handleRequest($request);
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
-            
+            $recipe->setDescription(nl2br($recipe->getDescription()));
             if($recipe->getImage() !== null){
                 $recipeImage = $recipe->getImage();
                 $recipeImageName = $fileUploader->upload($recipeImage);
