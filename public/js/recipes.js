@@ -43,11 +43,13 @@ $(document).ready(function(){
         });
 
     });
-        $('#tagFilter').css('display', 'none');
-
-        $('#recipes-gallery').jplist({             
-        itemsBox: '.thumbnail-gallery', 
-        itemPath: '.item', 
-        panelPath: '.jplist-panel'    
-    });
+    $('#tagFilter').css('display', 'none');
+    jplist.init();
+  }
+/*
+        $('#recipes-gallery').jplist({
+        itemsBox: '.thumbnail-gallery',
+        itemPath: '.item',
+        panelPath: '.jplist-panel'
+    });*/
 });

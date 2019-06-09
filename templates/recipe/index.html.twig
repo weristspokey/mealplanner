@@ -13,145 +13,136 @@
                 </div>
             </div>
             <div id="recipes-gallery">
-                <div class="jplist-panel row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #9D759D">                       
-                    <!-- filter by title -->
-                    <div class="text-filter-box col-md-2">
+                <div class="row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #9D759D">
+                    <!-- hidden sort control -->
+                    <div
+                    style="display: none"
+                    data-jplist-control="hidden-sort"
+                    data-group="group1"
+                    data-path=".name"
+                    data-order="asc"
+                    data-type="text">
+                    </div>
+                    <!-- text filter control -->
+                    <div class="col-md-3">
+                        <input
+                        data-jplist-control="textbox-filter"
+                        data-group="group1"
+                        data-name="my-filter-1"
+                        data-path=".name"
+                        type="text"
+                        value=""
+                        placeholder="Filter by Name" />
+                    </div>
+                    <div class="col-md-3">
+                        <input
+                                data-jplist-control="textbox-filter"
+                                data-group="group1"
+                                data-name="ingredient-filter"
+                                data-path=".ingredients"
+                                type="text"
+                                value=""
+                                placeholder="Filter by Ingredient" />
+                    </div>
+                    <div class="buttons col-md-3">
+                        <!-- button text filter control -->
+                        <button
+                            data-jplist-control="buttons-text-filter"
+                            data-path="default"
+                            data-group="group1"
+                            name="name1"
+                            data-mode="radio"
+                            data-selected="true"
+                            class="btn"
+                            style="background-color: white; border-radius: 20px; border: 1px solid black; font-size: 0.7rem; line-height: 1.0; padding: 0.3rem 0.5rem">
+                        Show All
+                        </button>
 
-                        <input 
-                            data-path=".title" 
-                            type="text"
-                            value=""
-                            placeholder="Filter by Name"
-                            data-control-type="textbox"
-                            data-control-name="title-filter"
-                            data-control-action="filter"
-                            autofocus
-                        />
+                        {% for tag in tags %}
+                        <button
+                                data-jplist-control="buttons-text-filter"
+                                data-path=".tags"
+                                data-group="group1"
+                                name="name1"
+                                data-mode="radio"
+                                data-text="{{ tag.name }}"
+                                class="btn btn-tag"
+                                style="background-color:{{ tag.color }};"
+                                type="button">
+                            {{ tag.name }}
+                        </button>
+                    {% endfor %}
                     </div>
 
-                    <!-- Filter tag DropDown Control -->
-                    <div 
-                        class="jplist-drop-down col-md-2" 
-                        data-control-type="filter-drop-down" 
-                        data-control-name="category-filter" 
-                        data-control-action="filter">
-                        <ul>
-                            <li><span data-path="default" id="tagFilter">Filter by Tag</span></li>
-                            <li><span data-path="default">Show All</span></li>
-                            {% for tag in tags %}
-                            <li>
-                                <span data-path=".{{tag.name}}">
-                                    <button class="btn btn-tag" style="background-color:{{ tag.color }}" role="button"> {{ tag.name }}</button>
-                                </span>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <!-- filter by ingredient -->
-                    <div class="text-filter-box col-md-2">
-
-                        <input 
-                            data-path=".ingredient" 
-                            type="text"
-                            value=""
-                            placeholder="Filter by ingredient"
-                            data-control-type="textbox"
-                            data-control-name="ingredient-filter"
-                            data-control-action="filter"
-                        />
-                    </div>
-                    
-                </div>     
-                {% if recipes is empty %}
-                <div class="empty-message">
-                    <h2>No Recipes added.</h2>
                 </div>
-                {% endif %}           
-                <div class="row thumbnail-gallery">
+
+                <!-- content to filter -->
+            <div data-jplist-group="group1" class="row thumbnail-gallery">
+
                 {% for recipe in recipes %}
-                    <div class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
+                    <div data-jplist-item class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
                         <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
                         <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}">
                             <div class="thumbnail-hoverbox">
-                                <h5 class="title" style="margin-bottom: 10px">{{ recipe.name }}</h3>
-                                <p style="font-size:13px">Tags:
-                                {% for recipeTag in recipe.tags %}
-                                    {% for tag in tags %}
-                                        {% if recipeTag == tag.id %}
-                                            <span class="{{tag.name}}">{{tag.name}} </span>
-                                        {% endif %}
+                                <h5 class="name" style="margin-bottom: 10px">{{ recipe.name }}</h5>
+                                <p class="tags" style="font-size:13px">Tags:
+                                    {% for recipeTag in recipe.tags %}
+                                        {% for tag in tags %}
+                                            {% if recipeTag == tag.id %}
+                                                <span class="{{tag.name}}">{{tag.name}} </span>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
-                                {% endfor %}
                                 </p>
-                                {% for item in recipe.recipeItems %}
-                                <span style="font-size: 11px; margin-left: 8px" class="ingredient d-none">{{item.name}}<span>
-                                {% endfor %}
+                                <p class="ingredients">
+                                    {% for item in recipe.recipeItems %}
+
+
+                                                <span>{{item.name}} </span>
+
+
+                                    {% endfor %}
+                                </p>
                             </div>
                         </a>
                     </div>
                 {% endfor %}
-                </div>
-                <div class="jplist-panel row">                       
-                        <ul 
-                            class="pagination pull-left jplist-pagination m-auto"
-                            data-control-type="boot-pagination" 
-                            data-control-name="paging" 
-                            data-control-action="paging"
-                            data-range="8"
-                            data-mode="google-like">
-                        </ul>
-                        <!-- pagination info label -->
-                        <div 
-                            class="pull-left jplist-pagination-info d-none"
-                            data-type="<strong>Page {current} of {pages}</strong><br/> <small>{start} - {end} of {all}</small>" 
-                            data-control-type="pagination-info" 
-                            data-control-name="paging" 
-                            data-control-action="paging">
-                        </div>
-         
-                        <!-- items per page dropdown -->
-                        <div 
-                            class="dropdown pull-left jplist-items-per-page d-none"
-                            data-control-type="boot-items-per-page-dropdown" 
-                            data-control-name="paging" 
-                            data-control-action="paging">
-                            <button 
-                                class="btn btn-primary dropdown-toggle" 
-                                type="button" 
-                                data-toggle="dropdown" 
-                                id="dropdown-menu-1"
-                                aria-expanded="true">                   
-                                <span data-type="selected-text">Items per Page</span>
-                                <span class="caret"></span>                     
-                            </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdown-menu-1">
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#" data-number="3">3 per page</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#" data-number="5">5 per page</a>
-                                </li> 
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#" data-number="16"  data-default="true">16 per page</a>
-                                </li>
-                                <li role="presentation" class="divider"></li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#" data-number="all">View All</a>
-                                </li>
-                            </ul>                        
-                        </div>
+
+                <!-- no results control -->
+                <div data-jplist-control="no-results" data-group="group1" data-name="no-results">No Results Found</div>
+
+            </div>
+                <!-- pagination control -->
+                <div
+                        data-jplist-control="pagination"
+                        data-group="group1"
+                        data-items-per-page="16"
+                        data-current-page="0"
+                        data-name="pagination1"
+                        class="jplist-pagination">
+
+                    <button type="button" data-type="first">«</button>
+                    <button type="button" data-type="prev">‹</button>
+
+                    <div class="jplist-holder" data-type="pages">
+                        <button type="button" data-type="page">{pageNumber}</button>
                     </div>
+
+                    <button type="button" data-type="next">›</button>
+                    <button type="button" data-type="last">»</button>
                 </div>
             </div>
-        </div> 
+
+
     </section>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-        <script src="{{ asset('jplist/jplist.core.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.sort-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
+    <!-- IE 10+ / Edge support via babel-polyfill: https://babeljs.io/docs/en/babel-polyfill/ -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.26.0/polyfill.min.js"></script>
+
+    <!-- jPList Library -->
+    <script src="{{ asset('jplist/jplist.min.js') }}"></script>
+
         <script src="{{ asset('js/recipes.js') }}"></script>
 {% endblock %}
