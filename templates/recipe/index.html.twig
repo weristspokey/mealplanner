@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div id="recipes-gallery">
-                <div class="row" style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #9D759D">
+                <div class="row" style="margin-bottom: 10px; border-bottom: 1px solid #9D759D">
                     <!-- hidden sort control -->
                     <div
                     style="display: none"
@@ -44,7 +44,7 @@
                                 value=""
                                 placeholder="Filter by Ingredient" />
                     </div>
-                    <div class="buttons col-md-3">
+                    <div class="buttons col-md-6" style="margin-bottom: 10px">
                         <!-- button text filter control -->
                         <button
                             data-jplist-control="buttons-text-filter"
@@ -71,15 +71,17 @@
                                 type="button">
                             {{ tag.name }}
                         </button>
-                    {% endfor %}
+                        {% endfor %}
+                        <a href="{{ path('tag_new') }}">
+                            <span title="Add" class="fa fa-plus" aria-hidden="true"></span>
+                        </a>
                     </div>
                 </div>
 
                 <!-- content to filter -->
             <div data-jplist-group="group1" class="row thumbnail-gallery">
-
                 {% for recipe in recipes %}
-                    <div data-jplist-item class="item col-lg-3 col-sm-3 col-md-3" style="margin-bottom: 10px">
+                    <div data-jplist-item class="item col-lg-3 col-sm-3 col-md-3">
                         <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail">
                         <a href="{{ path('recipe_show', { 'id': recipe.id }) }}" title="{{ recipe.name }}">
                             <div class="thumbnail-hoverbox">

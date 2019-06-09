@@ -106,7 +106,9 @@ footer #mail-btn:hover {
 }
 /* Mealplan View */
 .thumbnail-gallery div {
-  margin-bottom: 15px;
+  margin-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 .fc-day h5 {
   margin-bottom: 5px;
@@ -187,6 +189,7 @@ form button[data-id="tagFilter"] {
     padding: 5px 10px;
     border: 1px solid lightgray;
     border-radius: 10px;
+    margin-bottom: 10px;
 }
 @media (max-width: 600px) {
   .jplist-panel {
@@ -230,7 +233,7 @@ form input[value="Delete"] {
   transition: .5s ease;
   position: absolute;
   opacity: 0;
-  width: 90%; 
+  width: 95%;
   height: 100px;
   top: 50%;
   left: 50%;
@@ -260,11 +263,15 @@ form input[value="Delete"] {
   min-height: 150px;
   object-fit: cover;
 }
-@media (max-width: 735px) {
+@media (max-width: 770px) {
   #recipes-gallery img {
     max-height: 100px;
-    min-height: 100px;
+    min-height: 200px;
   }
+    #recipes-gallery .thumbnail-hoverbox {
+        opacity: 0.7;
+        top: 70%;
+    }
 }
 .img-recipe {
   max-height: 400px;
@@ -530,4 +537,18 @@ form.add-item-form .form-group {
 }
 .custom-file-input {
   opacity: 1;
+}
+#mobileNav .nav-link {
+    background-color: #9D759D;
+    color: white;
+    font-size: 14px;
+    border-radius: 0;
+}
+#mobileNav {
+    display: none;
+}
+@media (max-width: 770px) {
+    #mobileNav {
+        display: flex;
+    }
 }
