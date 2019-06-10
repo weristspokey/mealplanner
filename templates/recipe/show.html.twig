@@ -12,18 +12,24 @@
                                     <button class="btn btn-tag pull-left" style="background-color:{{ tag.color }}; margin-right: 5px">{{tag.name}}</button>
                                 {% endif %}
                             {% endfor %}
-                        {% endfor %}<br>
-                        
+                        {% endfor %}
+
+                        {{ form_start(delete_form) }}
+                        <input class="pull-right" type="submit" value="Delete">
+                        {{ form_end(delete_form) }}
+                        <a href="{{ path('recipe_edit', { 'id': recipe.id }) }}">
+                            <span title="Edit Recipe" class="fa fa-edit fa-2x pull-right" style="margin-right: 10px" aria-hidden="true"></span>
+                        </a><br>
                         <h1 class="title pull-left" style="margin-top:10px">{{ recipe.name }}</h1>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-md-center">
-                <div class="col-lg-6 text-center" style="border-right: 1px solid #ddd">
+                <div class="col-lg-6 col-md-7 text-center" style="border-right: 1px solid #ddd">
                     <h3>Description</h3>
                     <p class="text-justify">{{recipe.description | raw}}</p>
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-lg-4 col-md-5 text-center">
                     <h3>Ingredients</h3>
                     <ul class="nav nav-pills serving-nav">
                         <p style="margin-top: 5px; margin-right: 5px">Servings:</p>
@@ -67,13 +73,9 @@
                 </div>
             </div>
             <div class="row">
+
                 <div class="col-md-6">
-                    <a class="btn btn-default btn-sm pull-right" href="{{ path('recipe_edit', { 'id': recipe.id }) }}" role="button">Edit</a>
-                </div>
-                <div class="col-md-6">
-                    {{ form_start(delete_form) }}
-                        <input class="pull-left" style="background-color: #dc3545; vborder: none" type="submit" value="Delete">
-                    {{ form_end(delete_form) }}
+
                 </div>
             </div>
         </div>
@@ -103,10 +105,5 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-        <script src="{{ asset('jplist/jplist.core.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.sort-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.filter-dropdown-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.bootstrap-pagination-bundle.min.js') }}"></script>
-        <script src="{{ asset('jplist/jplist.textbox-filter.min.js') }}"></script>
         <script src="{{ asset('js/recipes.js') }}"></script>
 {% endblock %}

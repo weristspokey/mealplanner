@@ -236,7 +236,7 @@ class RecipeController extends Controller
     /**
      * Deletes a recipe entity.
      *
-     * @Route("/{id}", name="recipe_delete")
+     * @Route("/delete/{id}", name="recipe_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Recipe $recipe)
