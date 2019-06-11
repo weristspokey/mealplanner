@@ -21,6 +21,9 @@ h1, h2, h3, h4, h5, h6 {
   h1 {
     font-size: 1.4rem;
   }
+  h4 {
+    font-size: 1rem;
+  }
 }
 p {
   font-size: 16px;
@@ -208,6 +211,14 @@ a:focus, a:hover {
     padding-top: 80px !important;
     padding-bottom: 60px;
   }
+  #mainNav a {
+    float: right;
+  }
+}
+@media (max-width: 500px) {
+  .about-section, .goals-section, .statistics-section, .download-section {
+    padding-top: 40px !important;
+  }
 }
 @media (min-width: 992px) {
   .content-section {
@@ -261,7 +272,7 @@ ul.banner-social-buttons {
 }
 
 footer {
-  padding: 25px 0;
+  margin-bottom: 40px;
 }
 
 footer p {

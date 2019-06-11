@@ -49,6 +49,18 @@ footer #mail-btn:hover {
   border: 2px solid #f2f2f2; padding: 30px;
   min-height: 346px;
 }
+@media (max-width: 500px) {
+    .about-card {
+        padding: 20px;
+    }
+    #goals .col-md-4 {
+        width: 33%;
+    }
+    #goals .col-md-4 div {
+        width: 100px;
+        height: 100px;
+    }
+}
 .about-card i {
   color: #9D759D;
 }
