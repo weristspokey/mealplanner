@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\File\File;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Recipe;
 use App\Entity\RecipeItem;
 use App\Entity\RecipeItemCollection;
@@ -59,7 +59,7 @@ class RecipeController extends Controller
      * @Route("/new", name="recipe_new")
      * @Method({"GET", "POST"})
      */
-    public function newAction(Request $request, FileUploader $fileUploader)
+    public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
@@ -73,9 +73,16 @@ class RecipeController extends Controller
 
         if ($newRecipeForm->isSubmitted() && $newRecipeForm->isValid()) {
             $recipe->setDescription(nl2br($recipe->getDescription()));
-            $recipeImage = $recipe->getImage();
-            $recipeImageName = $fileUploader->upload($recipeImage);
-            $recipe->setImage($recipeImageName);
+
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $newRecipeForm['imageFile']->getData();
+
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/uploads/images';
+                $newFilename = uniqid().'.'.$uploadedFile->guessExtension();
+                $uploadedFile->move($destination, $newFilename);
+                $recipe->setImage($newFilename);
+            }
 
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
@@ -194,30 +201,33 @@ class RecipeController extends Controller
      * @Route("/{id}/edit", name="recipe_edit")
      * @Method({"GET", "POST"})
      */
-    public function editAction(Request $request, Recipe $recipe, FileUploader $fileUploader)
+    public function editAction(Request $request, Recipe $recipe)
     {
         $em = $this->getDoctrine()->getManager();
         $userId = $this->getUser()->getId();
         $tags = $this->getDoctrine()->getRepository(Tag::class)->findAllTagsOfUser($userId)->getQuery()->getResult();
-        $deleteForm = $this->createDeleteForm($recipe);
+
 
         $recipeTags = implode("," , $recipe->getTags());
         $recipe->setTags($recipeTags);
-
+        $recipe->setDescription(preg_replace('/\<br(\s*)?\/?\>/i', "", $recipe->getDescription()));
         $editForm = $this->createForm(RecipeType::class, $recipe);
         $editForm->handleRequest($request);
 
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $editForm['imageFile']->getData();
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/uploads/images';
+                $newFilename = uniqid().'.'.$uploadedFile->guessExtension();
+                $uploadedFile->move($destination, $newFilename);
+                $recipe->setImage($newFilename);
+            }
+
             $recipeTags = explode("," , $recipe->getTags());
             $recipe->setTags($recipeTags);
-            
-            if($recipe->getImage() !== null){
-                $recipeImage = $recipe->getImage();
-                $recipeImageName = $fileUploader->upload($recipeImage);
-                $recipe->setImage($recipeImageName);
-            }
-            $recipe->setImage($recipeImageName);
+            $recipe->setDescription(nl2br($recipe->getDescription()));
             
             $em->persist($recipe);
             $em->flush();
@@ -228,7 +238,6 @@ class RecipeController extends Controller
         return $this->render('recipe/edit.html.twig', [
             'recipe' => $recipe,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
             'tags' => $tags
         ]);
     }
@@ -236,7 +245,7 @@ class RecipeController extends Controller
     /**
      * Deletes a recipe entity.
      *
-     * @Route("/{id}", name="recipe_delete")
+     * @Route("/delete/{id}", name="recipe_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Recipe $recipe)
