@@ -74,11 +74,12 @@ class RecipeType extends AbstractType
                     'multiple' => true
                 ]
             ))
-            ->add('image', FileType::class, [
+            ->add('imageFile', FileType::class, [
+                'mapped' => false,
                 'label' => false,
                 'required' => false,
-                 'data_class' => null,
-                 'empty_data' => null
+                // 'data_class' => null,
+                 //'empty_data' => null
                 ]
             )
             ->add('Submit', SubmitType::class);

@@ -4,7 +4,12 @@
         <div class="container">
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-lg-10 col-12 m-auto">
-                    <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail img-recipe">
+                    {% if recipe.image %}
+                        <img src="{{ asset('uploads/images/' ~ recipe.image) }}" class="img-thumbnail img-recipe">
+                    {% else %}
+                        <img src="{{ asset('placeholder.jpeg') }}" class="img-thumbnail img-recipe">
+                    {% endif %}
+
                     <div class="thumbnail-box text-center">
                         {% for recipeTag in recipe.tags %}
                             {% for tag in tags %}
